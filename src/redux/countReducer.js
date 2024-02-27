@@ -11,9 +11,9 @@ export const countSlice = createSlice({
   initialState,
   reducers: {
     updateCount: (state, action) => {
-      let { count } = state;
+      // let { count } = state;
       const { newCount } = action.payload;
-      const minCount = 0;
+      // const minCount = 0;
 
       state.count = newCount;
 
@@ -23,7 +23,7 @@ export const countSlice = createSlice({
 
     resetCount: (state, action) => {
       const { clear } = action.payload;
-      let { count } = state;
+      // let { count } = state;
 
       //   state.count = [];
       //   alert("in resetCount");
