@@ -9,6 +9,8 @@ import { updateCount, resetCount } from "../src/redux/countReducer";
 import { current } from "@reduxjs/toolkit";
 
 //TODO: Implement editable text list, with date / time
+//TODO Export functions to modules
+//TODO Refactor function
 
 function App() {
   const stateCount = useSelector((state) => state.count);
