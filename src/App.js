@@ -6,20 +6,27 @@ import Button from "./components/Button/Button";
 // redux imports
 import { useDispatch, useSelector } from "react-redux";
 import { updateCount, resetCount } from "../src/redux/countReducer";
-// import { current } from "@reduxjs/toolkit";
+
+// utility functions imports
+import { checkCurrentCount } from "./utilityFunctions/utilityFunctions";
 
 //TODO: Implement editable text list, with date / time
-//TODO Export functions to modules
-//TODO Refactor function
+
 //! Known Bugs - When app first starts, incremented numbers concatenate. I believe its type is changing to string somehow. Clear cache for this site and try to replicate the issue
 
 function App() {
   const stateCount = useSelector((state) => state.count);
   const [currentCount, setCurrentCount] = useState(0);
   const dispatch = useDispatch();
-  console.log(stateCount);
-  // setCurrentCount(stateCount);
 
+  console.log(stateCount);
+
+  const getCount = () => {
+    // console.log(stateCount.count);
+    return stateCount.count > 0 ? stateCount.count : 0;
+  };
+
+  // on page load check what counts value is. If 0 return 0
   useEffect(() => {
     if (stateCount.length === 0) {
       setCurrentCount(0);
@@ -28,52 +35,6 @@ function App() {
     }
   }, [stateCount, stateCount.count]);
 
-  const reset = () => {
-    const zero = 0;
-
-    dispatch(
-      resetCount({
-        clear: zero,
-      })
-    );
-    // return;
-  };
-
-  const checkCurrentCount = (current, operation) => {
-    let updatedCount;
-    // convert current to integer
-    current = parseInt(current);
-
-    if (operation === "increment") {
-      updatedCount = current + 1;
-      // setCurrentCount((prev) => prev + 1);
-
-      // finally update count in redux
-      writeNewCount(updatedCount);
-      return;
-    } else if (operation === "decrement") {
-      if (current > 0) {
-        updatedCount = current - 1;
-        // setCurrentCount((prev) => prev - 1);
-        // finally update count in redux
-        writeNewCount(updatedCount);
-      }
-    }
-  };
-
-  const writeNewCount = (current) => {
-    dispatch(
-      updateCount({
-        newCount: current,
-      })
-    );
-  };
-
-  const getCount = () => {
-    // console.log(stateCount.count);
-    return stateCount.count > 0 ? stateCount.count : 0;
-  };
-
   return (
     <div className='App'>
       <CountDisplay count={getCount()} />
@@ -81,17 +42,21 @@ function App() {
         <Button
           operation='-'
           btnOnClick={() => {
-            if (currentCount > 0) {
-              // setCurrentCount((prev) => prev - 1);
-            }
-            checkCurrentCount(currentCount, "decrement");
+            dispatch(
+              updateCount({
+                newCount: checkCurrentCount(currentCount, "decrement"),
+              })
+            );
           }}
         />
         <Button
           operation='+'
           btnOnClick={() => {
-            // setCurrentCount((prev) => prev + 1);
-            checkCurrentCount(currentCount, "increment");
+            dispatch(
+              updateCount({
+                newCount: checkCurrentCount(currentCount, "increment"),
+              })
+            );
           }}
         />
       </div>
@@ -100,8 +65,11 @@ function App() {
           className='reset-btn'
           operation='Reset'
           btnOnClick={() => {
-            // setCurrentCount(0);
-            reset();
+            dispatch(
+              resetCount({
+                clear: 0,
+              })
+            );
           }}
         />
       </div>
