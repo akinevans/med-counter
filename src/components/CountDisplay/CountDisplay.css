@@ -1,0 +1,9 @@
+.count-display-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 150px;
+  font-size: 6rem;
+  outline: 2px solid black;
+}
