@@ -1,0 +1,33 @@
+.operation-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 75px;
+  padding: 0;
+  font-size: 3rem;
+  cursor: pointer;
+  color: #3c4048;
+  background-color: #eaeaea;
+  border-radius: 10px;
+  box-shadow: none;
+  outline: none;
+  /* border: none; */
+}
+
+.reset-btn {
+  width: fit-content;
+  height: fit-content;
+  padding: 10px 20px;
+  font-size: 2rem;
+}
+
+.operation-btn:hover {
+  /* background-color: #b2b2b2; */
+  transition: all 0.2s ease;
+}
+
+.operation-btn:active {
+  background-color: #b2b2b2;
+  transition: all 0.1s ease;
+}
