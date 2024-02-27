@@ -6,11 +6,12 @@ import Button from "./components/Button/Button";
 // redux imports
 import { useDispatch, useSelector } from "react-redux";
 import { updateCount, resetCount } from "../src/redux/countReducer";
-import { current } from "@reduxjs/toolkit";
+// import { current } from "@reduxjs/toolkit";
 
 //TODO: Implement editable text list, with date / time
 //TODO Export functions to modules
 //TODO Refactor function
+//! Known Bugs - When app first starts, incremented numbers concatenate. I believe its type is changing to string somehow. Clear cache for this site and try to replicate the issue
 
 function App() {
   const stateCount = useSelector((state) => state.count);
@@ -40,6 +41,8 @@ function App() {
 
   const checkCurrentCount = (current, operation) => {
     let updatedCount;
+    // convert current to integer
+    current = parseInt(current);
 
     if (operation === "increment") {
       updatedCount = current + 1;
