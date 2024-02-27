@@ -6,15 +6,22 @@
   width: 400px;
   height: 400px;
   margin: 50px auto;
-  background-color: #eee;
+  background-color: #3c4048;
+  border-radius: 10px;
 }
 
-.btn-wrapper {
+.quantity-btn-wrapper {
   display: flex;
+  flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
   width: 75%;
   height: auto;
   margin: 25px auto;
+
   /* outline: 2px solid rgb(201, 73, 73); */
+}
+
+.reset-btn-container {
+  display: flex;
 }

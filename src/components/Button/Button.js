@@ -3,7 +3,10 @@ import "./Button.css";
 
 export default function Button(props) {
   return (
-    <button className='operation-btn' onClick={props.btnOnClick}>
+    <button
+      className={`operation-btn ${props.className}`}
+      onClick={props.btnOnClick}
+    >
       {props.operation}
     </button>
   );

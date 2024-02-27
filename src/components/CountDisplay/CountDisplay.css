@@ -5,5 +5,7 @@
   width: 200px;
   height: 150px;
   font-size: 6rem;
-  outline: 2px solid black;
+  color: #00abb3;
+  outline: 3px solid #b2b2b2;
+  border-radius: 10px;
 }

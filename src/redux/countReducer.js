@@ -15,20 +15,20 @@ export const countSlice = createSlice({
       const { newCount } = action.payload;
       const minCount = 0;
 
-      if (!newCount) {
-        return null;
-      } else if (newCount >= minCount) {
-        state.count = newCount;
-      }
+      state.count = newCount;
+
       //   console.log(count);
       console.log(newCount);
     },
 
     resetCount: (state, action) => {
+      const { clear } = action.payload;
+      let { count } = state;
+
       //   state.count = [];
       //   alert("in resetCount");
 
-      state.count = 0;
+      state.count = clear;
     },
   },
 });
