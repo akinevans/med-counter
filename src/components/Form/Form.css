@@ -89,3 +89,8 @@ input.submit-btn:hover {
 input.submit-btn:active {
   opacity: 100%;
 }
+
+/*  utility classes */
+.set-background {
+  background-color: rgb(81, 118, 85);
+}

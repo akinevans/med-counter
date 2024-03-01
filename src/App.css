@@ -31,3 +31,8 @@
 .app-inner-wrapper::-webkit-scrollbar {
   display: none;
 }
+
+/*  utility classes */
+.red {
+  background-color: red;
+}

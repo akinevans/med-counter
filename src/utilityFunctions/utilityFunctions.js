@@ -1,6 +1,5 @@
 export const checkCurrentCount = (current, operation) => {
   let updatedCount;
-
   // convert current to integer
   // current = parseInt(current);
 
@@ -15,3 +14,18 @@ export const checkCurrentCount = (current, operation) => {
   }
   return false;
 };
+
+//
+//
+//
+
+export const handleFormSubmission = (e) => {
+  // Do not submit the form
+  e.preventDefault();
+
+  alert("Send data to Redux, Pull data into new Symptom card component");
+};
+
+//
+//
+//

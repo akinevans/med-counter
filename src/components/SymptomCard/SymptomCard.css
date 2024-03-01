@@ -1,0 +1,6 @@
+.symptom-card-wrapper {
+  /* use the same or similar design layout as the form */
+  background-color: rgba(189, 198, 131, 0.769);
+
+  max-width: 430px;
+}

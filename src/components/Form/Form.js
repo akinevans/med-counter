@@ -1,11 +1,15 @@
 import React from "react";
 import "./Form.css";
 
-export default function Form() {
+//utility imports
+import { handleFormSubmission } from "../../utilityFunctions/utilityFunctions";
+
+export default function Form(props) {
   const minIntensity = 1;
   const maxIntensity = 5;
+
   return (
-    <form className='form'>
+    <form className={`form ${props.className}`}>
       <div className='form-top-wrapper'>
         <label>
           <input
@@ -35,7 +39,7 @@ export default function Form() {
           />
         </label>
         <label>
-          <input className='time-picker' type='time' placeholder='Time' />
+          <input className='time-picker' type='time' />
         </label>
       </div>
       <div className='form-bottom-wrapper'>
@@ -51,7 +55,17 @@ export default function Form() {
           ></textarea>
         </label>
       </div>
-      <input className='submit-btn' type='text' value='Create new entry' />
+      <input
+        className='submit-btn'
+        type='text'
+        value='Create new entry'
+        //TODO: update onchange logic
+        onChange={null}
+        onClick={(e) => {
+          // Create new SymptomCard
+          handleFormSubmission(e);
+        }}
+      />
     </form>
   );
 }
