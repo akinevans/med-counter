@@ -2,10 +2,11 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import CountDisplay from "./components/CountDisplay/CountDisplay";
 import Button from "./components/Button/Button";
+import SymptomTracker from "./components/SymptomTracker/SymptomTracker";
 
 // redux imports
 import { useDispatch, useSelector } from "react-redux";
-import { updateCount, resetCount } from "../src/redux/countReducer";
+import { updateCount, resetCount, addSymptom } from "../src/redux/countReducer";
 
 // utility functions imports
 import { checkCurrentCount } from "./utilityFunctions/utilityFunctions";
@@ -16,7 +17,10 @@ import { checkCurrentCount } from "./utilityFunctions/utilityFunctions";
 
 function App() {
   const stateCount = useSelector((state) => state.count);
+  const stateList = useSelector((state) => state.intensityData);
+
   const [currentCount, setCurrentCount] = useState(0);
+
   const dispatch = useDispatch();
 
   console.log(stateCount);
@@ -73,6 +77,14 @@ function App() {
           }}
         />
       </div>
+      <SymptomTracker />
+
+      {/* {stateList.map((data) => (
+        <SymptomTracker
+          intensity={data.intensityData}
+          symptoms={data.symptoms}
+        />
+      ))} */}
     </div>
   );
 }
