@@ -1,0 +1,91 @@
+.form,
+.form-top-wrapper,
+.form-date-time-wrapper,
+.form-bottom-wrapper {
+  display: flex;
+  align-items: center;
+  width: 95%;
+  height: fit-content;
+  margin-bottom: 15px;
+}
+
+.form {
+  flex-direction: column;
+  justify-content: center;
+  width: 430px;
+  max-width: 600px;
+  margin: 0;
+  padding: 20px 10px;
+  background-color: rgb(127, 127, 127);
+}
+
+.form-top-wrapper {
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  /* outline: 2px solid rgba(255, 147, 147, 0.776); */
+}
+
+.form-date-time-wrapper {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+label {
+  width: fit-content;
+  height: fit-content;
+}
+
+.symptom-input {
+  cursor: auto !important;
+}
+
+input,
+.submit-btn {
+  width: 170px;
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 18px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.intensity-picker {
+  width: 110px;
+}
+
+.form-bottom-wrapper {
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  /* width: auto; */
+  /* outline: 2px solid rgba(255, 147, 147, 0.776); */
+}
+
+.date-picker,
+.time-picker {
+  /* margin-bottom: 15px; */
+}
+
+textarea {
+  width: 100%;
+  max-width: 580px;
+  margin: 10px;
+  font-size: 18px;
+  outline: none;
+  resize: none;
+}
+
+input.submit-btn {
+  text-align: center;
+  user-select: none;
+}
+
+input.submit-btn:hover {
+  opacity: 80%;
+}
+input.submit-btn:active {
+  opacity: 100%;
+}

@@ -1,5 +1,6 @@
 import "./App.css";
 import { useState, useEffect } from "react";
+import Form from "./components/Form/Form";
 import CountDisplay from "./components/CountDisplay/CountDisplay";
 import Button from "./components/Button/Button";
 
@@ -17,7 +18,9 @@ import { checkCurrentCount } from "./utilityFunctions/utilityFunctions";
 function App() {
   return (
     <div className='App'>
-      <div className='app-inner-wrapper'></div>
+      <div className='app-inner-wrapper'>
+        <Form />
+      </div>
     </div>
   );
 }

@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .App {
   display: flex;
   flex-direction: column;
@@ -9,11 +13,11 @@
 }
 
 .app-inner-wrapper {
-  width: 90%;
-  max-width: 600px;
-  height: 10%;
+  width: auto;
+  max-width: 500px;
+  height: 100%;
   margin: 4px 25px;
-  padding: 25px;
+  padding: 0;
   overflow-y: scroll;
   outline: 4px solid white;
 
