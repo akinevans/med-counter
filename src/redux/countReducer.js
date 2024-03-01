@@ -4,6 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   count: [],
+  symptomList: [],
+  intensityData: [],
 };
 
 export const countSlice = createSlice({
@@ -30,10 +32,21 @@ export const countSlice = createSlice({
 
       state.count = clear;
     },
+
+    addSymptom: (state, action) => {
+      const { data } = action.payload;
+      state.symptomList.push(data);
+    },
+
+    updateIntensity: (state, action) => {
+      const { data } = action.payload;
+      state.intensityData.push(data);
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { updateCount, resetCount } = countSlice.actions;
+export const { updateCount, resetCount, addSymptom, updateIntensity } =
+  countSlice.actions;
 
 export default countSlice.reducer;
