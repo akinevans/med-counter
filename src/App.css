@@ -4,8 +4,9 @@
   justify-content: center;
   align-items: center;
   width: 400px;
-  height: 400px;
+  height: fit-content;
   margin: 50px auto;
+  padding: 20px;
   background-color: #3c4048;
   border-radius: 10px;
 }
