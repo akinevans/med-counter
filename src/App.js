@@ -15,46 +15,49 @@ import { getByTestId } from "@testing-library/react";
 //TODO: Implement editable text list, with date / time
 
 function App() {
-  const testData = [
-    {
-      title: "Heart Flutter",
-      intensity: 4,
-      date: "Today",
-      time: "13:00",
-      notes:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, laudantium? Quibusdam placeat provident sint dolor!",
-    },
-    {
-      title: "Headache",
-      intensity: 2,
-      date: "Yesterday",
-      time: "9:00",
-      notes:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, laudantium? Quibusdam placeat provident sint dolor!",
-    },
-    {
-      title: "Runny Nose",
-      intensity: 1,
-      date: "Yesterday",
-      time: "12:00",
-      notes:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, laudantium? Quibusdam placeat provident sint dolor!",
-    },
-    {
-      title: "Cough",
-      intensity: 5,
-      date: "Yesterday",
-      time: "6:00",
-      notes:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, laudantium? Quibusdam placeat provident sint dolor!",
-    },
-  ];
+  // const testData = [
+  //   {
+  //     title: "Heart Flutter",
+  //     intensity: 4,
+  //     date: "Today",
+  //     time: "13:00",
+  //     notes:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, laudantium? Quibusdam placeat provident sint dolor!",
+  //   },
+  //   {
+  //     title: "Headache",
+  //     intensity: 2,
+  //     date: "Yesterday",
+  //     time: "9:00",
+  //     notes:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, laudantium? Quibusdam placeat provident sint dolor!",
+  //   },
+  //   {
+  //     title: "Runny Nose",
+  //     intensity: 1,
+  //     date: "Yesterday",
+  //     time: "12:00",
+  //     notes:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, laudantium? Quibusdam placeat provident sint dolor!",
+  //   },
+  //   {
+  //     title: "Cough",
+  //     intensity: 5,
+  //     date: "Yesterday",
+  //     time: "6:00",
+  //     notes:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, laudantium? Quibusdam placeat provident sint dolor!",
+  //   },
+  // ];
+
+  const symptomCardData = useSelector((state) => state.count.symptomList);
+
   return (
     <div className='App'>
       <div className='app-inner-wrapper'>
         <Form className='set-background' />
 
-        {testData.map((data, index) => (
+        {symptomCardData.map((data, index) => (
           <SymptomCard
             // key prop and all other data will be pulled from redux store
             // use index as the second parameter to get current arr index
@@ -64,7 +67,7 @@ function App() {
             intensity={data.intensity}
             date={data.date}
             time={data.time}
-            notes={data.notes}
+            note={data.note}
           />
         ))}
       </div>

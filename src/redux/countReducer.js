@@ -16,6 +16,25 @@ export const countSlice = createSlice({
     // first check if entry exists
     //if false, create new entry
     //else update existing entry
+
+    addSymptomCard: (state, action) => {
+      const { title, intensity, date, time, note } = action.payload;
+
+      const cardData = {
+        title: title,
+        intensity: intensity,
+        date: date,
+        time: time,
+        note: note,
+      };
+
+      console.log(cardData);
+
+      // add new data to symptomList state array
+      state.symptomList.push(cardData);
+      console.log(state.symptomList);
+    },
+
     //TODO: create reducer for editing / updating an existing entry
     updateCount: (state, action) => {
       // let { count } = state;
@@ -38,20 +57,25 @@ export const countSlice = createSlice({
       state.count = clear;
     },
 
-    addSymptom: (state, action) => {
-      const { data } = action.payload;
-      state.symptomList.push(data);
-    },
+    // addSymptom: (state, action) => {
+    //   const { data } = action.payload;
+    //   state.symptomList.push(data);
+    // },
 
-    updateIntensity: (state, action) => {
-      const { data } = action.payload;
-      state.intensityData.push(data);
-    },
+    // updateIntensity: (state, action) => {
+    //   const { data } = action.payload;
+    //   state.intensityData.push(data);
+    // },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { updateCount, resetCount, addSymptom, updateIntensity } =
-  countSlice.actions;
+export const {
+  updateCount,
+  resetCount,
+  addSymptom,
+  addSymptomCard,
+  updateIntensity,
+} = countSlice.actions;
 
 export default countSlice.reducer;

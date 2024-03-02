@@ -12,8 +12,9 @@ export default function SymptomCard(props) {
         <p>Date: {props.date}</p>
         <p>Time: {props.time}</p>
       </div>
-      <div className='notes-wrapper'>
-        <p className='notes-text'>{props.notes}</p>
+      <div className='note-wrapper'>
+        <p className='note-title'>Notes:</p>
+        <p className='note-text'>{props.note}</p>
       </div>
     </div>
   );

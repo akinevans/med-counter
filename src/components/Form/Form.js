@@ -1,9 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import "./Form.css";
+import { useDispatch, useSelector } from "react-redux";
+import { addSymptomCard } from "../../redux/countReducer";
 
 //utility imports
-import { handleFormSubmission } from "../../utilityFunctions/utilityFunctions";
+// import { handleFormSubmission } from "../../utilityFunctions/utilityFunctions";
 
 export default function Form(props) {
   const [symptom, setSymptom] = useState("");
@@ -16,6 +18,23 @@ export default function Form(props) {
   const maxIntensity = 5;
   const todaysDate = new Date();
   // console.log(todaysDate);
+  const dispatch = useDispatch();
+
+  const handleFormSubmission = (e) => {
+    // Do not submit the form
+    e.preventDefault();
+    alert("Send data to Redux, Pull data into new Symptom card component");
+
+    dispatch(
+      addSymptomCard({
+        title: symptom,
+        intensity: intensity,
+        date: date,
+        time: time,
+        note: note,
+      })
+    );
+  };
 
   return (
     <form className={`form ${props.className}`}>
@@ -28,7 +47,7 @@ export default function Form(props) {
             placeholder='Symptom'
             onChange={(e) => {
               setSymptom(e.target.value);
-              console.log(symptom);
+              // console.log(symptom);
             }}
           />
         </label>
@@ -41,7 +60,7 @@ export default function Form(props) {
             max={maxIntensity}
             onChange={(e) => {
               setIntensity(e.target.value);
-              console.log(intensity);
+              // console.log(intensity);
             }}
           />
         </label>
@@ -55,10 +74,10 @@ export default function Form(props) {
             // placeholder={todaysDate}
             onChange={(e) => {
               const newDate = e.target.value;
-              console.log(newDate);
+              // console.log(newDate);
               setDate(newDate);
               //! undefined error
-              console.log(date);
+              // console.log(date);
             }}
           />
         </label>
@@ -67,9 +86,9 @@ export default function Form(props) {
             className='time-picker'
             type='time'
             onChange={(e) => {
-              console.log(e.target.value);
+              // console.log(e.target.value);
               setTime(e.target.value);
-              console.log(time);
+              // console.log(time);
             }}
           />
         </label>
@@ -85,9 +104,9 @@ export default function Form(props) {
             rows='5'
             placeholder='Notes'
             onChange={(e) => {
-              console.log(e.target.value);
+              // console.log(e.target.value);
               setNote(e.target.value);
-              console.log(note);
+              // console.log(note);
             }}
           ></textarea>
         </label>
@@ -97,10 +116,10 @@ export default function Form(props) {
         type='text'
         value='Create new entry'
         //TODO: update onchange logic
-        onChange={null}
+        // onChange={null}
         onClick={(e) => {
           // Create new SymptomCard
-          handleFormSubmission(e);
+          handleFormSubmission(e, symptom, intensity, date, time, note);
         }}
       />
     </form>

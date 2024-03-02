@@ -19,12 +19,12 @@ export const checkCurrentCount = (current, operation) => {
 //
 //
 
-export const handleFormSubmission = (e) => {
-  // Do not submit the form
-  e.preventDefault();
+// export const handleFormSubmission = (e) => {
+//   // Do not submit the form
+//   e.preventDefault();
 
-  alert("Send data to Redux, Pull data into new Symptom card component");
-};
+//   alert("Send data to Redux, Pull data into new Symptom card component");
+// };
 
 //
 //
