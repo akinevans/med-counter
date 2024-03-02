@@ -12,6 +12,11 @@ export const countSlice = createSlice({
   name: "count",
   initialState,
   reducers: {
+    //TODO create reducer for adding a new symptom entry object to SymptomsList array
+    // first check if entry exists
+    //if false, create new entry
+    //else update existing entry
+    //TODO: create reducer for editing / updating an existing entry
     updateCount: (state, action) => {
       // let { count } = state;
       const { newCount } = action.payload;

@@ -1,12 +1,21 @@
 import React from "react";
+import { useState } from "react";
 import "./Form.css";
 
 //utility imports
 import { handleFormSubmission } from "../../utilityFunctions/utilityFunctions";
 
 export default function Form(props) {
+  const [symptom, setSymptom] = useState("");
+  const [intensity, setIntensity] = useState("");
+  const [date, setDate] = useState();
+  const [time, setTime] = useState();
+  const [note, setNote] = useState("");
+
   const minIntensity = 1;
   const maxIntensity = 5;
+  const todaysDate = new Date();
+  // console.log(todaysDate);
 
   return (
     <form className={`form ${props.className}`}>
@@ -17,6 +26,10 @@ export default function Form(props) {
             className='symptom-input'
             type='text'
             placeholder='Symptom'
+            onChange={(e) => {
+              setSymptom(e.target.value);
+              console.log(symptom);
+            }}
           />
         </label>
         <label>
@@ -26,6 +39,10 @@ export default function Form(props) {
             placeholder='Intensity'
             min={minIntensity}
             max={maxIntensity}
+            onChange={(e) => {
+              setIntensity(e.target.value);
+              console.log(intensity);
+            }}
           />
         </label>
       </div>
@@ -35,11 +52,26 @@ export default function Form(props) {
             //
             className='date-picker'
             type='date'
-            placeholder='Date'
+            // placeholder={todaysDate}
+            onChange={(e) => {
+              const newDate = e.target.value;
+              console.log(newDate);
+              setDate(newDate);
+              //! undefined error
+              console.log(date);
+            }}
           />
         </label>
         <label>
-          <input className='time-picker' type='time' />
+          <input
+            className='time-picker'
+            type='time'
+            onChange={(e) => {
+              console.log(e.target.value);
+              setTime(e.target.value);
+              console.log(time);
+            }}
+          />
         </label>
       </div>
       <div className='form-bottom-wrapper'>
@@ -52,6 +84,11 @@ export default function Form(props) {
             maxLength='350'
             rows='5'
             placeholder='Notes'
+            onChange={(e) => {
+              console.log(e.target.value);
+              setNote(e.target.value);
+              console.log(note);
+            }}
           ></textarea>
         </label>
       </div>
