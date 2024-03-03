@@ -99,8 +99,7 @@ export default function Form(props) {
           <textarea
             name='notes'
             id='notes'
-            cols='30'
-            maxLength='350'
+            cols='38'
             rows='5'
             placeholder='Notes'
             onChange={(e) => {
@@ -122,6 +121,13 @@ export default function Form(props) {
           handleFormSubmission(e, symptom, intensity, date, time, note);
         }}
       />
+      <button
+        //
+        className='close-btn'
+        onClick={props.closeBtnOnClick}
+      >
+        Close
+      </button>
     </form>
   );
 }

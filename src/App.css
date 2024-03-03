@@ -3,6 +3,7 @@
 }
 
 .App {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -26,7 +27,8 @@
 
 .symptom-card-component-list-wrapper {
   display: flex;
-  flex-direction: column;
+  /* //! column-reverse shows newest symptom cards first */
+  flex-direction: column-reverse;
   justify-content: center;
   align-items: center;
   width: 100%;

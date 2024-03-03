@@ -27,9 +27,10 @@
 
 .ham-menu-icon,
 .plus-icon {
-  width: 30px;
+  /* width: 30px; */
   height: 30px;
   color: #fff;
+  cursor: pointer;
 }
 
 .ham-menu-icon {

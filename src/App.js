@@ -21,8 +21,20 @@ function App() {
 
   return (
     <div className='App'>
-      <AppHeader heading='Symptom Management' />
-      <Form className={`${!formVisible ? "hidden" : ""}`} />
+      <AppHeader
+        heading='Symptom Management'
+        plusIconOnClick={() => {
+          setFormVisible(!formVisible);
+        }}
+      />
+
+      <Form
+        className={`${!formVisible ? "hidden" : ""}`}
+        closeBtnOnClick={() => {
+          setFormVisible(false);
+        }}
+      />
+
       <div className='symptom-card-component-list-wrapper'>
         {symptomCardData.map((data, index) => (
           <SymptomCard
