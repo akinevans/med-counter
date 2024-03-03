@@ -1,6 +1,142 @@
-.symptom-card-wrapper {
-  /* use the same or similar design layout as the form */
-  background-color: rgba(189, 198, 131, 0.769);
+.symptom-card-wrapper,
+.symptom-card-inner-wrapper,
+.symptom-card-data-wrapper,
+.date-time-wrapper,
+.symptom-intensity-wrapper,
+.note-wrapper {
+  display: flex;
+}
 
-  max-width: 430px;
+.symptom-card-wrapper {
+  /* use the same or similar design layout in the form */
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  max-width: 650px;
+  height: fit-content;
+  /* max-height: ; */
+  margin: 20px;
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: 5px 5px 5px var(--shadow);
+  /* outline: 2px solid green; */
+}
+
+.symptom-card-inner-wrapper {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  /* outline: 2px solid rgb(101, 62, 241); */
+  border-radius: var(--border-radius);
+}
+
+.card-accent-color {
+  background-color: dodgerblue;
+  width: 9px;
+  height: 100%;
+  border-top-left-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+}
+
+.symptom-card-data-wrapper {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+  padding: 20px 30px;
+}
+
+.date-time-wrapper,
+.symptom-intensity-wrapper {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.note-wrapper {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  height: fit-content;
+}
+
+.note-text-area {
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  border: none;
+  outline: 2px solid #dadada;
+  border-radius: 6px;
+  /* overflow-y: scroll; */
+}
+
+/*  */
+/*  */
+/*  */
+
+.date,
+.time,
+.symptom-title,
+.symptom-intensity,
+.note-title {
+  margin: 10px 0;
+}
+
+.date,
+.time {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--text-grey);
+}
+
+.symptom-title,
+.symptom-intensity {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--text-grey);
+}
+
+.note-title {
+  font-size: 1.4rem;
+  color: var(--text-grey);
+}
+
+/* Utility Classes */
+/* accent colors */
+
+.blue {
+  background-color: var(--primary);
+}
+.light-blue {
+  background-color: #07aadc;
+}
+.teal {
+  background-color: #05b3b3;
+}
+.gold {
+  background-color: #ffd700;
+}
+.orange {
+  background-color: #ffa500;
+}
+.green {
+  background-color: #0e9f0e;
+}
+.dark-green {
+  background-color: #076a07;
+}
+.purple {
+  background-color: #790596;
+}
+.fuchsia {
+  background-color: #d601d6;
+}
+.crimson {
+  background-color: #dc143c;
 }

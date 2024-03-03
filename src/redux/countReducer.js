@@ -35,37 +35,17 @@ export const countSlice = createSlice({
       console.log(state.symptomList);
     },
 
-    //TODO: create reducer for editing / updating an existing entry
-    updateCount: (state, action) => {
-      // let { count } = state;
-      const { newCount } = action.payload;
-      // const minCount = 0;
+    //TODO: create reducer for editing / updating an existing entry (one function that checks an objects key/values and updates each if necessary)
 
-      state.count = newCount;
-
-      //   console.log(count);
-      console.log(newCount);
+    addSymptom: (state, action) => {
+      const { data } = action.payload;
+      state.symptomList.push(data);
     },
 
-    resetCount: (state, action) => {
-      const { clear } = action.payload;
-      // let { count } = state;
-
-      //   state.count = [];
-      //   alert("in resetCount");
-
-      state.count = clear;
+    updateIntensity: (state, action) => {
+      const { data } = action.payload;
+      state.intensityData.push(data);
     },
-
-    // addSymptom: (state, action) => {
-    //   const { data } = action.payload;
-    //   state.symptomList.push(data);
-    // },
-
-    // updateIntensity: (state, action) => {
-    //   const { data } = action.payload;
-    //   state.intensityData.push(data);
-    // },
   },
 });
 

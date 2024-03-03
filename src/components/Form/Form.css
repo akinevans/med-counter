@@ -91,6 +91,7 @@ input.submit-btn:active {
 }
 
 /*  utility classes */
-.set-background {
-  background-color: rgb(81, 118, 85);
+
+.hidden {
+  display: none;
 }

@@ -1,62 +1,29 @@
 import "./App.css";
 import { useState } from "react";
+import AppHeader from "./components/AppHeader/AppHeader";
 import Form from "./components/Form/Form";
 import SymptomCard from "./components/SymptomCard/SymptomCard";
-import CountDisplay from "./components/CountDisplay/CountDisplay";
 
 // redux imports
-import { useDispatch, useSelector } from "react-redux";
-import { updateCount, resetCount, addSymptom } from "../src/redux/countReducer";
+import { useSelector } from "react-redux";
 
-// utility functions imports
-import { checkCurrentCount } from "./utilityFunctions/utilityFunctions";
-import { getByTestId } from "@testing-library/react";
+//utility imports
+import { generateRandomColor } from "./utilityFunctions/utilityFunctions";
 
 //TODO: Implement editable text list, with date / time
+//TODO get header icons
 
 function App() {
-  // const testData = [
-  //   {
-  //     title: "Heart Flutter",
-  //     intensity: 4,
-  //     date: "Today",
-  //     time: "13:00",
-  //     notes:
-  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, laudantium? Quibusdam placeat provident sint dolor!",
-  //   },
-  //   {
-  //     title: "Headache",
-  //     intensity: 2,
-  //     date: "Yesterday",
-  //     time: "9:00",
-  //     notes:
-  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, laudantium? Quibusdam placeat provident sint dolor!",
-  //   },
-  //   {
-  //     title: "Runny Nose",
-  //     intensity: 1,
-  //     date: "Yesterday",
-  //     time: "12:00",
-  //     notes:
-  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, laudantium? Quibusdam placeat provident sint dolor!",
-  //   },
-  //   {
-  //     title: "Cough",
-  //     intensity: 5,
-  //     date: "Yesterday",
-  //     time: "6:00",
-  //     notes:
-  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, laudantium? Quibusdam placeat provident sint dolor!",
-  //   },
-  // ];
+  const [formVisible, setFormVisible] = useState(false);
 
+  // get data from Redux
   const symptomCardData = useSelector((state) => state.count.symptomList);
 
   return (
     <div className='App'>
-      <div className='app-inner-wrapper'>
-        <Form className='set-background' />
-
+      <AppHeader heading='Symptom Management' />
+      <Form className={`${!formVisible ? "hidden" : ""}`} />
+      <div className='symptom-card-component-list-wrapper'>
         {symptomCardData.map((data, index) => (
           <SymptomCard
             // key prop and all other data will be pulled from redux store
@@ -68,6 +35,7 @@ function App() {
             date={data.date}
             time={data.time}
             note={data.note}
+            accentColor={generateRandomColor()}
           />
         ))}
       </div>

@@ -18,13 +18,26 @@ export const checkCurrentCount = (current, operation) => {
 //
 //
 //
+export const generateRandomColor = () => {
+  const colors = [
+    "blue",
+    "light-blue",
+    "teal",
+    "gold",
+    "orange",
+    "green",
+    "dark-green",
+    "purple",
+    "fuchsia",
+    "crimson",
+  ];
+  let randomIndex = Math.floor(Math.random() * colors.length);
 
-// export const handleFormSubmission = (e) => {
-//   // Do not submit the form
-//   e.preventDefault();
+  console.log("index is: ", randomIndex);
+  console.log(colors[randomIndex]);
 
-//   alert("Send data to Redux, Pull data into new Symptom card component");
-// };
+  return colors[randomIndex];
+};
 
 //
 //
