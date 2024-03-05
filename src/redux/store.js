@@ -1,5 +1,3 @@
-// Redux persist saves the state of the shopping cart so that when the page reloads the user will still have items in cart
-
 import { configureStore } from "@reduxjs/toolkit";
 import countReducer from "./countReducer";
 import {

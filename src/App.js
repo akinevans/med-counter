@@ -5,7 +5,8 @@ import Form from "./components/Form/Form";
 import SymptomCard from "./components/SymptomCard/SymptomCard";
 
 // redux imports
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteAll } from "./redux/countReducer";
 
 //utility imports
 import { generateRandomColor } from "./utilityFunctions/utilityFunctions";
@@ -18,7 +19,21 @@ function App() {
 
   // get data from Redux
   const symptomCardData = useSelector((state) => state.count.symptomList);
+  const dispatch = useDispatch();
 
+  const handleDeletion = () => {
+    const reply = prompt("Are you sure you want to delete all entries?");
+    if (reply === null || reply === undefined) {
+      return;
+    }
+    reply.toLowerCase();
+
+    if (reply === "yes" || reply === "y") {
+      dispatch(deleteAll());
+    } else {
+      return false;
+    }
+  };
   return (
     <div className='App'>
       <AppHeader
@@ -27,6 +42,16 @@ function App() {
           setFormVisible(!formVisible);
         }}
       />
+
+      {/* //! Delete all btn is for testing purposes only */}
+      <button
+        className='delete-all-btn'
+        onClick={() => {
+          handleDeletion();
+        }}
+      >
+        Delete All Entries
+      </button>
 
       <Form
         className={`${!formVisible ? "hidden" : ""}`}

@@ -119,6 +119,8 @@ export default function Form(props) {
         onClick={(e) => {
           // Create new SymptomCard
           handleFormSubmission(e, symptom, intensity, date, time, note);
+          //close modal
+          props.closeBtnOnClick();
         }}
       />
       <button

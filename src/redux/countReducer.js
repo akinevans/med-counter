@@ -37,6 +37,11 @@ export const countSlice = createSlice({
 
     //TODO: create reducer for editing / updating an existing entry (one function that checks an objects key/values and updates each if necessary)
 
+    deleteAll: (state) => {
+      // reset symptomList array to empty
+      state.symptomList = [];
+    },
+
     addSymptom: (state, action) => {
       const { data } = action.payload;
       state.symptomList.push(data);
@@ -56,6 +61,7 @@ export const {
   addSymptom,
   addSymptomCard,
   updateIntensity,
+  deleteAll,
 } = countSlice.actions;
 
 export default countSlice.reducer;

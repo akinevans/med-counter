@@ -26,14 +26,15 @@ export default function SymptomCard(props) {
             </p>
           </div>
           <div className='note-wrapper'>
-            <p className='note-title'>Notes:</p>
+            {/* <p className='note-title'>Notes:</p> */}
             <textarea
               className='note-text-area'
               name='note'
               id='note'
               cols='5'
               rows='4'
-              // value={props.note}
+              value={props.note}
+              placeholder='Notes...'
               contentEditable='true'
             ></textarea>
           </div>
