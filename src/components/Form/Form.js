@@ -5,10 +5,7 @@ import { useDispatch } from "react-redux";
 import { addSymptomCard } from "../../redux/countReducer";
 
 //utility imports
-import {
-  displayAccentColors,
-  generateRandomColor,
-} from "../../utilityFunctions/utilityFunctions";
+import { displayAccentColors } from "../../utilityFunctions/utilityFunctions";
 
 export default function Form(props) {
   const [symptom, setSymptom] = useState("");

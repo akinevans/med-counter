@@ -19,27 +19,6 @@ export const checkCurrentCount = (current, operation) => {
 //
 //
 
-export const generateRandomColor = () => {
-  const colors = [
-    "blue",
-    "light-blue",
-    "teal",
-    "gold",
-    "orange",
-    "green",
-    "dark-green",
-    "purple",
-    "fuchsia",
-    "crimson",
-  ];
-  let randomIndex = Math.floor(Math.random() * colors.length);
-
-  // console.log("index is: ", randomIndex);
-  // console.log(colors[randomIndex]);
-
-  return colors[randomIndex];
-};
-
 export const displayAccentColors = () => {
   return [
     "blue",
