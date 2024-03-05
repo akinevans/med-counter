@@ -1,7 +1,8 @@
 .form,
 .form-top-wrapper,
 .form-date-time-wrapper,
-.form-bottom-wrapper {
+.form-bottom-wrapper,
+.color-picker-wrapper {
   display: flex;
   align-items: center;
   width: 95%;
@@ -87,6 +88,31 @@ textarea {
   /* overflow-y: scroll; */
 }
 
+.color-picker-wrapper {
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+  margin: 15px auto;
+  width: 51.5%;
+  height: fit-content;
+  background-color: #fff;
+  outline: 3px solid #000;
+}
+
+.selected-color-view {
+  width: 100%;
+  height: 40px;
+  margin: 0 auto 15px;
+  /* outline: 2px solid #ff0000; */
+}
+
+.color-block {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
 input.submit-btn,
 .close-btn {
   text-align: center;
@@ -109,4 +135,41 @@ input.submit-btn:active {
 
 .hidden {
   display: none;
+}
+
+/* color block selected */
+.selected {
+  /* transform: scale(1.5); */
+}
+
+/* accent colors */
+.blue {
+  background-color: var(--primary);
+}
+.light-blue {
+  background-color: #07aadc;
+}
+.teal {
+  background-color: #05b3b3;
+}
+.gold {
+  background-color: #ffd700;
+}
+.orange {
+  background-color: #ffa500;
+}
+.green {
+  background-color: #07a434;
+}
+.dark-green {
+  background-color: #077b07;
+}
+.purple {
+  background-color: #790596;
+}
+.fuchsia {
+  background-color: #d601d6;
+}
+.crimson {
+  background-color: #dc143c;
 }

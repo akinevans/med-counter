@@ -18,6 +18,7 @@ export const checkCurrentCount = (current, operation) => {
 //
 //
 //
+
 export const generateRandomColor = () => {
   const colors = [
     "blue",
@@ -37,6 +38,21 @@ export const generateRandomColor = () => {
   // console.log(colors[randomIndex]);
 
   return colors[randomIndex];
+};
+
+export const displayAccentColors = () => {
+  return [
+    "blue",
+    "light-blue",
+    "teal",
+    "gold",
+    "orange",
+    "green",
+    "dark-green",
+    "purple",
+    "fuchsia",
+    "crimson",
+  ];
 };
 
 //

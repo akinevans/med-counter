@@ -3,10 +3,12 @@ import { useState } from "react";
 import "./Form.css";
 import { useDispatch } from "react-redux";
 import { addSymptomCard } from "../../redux/countReducer";
-import { generateRandomColor } from "../../utilityFunctions/utilityFunctions";
 
 //utility imports
-// import { handleFormSubmission } from "../../utilityFunctions/utilityFunctions";
+import {
+  displayAccentColors,
+  generateRandomColor,
+} from "../../utilityFunctions/utilityFunctions";
 
 export default function Form(props) {
   const [symptom, setSymptom] = useState("");
@@ -14,13 +16,16 @@ export default function Form(props) {
   const [date, setDate] = useState();
   const [time, setTime] = useState();
   const [note, setNote] = useState("");
+  const [colorSelected, setColorSelected] = useState(false);
+  const [userSelectedAccentColor, setUserSelectedAccentColor] =
+    useState("blue");
 
-  const createAccentColor = generateRandomColor();
   const minIntensity = 1;
   const maxIntensity = 5;
   const todaysDate = new Date();
   // console.log(todaysDate);
   const dispatch = useDispatch();
+  const listOfAccentColors = displayAccentColors();
 
   const handleFormSubmission = (e) => {
     // Do not submit the form
@@ -34,7 +39,8 @@ export default function Form(props) {
         date: date,
         time: time,
         note: note,
-        accentColor: createAccentColor,
+        // blue by default
+        accentColor: userSelectedAccentColor,
       })
     );
   };
@@ -111,6 +117,26 @@ export default function Form(props) {
               // console.log(note);
             }}
           ></textarea>
+          {/* //& COLOR PICKER */}
+          {/* //! the 'color' className in Form.css is separate from the accent color classNames in SymptomCard.css */}
+          <div className='color-picker-wrapper'>
+            <div
+              className={`selected-color-view ${userSelectedAccentColor}`}
+            ></div>
+            {listOfAccentColors.map((color) => (
+              <div
+                className={`color-block ${color} ${
+                  colorSelected ? "selected" : ""
+                }`}
+                onClick={() => {
+                  console.log(color);
+                  //on click outside turn it to false ?
+                  setColorSelected(!colorSelected);
+                  setUserSelectedAccentColor(color);
+                }}
+              ></div>
+            ))}
+          </div>
         </label>
       </div>
       <input
