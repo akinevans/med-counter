@@ -61,11 +61,17 @@ function App() {
       />
 
       <div className='symptom-card-component-list-wrapper'>
+        <h1
+          className={`empty-message ${
+            symptomCardData.length === 0 ? "" : "hidden"
+          }`}
+        >
+          Begin by adding some entries.
+        </h1>
         {symptomCardData.map((data, index) => (
           <SymptomCard
             // key prop and all other data will be pulled from redux store
             // use index as the second parameter to get current arr index
-
             key={index}
             title={data.title}
             intensity={data.intensity}

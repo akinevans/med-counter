@@ -4,6 +4,8 @@ import "./SymptomCard.css";
 //TODO: make date, time, symptom, intensity, and notes contenteditable.
 //TODO when content is changed onChange send new data to redux via an update function
 
+//! NEXT - Implement Edit Card functionality
+
 export default function SymptomCard(props) {
   return (
     <div className='symptom-card-wrapper'>
