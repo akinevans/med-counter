@@ -10,9 +10,8 @@ export default function SymptomCard(props) {
       <div className='symptom-card-inner-wrapper'>
         {/* Have a delete entry button that appears when editing btn is pressed */}
 
-        <div className={`card-accent-color ${props.accentColor}`}></div>
+        <div className={`card-accent-color ${props.accentColor} red`}></div>
         {/* //& add a btn to edit the card data */}
-        {/* <button>Edit</button> */}
         <div className='symptom-card-data-wrapper'>
           <div className='date-time-wrapper'>
             <p className='date'>Date: {props.date}</p>
@@ -37,6 +36,7 @@ export default function SymptomCard(props) {
               placeholder='Notes...'
               contentEditable='true'
             ></textarea>
+            <button>Edit Card</button>
           </div>
         </div>
       </div>

@@ -1,8 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import "./Form.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addSymptomCard } from "../../redux/countReducer";
+import { generateRandomColor } from "../../utilityFunctions/utilityFunctions";
 
 //utility imports
 // import { handleFormSubmission } from "../../utilityFunctions/utilityFunctions";
@@ -14,6 +15,7 @@ export default function Form(props) {
   const [time, setTime] = useState();
   const [note, setNote] = useState("");
 
+  const createAccentColor = generateRandomColor();
   const minIntensity = 1;
   const maxIntensity = 5;
   const todaysDate = new Date();
@@ -32,6 +34,7 @@ export default function Form(props) {
         date: date,
         time: time,
         note: note,
+        accentColor: createAccentColor,
       })
     );
   };

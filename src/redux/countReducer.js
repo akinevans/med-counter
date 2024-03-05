@@ -1,6 +1,7 @@
 // Redux persist (in store.js) saves the state of the count so that when the page reloads the user will still have the latest count value
 
 import { createSlice } from "@reduxjs/toolkit";
+import { generateRandomColor } from "../utilityFunctions/utilityFunctions";
 
 const initialState = {
   count: [],
@@ -18,7 +19,8 @@ export const countSlice = createSlice({
     //else update existing entry
 
     addSymptomCard: (state, action) => {
-      const { title, intensity, date, time, note } = action.payload;
+      const { title, intensity, date, time, note, accentColor } =
+        action.payload;
 
       const cardData = {
         title: title,
@@ -26,6 +28,7 @@ export const countSlice = createSlice({
         date: date,
         time: time,
         note: note,
+        accentColor: accentColor,
       };
 
       console.log(cardData);

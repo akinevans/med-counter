@@ -33,8 +33,8 @@ export const generateRandomColor = () => {
   ];
   let randomIndex = Math.floor(Math.random() * colors.length);
 
-  console.log("index is: ", randomIndex);
-  console.log(colors[randomIndex]);
+  // console.log("index is: ", randomIndex);
+  // console.log(colors[randomIndex]);
 
   return colors[randomIndex];
 };

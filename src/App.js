@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteAll } from "./redux/countReducer";
 
 //utility imports
-import { generateRandomColor } from "./utilityFunctions/utilityFunctions";
 
 //TODO: Implement editable text list, with date / time
 //TODO get header icons
@@ -26,6 +25,7 @@ function App() {
     if (reply === null || reply === undefined) {
       return;
     }
+
     reply.toLowerCase();
 
     if (reply === "yes" || reply === "y") {
@@ -43,7 +43,7 @@ function App() {
         }}
       />
 
-      {/* //! Delete all btn is for testing purposes only */}
+      {/* //! Delete all entries btn is for testing purposes only */}
       <button
         className='delete-all-btn'
         onClick={() => {
@@ -72,7 +72,7 @@ function App() {
             date={data.date}
             time={data.time}
             note={data.note}
-            accentColor={generateRandomColor()}
+            accentColor={data.accentColor}
           />
         ))}
       </div>
