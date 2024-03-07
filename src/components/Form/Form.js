@@ -5,7 +5,10 @@ import { useDispatch } from "react-redux";
 import { addSymptomCard } from "../../redux/countReducer";
 
 //utility imports
-import { displayAccentColors } from "../../utilityFunctions/utilityFunctions";
+import {
+  displayAccentColors,
+  generateUniqueKey,
+} from "../../utilityFunctions/utilityFunctions";
 
 export default function Form(props) {
   const [symptom, setSymptom] = useState("");
@@ -23,20 +26,21 @@ export default function Form(props) {
   // console.log(todaysDate);
   const dispatch = useDispatch();
   const listOfAccentColors = displayAccentColors();
+  let uniqueKey = generateUniqueKey();
 
   const handleFormSubmission = (e) => {
     // Do not submit the form
     e.preventDefault();
-    alert("Send data to Redux, Pull data into new Symptom card component");
+    // alert("Send data to Redux, Pull data into new Symptom card component");
 
     dispatch(
       addSymptomCard({
+        uniqueKey: uniqueKey,
         title: symptom,
         intensity: intensity,
         date: date,
         time: time,
         note: note,
-        // blue by default
         accentColor: userSelectedAccentColor,
       })
     );
@@ -126,7 +130,7 @@ export default function Form(props) {
                   colorSelected ? "selected" : ""
                 }`}
                 onClick={() => {
-                  console.log(color);
+                  // console.log(color);
                   //on click outside turn it to false ?
                   setColorSelected(!colorSelected);
                   setUserSelectedAccentColor(color);

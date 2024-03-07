@@ -6,7 +6,7 @@ import SymptomCard from "./components/SymptomCard/SymptomCard";
 
 // redux imports
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAll } from "./redux/countReducer";
+import { editSymptom, deleteAll } from "./redux/countReducer";
 
 //utility imports
 
@@ -14,21 +14,30 @@ import { deleteAll } from "./redux/countReducer";
 //TODO get header icons
 
 function App() {
-  const [formVisible, setFormVisible] = useState(false);
-
   // get data from Redux
   const symptomCardData = useSelector((state) => state.count.symptomList);
   const dispatch = useDispatch();
+  //state variables
+  const [formVisible, setFormVisible] = useState(false);
+
+  // const [userSelectedAccentColor, setUserSelectedAccentColor] =
+  //   useState("blue");
 
   const handleDeletion = () => {
-    const reply = prompt("Are you sure you want to delete all entries?");
+    const reply = prompt(
+      "Delete all entries? Enter for Yes or Cancel / ESC for No"
+    );
     if (reply === null || reply === undefined) {
       return;
     }
 
-    reply.toLowerCase();
+    if (!reply) {
+      dispatch(deleteAll());
+    }
 
-    if (reply === "yes" || reply === "y") {
+    const response = reply.toLowerCase();
+
+    if (response === "yes" || response === "y") {
       dispatch(deleteAll());
     } else {
       return false;
@@ -68,19 +77,24 @@ function App() {
         >
           Begin by adding some entries.
         </h1>
-        {symptomCardData.map((data, index) => (
-          <SymptomCard
-            // key prop and all other data will be pulled from redux store
-            // use index as the second parameter to get current arr index
-            key={index}
-            title={data.title}
-            intensity={data.intensity}
-            date={data.date}
-            time={data.time}
-            note={data.note}
-            accentColor={data.accentColor}
-          />
-        ))}
+        {symptomCardData.length
+          ? symptomCardData.map((data, index) => (
+              <SymptomCard
+                // key prop and all other data will be pulled from redux store
+                // use index as the second parameter to get current arr index
+                // key={index}
+                title={data.title}
+                intensity={data.intensity}
+                date={data.date}
+                time={data.time}
+                note={data.note}
+                accentColor={data.accentColor}
+                key={data.uniqueKey}
+                uniqueKey={data.uniqueKey}
+                //props for updating values in edit mode
+              />
+            ))
+          : false}
       </div>
     </div>
   );

@@ -20,6 +20,7 @@
   border-radius: var(--border-radius);
   box-shadow: 5px 5px 5px var(--shadow);
   /* outline: 2px solid green; */
+  transition: all 0.2s ease-in-out;
 }
 
 .symptom-card-inner-wrapper {
@@ -41,6 +42,7 @@
 }
 
 .symptom-card-data-wrapper {
+  position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -49,12 +51,36 @@
   padding: 20px 30px;
 }
 
+.edit-btn {
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  width: fit-content;
+  height: fit-content;
+  padding: 2px 8px;
+  background-color: #c0c0c0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  opacity: 80%;
+}
+.edit-btn:active {
+  opacity: 60%;
+}
+
 .date-time-wrapper,
 .symptom-intensity-wrapper {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+}
+
+.date-time-wrapper {
+  margin-top: 10px;
 }
 
 .note-wrapper {
@@ -85,7 +111,7 @@
 .symptom-title,
 .symptom-intensity,
 .note-title {
-  margin: 10px 0;
+  margin: 5px 0 10px;
 }
 
 .date,
@@ -102,12 +128,52 @@
   color: var(--text-grey);
 }
 
+.symptom-title {
+  width: fit-content;
+  min-width: 50px;
+  max-width: 350px;
+  min-height: 1.6rem;
+  color: #000;
+  outline: 2px solid rgba(255, 0, 0, 0.357);
+}
+
+.symptom-title::placeholder {
+  color: #000000;
+  /* apply full opacity */
+  opacity: 1;
+}
+
 .note-title {
   font-size: 1.4rem;
   color: var(--text-grey);
 }
 
+.note-text-area {
+  width: 100%;
+  height: 100px;
+  color: #000;
+}
+
+.unique-key-text {
+  width: fit-content;
+  margin: 0 auto;
+  font-size: 0.9rem;
+  opacity: 0.4;
+}
+
 /* Utility Classes */
+
+.edit-mode {
+  transform: scale(1.1);
+  transition: all 0.2s ease-in-out;
+}
+
+.non-selectable {
+  user-select: none;
+  /* removes ability to edit */
+  pointer-events: none;
+}
+
 /* accent colors */
 
 .blue {
