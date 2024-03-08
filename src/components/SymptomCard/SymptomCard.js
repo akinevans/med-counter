@@ -175,7 +175,16 @@ export default function SymptomCard(props) {
               className='time'
               type='time'
               placeholder={props.time}
-              value={props.time}
+              value={newData.time ? newData.time : props.time}
+              onChange={(event) => {
+                handleInputUpdate(
+                  event,
+                  "time-field",
+                  currentData,
+                  newData,
+                  setNewData
+                );
+              }}
             ></input>
           </div>
           <div className='symptom-and-intensity-wrapper'>
@@ -230,6 +239,8 @@ export default function SymptomCard(props) {
           </div>
           <div className='note-wrapper'>
             {/* <p className='note-title'>Notes:</p> */}
+
+            {/* //& NOTE  */}
             <textarea
               className={`note-text-area ${
                 editEnabled ? "" : "non-selectable"
@@ -238,9 +249,18 @@ export default function SymptomCard(props) {
               id='note'
               cols='5'
               rows='4'
-              value={props.note}
+              value={newData.note ? newData.note : props.note}
               placeholder='Notes...'
               readOnly={editEnabled ? false : true}
+              onChange={(event) => {
+                handleInputUpdate(
+                  event,
+                  "note-field",
+                  currentData,
+                  newData,
+                  setNewData
+                );
+              }}
             ></textarea>
             <p
               ref={myElementRef}

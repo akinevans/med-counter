@@ -83,10 +83,12 @@ function formatDateAndTime(date, time) {
       time.hour +
       ":" +
       (time.minute < 10 ? "0" : "") +
-      time.minute +
-      ":" +
-      (time.second < 10 ? "0" : "") +
-      time.second;
+      time.minute;
+    // Uncomment to include seconds in the symptomCard time, you will have to adjust the width in css to accommodate
+    // +
+    // ":" +
+    // (time.second < 10 ? "0" : "") +
+    // time.second;
 
     return editedTime;
   }

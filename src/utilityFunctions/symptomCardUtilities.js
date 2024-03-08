@@ -64,7 +64,7 @@ export const handleInputUpdate = (
   // update newDataState key values by seeing what input the data is coming from
   switch (inputField) {
     case "date-field":
-      alert("key is date");
+      // alert("key is date");
       setNewData((prevState) => ({
         // ...prevState,
         date: event.target.value,
@@ -72,16 +72,30 @@ export const handleInputUpdate = (
       break;
 
     case "symptom-title-field":
-      alert("key is title");
+      // alert("key is title");
       setNewData(() => ({
         title: event.target.value,
       }));
       break;
 
+    case "time-field":
+      // alert("key is time");
+      setNewData(() => ({
+        time: event.target.value,
+      }));
+      break;
+
     case "intensity-field":
-      alert("key is intensity");
+      // alert("key is intensity");
       setNewData(() => ({
         intensity: event.target.value,
+      }));
+      break;
+
+    case "note-field":
+      // alert("key is note");
+      setNewData(() => ({
+        note: event.target.value,
       }));
       break;
 
@@ -154,10 +168,13 @@ export const handleEditButton = (
 export const evaluateDataValues = (currentData, newData) => {
   //* This logic prevents values from being overwritten by empty strings when edit mode is enabled, then immediately closed without user updating any values
 
-  //TODO add all other inputs tot his logic
+  //TODO add all other inputs to this logic
   // Edge case for all input elements
   if (newData.date === "" || !newData.date) {
     newData.date = currentData.date;
+  }
+  if (newData.time === "" || !newData.time) {
+    newData.time = currentData.time;
   }
   if (newData.title === "" || !newData.title) {
     newData.title = currentData.title;

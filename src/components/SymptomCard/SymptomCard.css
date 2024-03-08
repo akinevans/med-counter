@@ -117,6 +117,12 @@
   font-weight: 400;
   color: var(--text-grey);
 }
+
+.time {
+  width: fit-content;
+  padding: 0;
+  /* outline: 2px solid green; */
+}
 .symptom-title-wrapper {
   width: fit-content;
   /* outline: 2px solid red; */
