@@ -8,25 +8,25 @@ import { addSymptomCard } from "../../redux/countReducer";
 import {
   displayAccentColors,
   generateUniqueKey,
+  getDateAndTime,
 } from "../../utilityFunctions/FormUtilities";
 
 export default function Form(props) {
   const [symptom, setSymptom] = useState("");
   const [intensity, setIntensity] = useState("");
-  const [date, setDate] = useState();
-  const [time, setTime] = useState();
+  const [date, setDate] = useState(getDateAndTime()[0]);
+  const [time, setTime] = useState(getDateAndTime()[1]);
   const [note, setNote] = useState("");
   const [colorSelected, setColorSelected] = useState(false);
   const [userSelectedAccentColor, setUserSelectedAccentColor] =
     useState("blue");
 
   // get local time zones, then set the local time wherever user is at
-  const todaysDate = new Date();
-  // console.log(todaysDate);
+
   const dispatch = useDispatch();
   const listOfAccentColors = displayAccentColors();
 
-  //TODO: check if generated unique key exists in stata.listOfUniqueKeys, if false continue code, else generate a new one
+  //TODO: check if generated unique key exists in state.listOfUniqueKeys, if false continue code, else generate a new one
   let uniqueKey = generateUniqueKey();
 
   const handleFormSubmission = (e) => {
@@ -48,13 +48,42 @@ export default function Form(props) {
 
   return (
     <form className={`form ${props.className}`}>
-      <div className='form-top-wrapper'>
+      <div className='form-date-time-wrapper'>
+        <label>
+          <input
+            // Does not accept placeholder attribute
+            className='date-picker'
+            type='date'
+            value={date}
+            onChange={(e) => {
+              setDate(e.target.value);
+              //! undefined error
+              // console.log(date);
+            }}
+          />
+        </label>
+        <label>
+          <input
+            className='time-picker'
+            type='time'
+            value={time}
+            contentEditable='true'
+            onChange={(e) => {
+              // console.log(e.target.value);
+              setTime(e.target.value);
+              console.log(time);
+            }}
+          />
+        </label>
+      </div>
+      <div className='form-symptom-and-intensity-wrapper'>
         <label>
           <input
             //
             className='symptom-input'
             type='text'
             placeholder='Symptom'
+            value={symptom}
             onChange={(e) => {
               setSymptom(e.target.value);
               // console.log(symptom);
@@ -65,6 +94,7 @@ export default function Form(props) {
           <input
             className='intensity-picker'
             type='number'
+            value={intensity}
             placeholder='Intensity'
             min={1}
             max={10}
@@ -75,34 +105,7 @@ export default function Form(props) {
           />
         </label>
       </div>
-      <div className='form-date-time-wrapper'>
-        <label>
-          <input
-            //
-            className='date-picker'
-            type='date'
-            // placeholder={todaysDate}
-            onChange={(e) => {
-              const newDate = e.target.value;
-              // console.log(newDate);
-              setDate(newDate);
-              //! undefined error
-              // console.log(date);
-            }}
-          />
-        </label>
-        <label>
-          <input
-            className='time-picker'
-            type='time'
-            onChange={(e) => {
-              // console.log(e.target.value);
-              setTime(e.target.value);
-              // console.log(time);
-            }}
-          />
-        </label>
-      </div>
+
       <div className='form-bottom-wrapper'>
         <label>
           {/* <input className='text-area' type='text' placeholder='Notes' /> */}
@@ -111,6 +114,7 @@ export default function Form(props) {
             id='notes'
             cols='38'
             rows='5'
+            value={note}
             placeholder='Notes'
             onChange={(e) => {
               // console.log(e.target.value);

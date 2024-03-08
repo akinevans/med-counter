@@ -26,3 +26,40 @@ export const displayAccentColors = () => {
     "crimson",
   ];
 };
+
+//
+//
+//
+
+export const getDateAndTime = () => {
+  // Date logic
+  const currentDate = new Date();
+
+  // get year, month, and day
+  let year = currentDate.getFullYear();
+  let month = currentDate.getMonth() + 1; // Months are zero-based, so we add 1
+  let day = currentDate.getDate();
+
+  // Format  date as YYYY-MM-DD
+  let formattedDate =
+    year +
+    "-" +
+    (month < 10 ? "0" : "") +
+    month +
+    "-" +
+    (day < 10 ? "0" : "") +
+    day;
+
+  // Time logic
+  // get hours, min, sec
+  let hour = currentDate.getHours();
+  let minute = currentDate.getMinutes();
+  let second = currentDate.getSeconds();
+
+  // Format time as HH:MM
+  let formattedTime =
+    (hour < 10 ? "0" : "") + hour + ":" + (minute < 10 ? "0" : "") + minute;
+
+  console.log("formattedDate", formattedDate, "formatted time:", formattedTime);
+  return [formattedDate, formattedTime];
+};

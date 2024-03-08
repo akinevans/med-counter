@@ -165,5 +165,39 @@ export const handleEditButton = (
 //
 
 // function for handling decision making for new data and current data directly before its sent to redux in sendUpdatedData
+export const evaluateDataValues = (currentData, newData) => {
+  // //!BUG when clicking edit then immediately save, data gets erased in SymptomCard
+  //^ FIX - By comparing if currentData !== newData you can decide if dispatch/editSymptom should be called or not
+  // Edge case for all input elements
+  // if new title is empty, set it to current title to prevent it from being overwritten as an empty string when sending data to redux
 
-export const evaluateDataValues = (currentData, newData) => {};
+  //TODO: refactor the if expressions into a for in loop
+  //   for (let key in newData) {
+  //     console.log(newData[key]);
+  //     console.log(key);
+  //     alert("pause for key");
+  //     if (newData[key] === "" || !newData[key]) {
+  //       newData[key] = currentData[key];
+  //     }
+  //   }
+
+  // do them in this order -> date, time, title, intensity, note
+
+  // date
+  if (newData.date === "" || !newData.date) {
+    newData.date = currentData.date;
+  }
+  // title
+  if (newData.title === "" || !newData.title) {
+    newData.title = currentData.title;
+  }
+  // intensity
+  if (newData.intensity === "" || !newData.intensity) {
+    newData.intensity = currentData.intensity;
+  }
+  // note
+  if (newData.note === "" || !newData.note) {
+    newData.note = currentData.note;
+  }
+  console.log("new date at end of evaluateDataValues", newData.date);
+};

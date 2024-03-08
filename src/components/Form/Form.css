@@ -1,5 +1,5 @@
 .form,
-.form-top-wrapper,
+.form-symptom-and-intensity-wrapper,
 .form-date-time-wrapper,
 .form-bottom-wrapper,
 .color-picker-wrapper {
@@ -25,7 +25,7 @@
   z-index: 99;
 }
 
-.form-top-wrapper {
+.form-symptom-and-intensity-wrapper {
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 20px;

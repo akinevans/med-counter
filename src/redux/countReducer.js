@@ -71,19 +71,29 @@ export const countSlice = createSlice({
         newAccentColor,
       } = action.payload;
 
+      //! i think the issue with data/ time is that those elements cant be updated like the others
+      //! maybe they need a placeholder?
+
+      //* date undefined here
+      console.log("from edit reducer: date:", newDate);
+      console.log("from edit reducer: time:", newTime);
       console.log("from edit reducer: title:", newTitle);
-      alert("pause from reducer");
+      console.log("from edit reducer: intensity:", newIntensity);
+      console.log("from edit reducer: note:", newNote);
+      console.log("from edit reducer: accent color:", newAccentColor);
 
       // Create a new object with the updated values
       const updatedSymptom = {
         ...list[index],
-        title: newTitle,
-        intensity: newIntensity,
         date: newDate,
         time: newTime,
+        title: newTitle,
+        intensity: newIntensity,
         note: newNote,
         accentColor: newAccentColor,
       };
+      console.log(updatedSymptom.date);
+      alert("pause from reducer");
 
       // Update the copied array with the new object
       list[index] = updatedSymptom;
