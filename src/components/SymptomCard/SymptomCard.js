@@ -140,6 +140,7 @@ export default function SymptomCard(props) {
               className='time'
               type='time'
               placeholder={props.time}
+              value={props.time}
             ></input>
           </div>
           <div className='symptom-and-intensity-wrapper'>

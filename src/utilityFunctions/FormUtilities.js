@@ -36,30 +36,77 @@ export const getDateAndTime = () => {
   const currentDate = new Date();
 
   // get year, month, and day
-  let year = currentDate.getFullYear();
-  let month = currentDate.getMonth() + 1; // Months are zero-based, so we add 1
-  let day = currentDate.getDate();
-
-  // Format  date as YYYY-MM-DD
-  let formattedDate =
-    year +
-    "-" +
-    (month < 10 ? "0" : "") +
-    month +
-    "-" +
-    (day < 10 ? "0" : "") +
-    day;
+  let dateObj = {
+    year: currentDate.getFullYear(),
+    // Months are zero-based, so add 1
+    month: currentDate.getMonth() + 1,
+    day: currentDate.getDate(),
+  };
 
   // Time logic
   // get hours, min, sec
-  let hour = currentDate.getHours();
-  let minute = currentDate.getMinutes();
-  let second = currentDate.getSeconds();
+  let timeObj = {
+    hour: currentDate.getHours(),
+    minute: currentDate.getMinutes(),
+    second: currentDate.getSeconds(),
+  };
 
-  // Format time as HH:MM
-  let formattedTime =
-    (hour < 10 ? "0" : "") + hour + ":" + (minute < 10 ? "0" : "") + minute;
+  let formattedDate = formatDateAndTime(dateObj);
+  let formattedTime = formatDateAndTime(null, timeObj);
 
-  console.log("formattedDate", formattedDate, "formatted time:", formattedTime);
+  console.log("date", formattedDate, "time:", formattedTime);
+
   return [formattedDate, formattedTime];
+};
+
+// function for formatting date and time values after they are generated
+function formatDateAndTime(date, time) {
+  // shorten the operation by seeing if the function needs date or time
+  if (!time) {
+    // Format  date as YYYY-MM-DD
+    let editedDate =
+      date.year +
+      "-" +
+      (date.month < 10 ? "0" : "") +
+      date.month +
+      "-" +
+      (date.day < 10 ? "0" : "") +
+      date.day;
+
+    return editedDate;
+  }
+
+  if (!date) {
+    // Format time as HH:MM
+    let editedTime =
+      (time.hour < 10 ? "0" : "") +
+      time.hour +
+      ":" +
+      (time.minute < 10 ? "0" : "") +
+      time.minute +
+      ":" +
+      (time.second < 10 ? "0" : "") +
+      time.second;
+
+    return editedTime;
+  }
+}
+
+export const clearFormInputValues = (
+  setSymptom,
+  setIntensity,
+  setDate,
+  setTime,
+  setNote,
+  setColorSelected,
+  setUserSelectedAccentColor
+) => {
+  // set all relevant state values back to their default values when form is submitted OR closed
+  setSymptom("");
+  setIntensity("");
+  // setDate();
+  // setTime();
+  setNote("");
+  setColorSelected(false);
+  // setUserSelectedAccentColor();
 };

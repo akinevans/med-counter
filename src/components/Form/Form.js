@@ -1,15 +1,19 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Form.css";
 import { useDispatch } from "react-redux";
 import { addSymptomCard } from "../../redux/countReducer";
+
+//TODO: from should reset all its inputs each
 
 //utility imports
 import {
   displayAccentColors,
   generateUniqueKey,
   getDateAndTime,
+  clearFormInputValues,
 } from "../../utilityFunctions/FormUtilities";
+import { clear } from "@testing-library/user-event/dist/clear";
 
 export default function Form(props) {
   const [symptom, setSymptom] = useState("");
@@ -153,14 +157,40 @@ export default function Form(props) {
         onClick={(e) => {
           // Create new SymptomCard
           handleFormSubmission(e, symptom, intensity, date, time, note);
-          //close modal
+
+          // reset form modal data
+          clearFormInputValues(
+            setSymptom,
+            setIntensity,
+            setDate,
+            setTime,
+            setNote,
+            setColorSelected,
+            setUserSelectedAccentColor
+          );
+
+          //close form modal
           props.closeBtnOnClick();
         }}
       />
       <button
         //
         className='close-btn'
-        onClick={props.closeBtnOnClick}
+        onClick={() => {
+          // reset form modal data
+          clearFormInputValues(
+            setSymptom,
+            setIntensity,
+            setDate,
+            setTime,
+            setNote,
+            setColorSelected,
+            setUserSelectedAccentColor
+          );
+
+          // close form modal
+          props.closeBtnOnClick();
+        }}
       >
         Close
       </button>
