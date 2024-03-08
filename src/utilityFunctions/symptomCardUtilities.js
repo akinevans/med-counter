@@ -1,3 +1,8 @@
+//! KNOWN BUGS
+// When going into edit mode. Editing the date, then the time, then clicking save (in that order), the new date value will reset to the currentDate value
+
+//TODO: refactor all functions to use state / set state with newData state obj
+
 function getCurrentIndex(
   newData,
   currentData,
@@ -21,7 +26,6 @@ function getCurrentIndex(
       console.log("i: ", i);
       console.log("data FOUND in: ", symptomCardData[i]);
       console.log("some data found - title:: ", symptomCardData[i].title);
-      console.log("newData index: ", newData.index);
 
       newData.index = symptomCardData[i].cardIndex;
       currentData.index = i;
@@ -46,7 +50,6 @@ export const handleInputUpdate = (
   inputField,
   currentData,
   newData,
-  updateNewDataState,
   setNewData
 ) => {
   //check which input in symptomCard the data is coming from
@@ -58,16 +61,25 @@ export const handleInputUpdate = (
     alert("nothing changed");
   }
 
+  // update newDataState key values by seeing what input the data is coming from
   switch (inputField) {
     case "date-field":
-      // update newData state object
-      updateNewDataState("date", event.target.value, setNewData);
+      alert("key is date");
+      setNewData((prevState) => ({
+        // ...prevState,
+        date: event.target.value,
+      }));
       break;
+
     case "symptom-title-field":
-      newData.title = event.target.value;
+      alert("key is title");
+      setNewData(() => ({
+        title: event.target.value,
+      }));
       break;
+
     case "intensity-field":
-      newData.intensity = event.target.value;
+      // newData.intensity = event.target.value;
       break;
 
     default:
@@ -82,35 +94,8 @@ export const handleInputUpdate = (
   //   }
   console.log("newData from", inputField.toUpperCase(), ":", newData);
 
-  updateNewDataState(null, event, setNewData);
   // return;
 };
-
-//
-//
-//
-//
-
-// function for sending the updated symptom card data (newData) to redux
-function handleEdit(e, newData, currentData, setEditEnabled, sendUpdatedData) {
-  //! IMPORTANT - you will have to accept data from ALL inputs and send it all to redux
-
-  //edge case
-  if (e === null || e === undefined) {
-    return false;
-  }
-
-  setEditEnabled(false);
-
-  //& check if any data has been altered, if true send date to redux
-  //& do this by populating currentData variable (hardcode is fine) then compare it to newData
-
-  console.log("newData right before send to Redux: ", newData);
-  //   alert("Pause to see console data");
-
-  // send the updated data, newData, to redux
-  sendUpdatedData(newData, currentData);
-}
 
 //
 //
@@ -148,7 +133,7 @@ export const handleEditButton = (
       currentSymptomCardKey,
       setCardIndex
     );
-    handleEdit(e, newData, currentData, setEditEnabled, sendUpdatedData);
+    sendUpdatedData(newData, currentData);
   }
 };
 
@@ -200,14 +185,3 @@ export const evaluateDataValues = (currentData, newData) => {
 //
 //
 //
-// function for updating newDataState object
-export const updateNewDataState = (key, value, setNewData) => {
-  if (key === "date") {
-    alert("key is date");
-    setNewData((prevState) => ({
-      // ...prevState,
-
-      date: value,
-    }));
-  }
-};

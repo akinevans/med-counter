@@ -13,7 +13,6 @@ import {
   handleEditButton,
   handleInputUpdate,
   evaluateDataValues,
-  updateNewDataState,
 } from "../../utilityFunctions/symptomCardUtilities";
 
 //TODO make it so only one card can be in edit mode at a time. Try using state in App.js for this functionality
@@ -29,7 +28,6 @@ export default function SymptomCard(props) {
   console.clear();
 
   // state variables
-  // const [indexValue, setIndeValue] = useState(null);
   const [cardIndex, setCardIndex] = useState(0);
   const [editEnabled, setEditEnabled] = useState(false);
   const [currentSymptomCardKey, setCurrentSymptomCardKey] = useState("");
@@ -48,18 +46,6 @@ export default function SymptomCard(props) {
     // stateLength: null,
   });
 
-  // Function to update the state obj
-  // const updateNewDataState = (key, value) => {
-  //   if (key === "date") {
-  //     alert("key is date");
-  //     setNewData((prevState) => ({
-  //       // ...prevState,
-
-  //       date: value,
-  //     }));
-  //   }
-  // };
-
   // get data from Redux
   const symptomCardData = useSelector((state) => state.count.symptomList);
   console.log("symptomCardData", symptomCardData);
@@ -67,18 +53,6 @@ export default function SymptomCard(props) {
   const dispatch = useDispatch();
   const myElementRef = useRef(null);
 
-  // const newData = {
-  //   uniqueKey: props.uniqueKey,
-  //   // index: null,
-  //   // title: null,
-  //   // intensity: null,
-  //   date: null,
-  //   // time: null,
-  //   // note: null,
-  //   // accentColor: null,
-  //   // uniqueKey: null,
-  //   // stateLength: null,
-  // };
   //^ newData must use the exact same key names
   const currentData = {
     uniqueKey: props.uniqueKey,
@@ -97,6 +71,11 @@ export default function SymptomCard(props) {
 
   const sendUpdatedData = (newData, currentData) => {
     //TODO refactor data decision making into a module in symptomCardUtilities
+
+    setEditEnabled(false);
+
+    //& check if any data has been altered, if true send date to redux
+    //& do this by populating currentData variable (hardcode is fine) then compare it to newData
 
     evaluateDataValues(currentData, newData);
 
@@ -173,6 +152,8 @@ export default function SymptomCard(props) {
           </button>
           <div className='date-time-wrapper'>
             {/* //!BUG - when in edit mode and selecting a new date the value display doesnt change until save btn is pressed, try adding state variables */}
+
+            {/* //& DATE  */}
             <input
               className={`date ${editEnabled ? "" : "non-selectable"}`}
               type='date'
@@ -184,12 +165,12 @@ export default function SymptomCard(props) {
                   "date-field",
                   currentData,
                   newData,
-                  updateNewDataState,
                   setNewData
                 );
               }}
             ></input>
 
+            {/* //& TIME  */}
             <input
               className='time'
               type='time'
@@ -202,6 +183,7 @@ export default function SymptomCard(props) {
             <div className='symptom-title-wrapper'>
               <h1 className='symptom-header'>Symptom</h1>
 
+              {/* //& TITLE  */}
               <input
                 type='text'
                 className={`symptom-title ${
@@ -209,12 +191,14 @@ export default function SymptomCard(props) {
                 }`}
                 placeholder={props.title}
                 // contentEditable={editEnabled}
+
                 onChange={(event) => {
                   handleInputUpdate(
                     event,
                     "symptom-title-field",
                     currentData,
-                    newData
+                    newData,
+                    setNewData
                   );
                 }}
               ></input>
