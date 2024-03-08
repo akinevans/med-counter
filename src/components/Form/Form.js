@@ -20,19 +20,19 @@ export default function Form(props) {
   const [userSelectedAccentColor, setUserSelectedAccentColor] =
     useState("blue");
 
-  const minIntensity = 1;
-  const maxIntensity = 5;
+  // get local time zones, then set the local time wherever user is at
   const todaysDate = new Date();
   // console.log(todaysDate);
   const dispatch = useDispatch();
   const listOfAccentColors = displayAccentColors();
+
+  //TODO: check if generated unique key exists in stata.listOfUniqueKeys, if false continue code, else generate a new one
   let uniqueKey = generateUniqueKey();
 
   const handleFormSubmission = (e) => {
     // Do not submit the form
     e.preventDefault();
-    // alert("Send data to Redux, Pull data into new Symptom card component");
-
+    //* Create new symptomCard by sending data to redux
     dispatch(
       addSymptomCard({
         uniqueKey: uniqueKey,
@@ -66,8 +66,8 @@ export default function Form(props) {
             className='intensity-picker'
             type='number'
             placeholder='Intensity'
-            min={minIntensity}
-            max={maxIntensity}
+            min={1}
+            max={10}
             onChange={(e) => {
               setIntensity(e.target.value);
               // console.log(intensity);

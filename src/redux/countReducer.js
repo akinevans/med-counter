@@ -71,6 +71,9 @@ export const countSlice = createSlice({
         newAccentColor,
       } = action.payload;
 
+      console.log("from edit reducer: title:", newTitle);
+      alert("pause from reducer");
+
       // Create a new object with the updated values
       const updatedSymptom = {
         ...list[index],

@@ -6,7 +6,7 @@ import SymptomCard from "./components/SymptomCard/SymptomCard";
 
 // redux imports
 import { useDispatch, useSelector } from "react-redux";
-import { editSymptom, deleteAll } from "./redux/countReducer";
+import { deleteAll } from "./redux/countReducer";
 
 //utility imports
 

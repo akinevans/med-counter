@@ -1,3 +1,5 @@
+//TODO Make modals for editing date, time, title, intensity - not for notes
+
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import "./SymptomCard.css";
@@ -5,6 +7,12 @@ import "./SymptomCard.css";
 // redux imports
 import { useDispatch, useSelector } from "react-redux";
 import { editSymptom, deleteDuplicateSymptom } from "../../redux/countReducer";
+
+// utility imports
+import {
+  handleEditButton,
+  handleInputUpdate,
+} from "../../utilityFunctions/symptomCardUtilities";
 //TODO make it so only one card can be in edit mode at a time. Try using state in App.js for this functionality
 
 //TODO: make date, time, symptom, intensity, and notes content editable.
@@ -17,109 +25,79 @@ import { editSymptom, deleteDuplicateSymptom } from "../../redux/countReducer";
 export default function SymptomCard(props) {
   console.clear();
 
-  const [currentSymptomCardKey, setCurrentSymptomCardKey] = useState("");
+  // state variables
   const [cardIndex, setCardIndex] = useState(0);
+  const [editEnabled, setEditEnabled] = useState(false);
+  const [currentSymptomCardKey, setCurrentSymptomCardKey] = useState("");
 
   // get data from Redux
   const symptomCardData = useSelector((state) => state.count.symptomList);
   console.log("symptomCardData", symptomCardData);
 
   const dispatch = useDispatch();
-  const [editEnabled, setEditEnabled] = useState(false);
   const myElementRef = useRef(null);
 
+  //TODO hardcode all current data with info from redux symptomCard state, may have to get index
+  //TODO hardcode all current data with info from redux symptomCard state, may have to get index
+  //TODO hardcode all current data with info from redux symptomCard state, may have to get index
   const currentData = {
+    uniqueKey: props.uniqueKey,
     index: cardIndex,
     stateLength: symptomCardData.length,
-    // title: symptomCardData[getCurrentIndex()[0]].title,
+    // title: props.title ? props.title : symptomCardData.title,
+    title: props.title,
+    intensity: props.intensity,
+    date: props.date,
+    time: props.time,
+    note: props.note,
+    accentColor: props.accentColor,
   };
 
   console.log("currentData", currentData);
 
-  const newData = {};
-  newData.title = "";
+  const newData = {
+    // title: "",
+  };
 
   console.log("newData ", newData);
 
-  function getCurrentIndex() {
-    // console.log("currentStateLength ", currentStateLength);
-    console.log("currentStateLength ", currentData.stateLength);
+  // console.log("cardIndex state var ", cardIndex);
 
-    //edge case
-    if (symptomCardData.length === 0) {
-      setCardIndex(0);
-      newData.index = 0;
-      currentData.index = 0;
-      return 0;
-    }
+  const sendUpdatedData = (newData, currentData) => {
+    //TODO refactor data decision making into a module in symptomCardUtilities
 
-    // find the correct data in symptomCard state array by matching the unique id property
-    for (let i = 0; i < symptomCardData.length; i++) {
-      if (symptomCardData[i].uniqueKey === currentSymptomCardKey) {
-        console.log("i: ", i);
-        console.log("data FOUND in: ", symptomCardData[i]);
-        console.log("some found data:: ", symptomCardData[i].title);
-        console.log("some found data:: ", symptomCardData[i].accentColor);
-        newData.index = symptomCardData[i].cardIndex;
-
-        console.log("newData index: ", newData.index);
-
-        currentData.index = i;
-        break;
-      } else if (i !== symptomCardData.length) {
-        continue;
-      }
-      return i;
-    }
-    return 0;
-    // throw new Error("akin - getCurrentIndex failed for some reason");
-  }
-
-  console.log("cardIndex state var ", cardIndex);
-
-  const handleSymptomUpdate = (event) => {
-    //& create a new util function for each input
-    //& create a new util function for each input
-    //& create a new util function for each input
-
-    console.log(event.target.value);
-
-    // set the updated values for newData
-    newData.title = event.target.value;
-    console.log("newData from handleSymptomUpdate", newData);
-  };
-
-  // function for sending updated symptom card data to redux
-  const handleEdit = (e) => {
-    //! IMPORTANT - you will have to accept data from ALL inputs and send it all to redux
-
-    //edge case
-    if (e === null || e === undefined) {
-      return false;
-    }
-
-    setEditEnabled(false);
-
-    //& check if any data has been altered, if true send date to redux
-
-    //& do this by populating currentData variable (hardcode is fine) then compare it to newData
-
-    console.log("newData right before send to Redux: ", newData);
-    alert("Pause to see console data");
-    //finally send newData to redux
-    sendUpdatedData(newData);
-  };
-
-  const sendUpdatedData = (newData) => {
     //!BUG when clicking edit then immediately save, data gets erased in SymptomCard
     //^ FIX - By comparing if currentData !== newData you can decide if dispatch/editSymptom should be called or not
+    // Edge case - if new title is empty, set it to current title to prevent it from being overwritten as an empty string
+    if (newData.title === "" || !newData.title) {
+      newData.title = currentData.title;
+    }
 
+    if (newData.title !== currentData.title) {
+      alert("title is the same");
+      //set new title = current title so it doesn't get erased in redux
+      // newData.title = currentData.title;
+    } else if (newData.title === currentData.title) {
+      newData.title = currentData.title;
+    }
+    // else if (event.target.value === "" || event.target.value === false) {
+    //   newData.title = currentData.title;
+    // }
+
+    console.log("in sendUpdatedData here is currentData:", currentData);
+    console.log("in sendUpdatedData here is NewData:", newData);
+    alert("pause for console ");
+
+    const titleEmpty = newData.title === "" || newData.title === false;
     // Redux state is immutable so editSymptom creates a new object in state arr
+    // first check if currentData === newData, if true, send data to redux
     dispatch(
       editSymptom({
         index: newData.index,
+        // newTitle: titleEmpty ? currentData.title : newData.title,
+        //! newData title is undefined here, work backwards
         newTitle: newData.title,
-        newIntensity: "X",
+        newIntensity: newData.intensity,
         // date: date,
         // time: time,
         // note: note,
@@ -157,21 +135,21 @@ export default function SymptomCard(props) {
             //
             className='edit-btn'
             onClick={(e) => {
-              //edge case
-              if (e.target.value === "" && e.target.textContent === "Edit") {
-                // trigger content editable attributes
-                setEditEnabled(!editEnabled);
-                // check what state editEnabled is in
-                // if true get all new input data
-              }
-              if (e.target.textContent === "Save") {
-                //^ update all inputs state
-                //! be careful, e = the button event, not the data you're dealing with
-
-                //check if editEnabled is turned back off then send all data to redux
-                let INDEX = getCurrentIndex();
-                handleEdit(e, INDEX);
-              }
+              //TODO maybe...
+              // set edit mode?
+              // decide if edit mode is true? then handleEditBtn, if false...?
+              handleEditButton(
+                e,
+                newData,
+                currentData,
+                symptomCardData,
+                currentSymptomCardKey,
+                // state variables
+                editEnabled,
+                setEditEnabled,
+                setCardIndex,
+                sendUpdatedData
+              );
             }}
           >
             {editEnabled ? "Save" : "Edit"}
@@ -180,18 +158,48 @@ export default function SymptomCard(props) {
             <p className='date'>Date: {props.date}</p>
             <p className='time'>Time: {props.time}</p>
           </div>
-          <div className='symptom-intensity-wrapper'>
+          <div className='symptom-and-intensity-wrapper'>
             {/* //! you can make a new content editable effect by triggering user select:none */}
-            <input
-              className={`symptom-title ${editEnabled ? "" : "non-selectable"}`}
-              placeholder={props.title}
-              // contentEditable={editEnabled}
-              onChange={handleSymptomUpdate}
-            ></input>
+            <div className='symptom-title-wrapper'>
+              <h1 className='symptom-header'>Symptom</h1>
 
-            <p className='symptom-intensity' contentEditable='true'>
-              Intensity: {props.intensity}
-            </p>
+              <input
+                type='text'
+                className={`symptom-title ${
+                  editEnabled ? "" : "non-selectable"
+                }`}
+                placeholder={props.title}
+                // contentEditable={editEnabled}
+                onChange={(event) => {
+                  handleInputUpdate(
+                    event,
+                    "symptom-title-field",
+                    currentData,
+                    newData
+                  );
+                }}
+              ></input>
+            </div>
+            <div className='intensity-title-and-value-wrapper'>
+              <h1 className='intensity-header'>Intensity</h1>
+              <input
+                type='number'
+                min='1'
+                max='10'
+                className={`symptom-intensity ${
+                  editEnabled ? "" : "non-selectable"
+                }`}
+                placeholder={props.intensity}
+                onChange={(event) => {
+                  handleInputUpdate(
+                    event,
+                    "intensity-field",
+                    currentData,
+                    newData
+                  );
+                }}
+              ></input>
+            </div>
           </div>
           <div className='note-wrapper'>
             {/* <p className='note-title'>Notes:</p> */}

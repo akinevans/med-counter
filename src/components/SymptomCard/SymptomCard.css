@@ -2,7 +2,8 @@
 .symptom-card-inner-wrapper,
 .symptom-card-data-wrapper,
 .date-time-wrapper,
-.symptom-intensity-wrapper,
+.symptom-and-intensity-wrapper,
+.intensity-title-and-value-wrapper,
 .note-wrapper {
   display: flex;
 }
@@ -71,35 +72,31 @@
   opacity: 60%;
 }
 
+.date-time-wrapper {
+  margin-top: 10px;
+}
+
 .date-time-wrapper,
-.symptom-intensity-wrapper {
+.symptom-and-intensity-wrapper {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   width: 100%;
 }
 
-.date-time-wrapper {
-  margin-top: 10px;
+.symptom-and-intensity-wrapper {
+  align-items: flex-end;
+  margin: 0 0 10px 0;
+  /* outline: 2px solid red; */
 }
 
-.note-wrapper {
+.intensity-title-and-value-wrapper {
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 100%;
-  height: fit-content;
-}
-
-.note-text-area {
-  width: 100%;
-  margin: 0;
-  padding: 10px;
-  font-family: Arial, Helvetica, sans-serif;
-  border: none;
-  outline: 2px solid #dadada;
-  border-radius: 6px;
-  /* overflow-y: scroll; */
+  justify-content: center;
+  align-items: flex-end;
+  width: 30%;
+  max-width: 85px;
+  /* outline: 2px solid red; */
 }
 
 /*  */
@@ -120,27 +117,75 @@
   font-weight: 400;
   color: var(--text-grey);
 }
+.symptom-title-wrapper {
+  width: fit-content;
+  /* outline: 2px solid red; */
+}
+
+.symptom-header {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #000;
+}
 
 .symptom-title,
 .symptom-intensity {
+  width: 100%;
   font-size: 1.5rem;
   font-weight: 500;
   color: var(--text-grey);
 }
 
+.intensity-header {
+  width: 85px 1uto;
+  margin: 0;
+  padding: 0;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #000;
+  /* outline: 2px solid red; */
+}
+
+.symptom-intensity {
+  width: 100%;
+  outline: 2px solid #dadada;
+  /* outline: 2px solid red; */
+}
+
 .symptom-title {
-  width: fit-content;
+  width: 100%;
   min-width: 50px;
   max-width: 350px;
   min-height: 1.6rem;
   color: #000;
-  outline: 2px solid rgba(255, 0, 0, 0.357);
+  outline: 2px solid #dadada;
 }
 
-.symptom-title::placeholder {
+.symptom-title::placeholder,
+.symptom-intensity::placeholder {
   color: #000000;
   /* apply full opacity */
   opacity: 1;
+}
+
+.note-wrapper {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  height: fit-content;
+}
+
+.note-text-area {
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  border: none;
+  outline: 2px solid #dadada;
+  border-radius: 6px;
+  /* overflow-y: scroll; */
 }
 
 .note-title {
