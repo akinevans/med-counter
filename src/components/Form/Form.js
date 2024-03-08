@@ -8,7 +8,7 @@ import { addSymptomCard } from "../../redux/countReducer";
 import {
   displayAccentColors,
   generateUniqueKey,
-} from "../../utilityFunctions/utilityFunctions";
+} from "../../utilityFunctions/FormUtilities";
 
 export default function Form(props) {
   const [symptom, setSymptom] = useState("");
