@@ -178,15 +178,6 @@ export default function Form(props) {
         className='close-btn'
         onClick={() => {
           // reset form modal data
-          clearFormInputValues(
-            setSymptom,
-            setIntensity,
-            setDate,
-            setTime,
-            setNote,
-            setColorSelected,
-            setUserSelectedAccentColor
-          );
 
           // close form modal
           props.closeBtnOnClick();
