@@ -13,7 +13,6 @@ import {
   getDateAndTime,
   clearFormInputValues,
 } from "../../utilityFunctions/FormUtilities";
-import { clear } from "@testing-library/user-event/dist/clear";
 
 export default function Form(props) {
   const [symptom, setSymptom] = useState("");

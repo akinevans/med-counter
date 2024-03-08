@@ -101,7 +101,7 @@ export const clearFormInputValues = (
   setColorSelected,
   setUserSelectedAccentColor
 ) => {
-  // set all relevant state values back to their default values when form is submitted OR closed
+  // set all relevant state values back to their default values when form is submitted or closed
   setSymptom("");
   setIntensity("");
   // setDate();

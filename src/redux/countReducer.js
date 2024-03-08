@@ -20,7 +20,7 @@ export const countSlice = createSlice({
     //else update existing entry
 
     addSymptomCard: (state, action) => {
-      const { uniqueKey, title, intensity, date, time, note, accentColor } =
+      const { uniqueKey, date, time, title, intensity, note, accentColor } =
         action.payload;
 
       // get this symptomCards index, then place it in cardData obj
@@ -61,36 +61,26 @@ export const countSlice = createSlice({
     editSymptom: (state, action) => {
       const list = [...state.symptomList]; // Create a shallow copy of the array
 
-      const {
-        index,
-        newTitle,
-        newIntensity,
-        newDate,
-        newTime,
-        newNote,
-        newAccentColor,
-      } = action.payload;
+      const { index, date, time, title, intensity, note, accentColor } =
+        action.payload;
 
-      //! i think the issue with data/ time is that those elements cant be updated like the others
-      //! maybe they need a placeholder?
-
-      //* date undefined here
-      console.log("from edit reducer: date:", newDate);
-      console.log("from edit reducer: time:", newTime);
-      console.log("from edit reducer: title:", newTitle);
-      console.log("from edit reducer: intensity:", newIntensity);
-      console.log("from edit reducer: note:", newNote);
-      console.log("from edit reducer: accent color:", newAccentColor);
+      console.log("from edit reducer: date:", date);
+      console.log("from edit reducer: time:", time);
+      console.log("from edit reducer: title:", title);
+      console.log("from edit reducer: intensity:", intensity);
+      console.log("from edit reducer: note:", note);
+      console.log("from edit reducer: accent color:", accentColor);
 
       // Create a new object with the updated values
       const updatedSymptom = {
         ...list[index],
-        date: newDate,
-        time: newTime,
-        title: newTitle,
-        intensity: newIntensity,
-        note: newNote,
-        accentColor: newAccentColor,
+        index: index,
+        date: date,
+        time: time,
+        title: title,
+        intensity: intensity,
+        note: note,
+        accentColor: accentColor,
       };
       console.log(updatedSymptom.date);
       alert("pause from reducer");
@@ -106,9 +96,9 @@ export const countSlice = createSlice({
     },
 
     deleteSymptom: (state, action) => {
-      //TODO delete from listOfuniqueKeys also
-      //TODO delete from listOfuniqueKeys also
-      //TODO delete from listOfuniqueKeys also
+      //TODO delete from listOfUniqueKeys also
+      //TODO delete from listOfUniqueKeys also
+      //TODO delete from listOfUniqueKeys also
 
       const list = [...state.symptomList]; // Create a shallow copy of the array
       const indexToDelete = action.payload;

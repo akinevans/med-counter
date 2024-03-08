@@ -14,6 +14,7 @@ import {
   handleInputUpdate,
   evaluateDataValues,
 } from "../../utilityFunctions/symptomCardUtilities";
+
 //TODO make it so only one card can be in edit mode at a time. Try using state in App.js for this functionality
 
 //TODO: make date, time, symptom, intensity, and notes content editable.
@@ -27,6 +28,7 @@ export default function SymptomCard(props) {
   console.clear();
 
   // state variables
+  const [dateValue, setDateValue] = useState(null);
   const [cardIndex, setCardIndex] = useState(0);
   const [editEnabled, setEditEnabled] = useState(false);
   const [currentSymptomCardKey, setCurrentSymptomCardKey] = useState("");
@@ -38,9 +40,21 @@ export default function SymptomCard(props) {
   const dispatch = useDispatch();
   const myElementRef = useRef(null);
 
-  const newData = {};
+  const newData = {
+    uniqueKey: props.uniqueKey,
+    // index: null,
+    // title: null,
+    // intensity: null,
+    date: null,
+    // time: null,
+    // note: null,
+    // accentColor: null,
+    // uniqueKey: null,
+    // stateLength: null,
+  };
   //^ newData must use the exact same key names
   const currentData = {
+    uniqueKey: props.uniqueKey,
     index: cardIndex,
     title: props.title,
     intensity: props.intensity,
@@ -48,7 +62,6 @@ export default function SymptomCard(props) {
     time: props.time,
     note: props.note,
     accentColor: props.accentColor,
-    uniqueKey: props.uniqueKey,
     stateLength: symptomCardData.length,
   };
 
@@ -66,13 +79,16 @@ export default function SymptomCard(props) {
 
     // Redux state is immutable so editSymptom creates a new object in state arr
     // check if new data == current data, if false, send data to redux, if true do nothing
+
+    //payload variables names must match exactly in redux function
     dispatch(
       editSymptom({
         index: newData.index,
-        newTitle: newData.title,
-        newIntensity: newData.intensity,
-        date: newData.date,
-        // time: time,
+        // date: newData.date,
+        date: dateValue || newData.date,
+        time: newData.time,
+        title: newData.title,
+        intensity: newData.intensity,
         note: newData.note,
         // // blue by default
         // accentColor: userSelectedAccentColor,
@@ -128,12 +144,18 @@ export default function SymptomCard(props) {
             {editEnabled ? "Save" : "Edit"}
           </button>
           <div className='date-time-wrapper'>
+            {/* //!BUG - when in edit mode and selecting a new date the value display doesnt change until save btn is pressed, try adding state variables */}
             <input
-              className='date'
+              className={`date ${editEnabled ? "" : "non-selectable"}`}
               type='date'
-              // value={currentData.date ? currentData.date : props.date}
-              value={props.date}
-              // value='2024-03-12'
+              // value={newData.date ? newData.date : props.date}
+              // value={props.date}
+              value={dateValue ? dateValue : props.date}
+              onChange={(event) => {
+                // newData.date = event.target.value;
+                setDateValue(event.target.value);
+                handleInputUpdate(event, "date-field", currentData, newData);
+              }}
             ></input>
 
             <input

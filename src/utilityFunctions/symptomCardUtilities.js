@@ -51,36 +51,22 @@ export const handleInputUpdate = (event, inputField, currentData, newData) => {
     alert("nothing changed");
   }
 
-  if (inputField === "symptom-title-field") {
-    //! ALL comparisons between NewData and Current Data are moving to sendUpdatedData because its the last function before redux, if that doesnt work move them to handleEdit
+  switch (inputField) {
+    case "date-field":
+      alert("date field");
+      console.log(event);
+      //^ e target value is set to ""
+      newData.date = event.target.value;
+      break;
+    case "symptom-title-field":
+      newData.title = event.target.value;
+      break;
+    case "intensity-field":
+      newData.intensity = event.target.value;
+      break;
 
-    //! ALL comparisons between NewData and Current Data are moving to sendUpdatedData because its the last function before redux, if that doesnt work move them to handleEdit
-
-    //! ALL comparisons between NewData and Current Data are moving to sendUpdatedData because its the last function before redux, if that doesnt work move them to handleEdit
-    //   console.log("symptom title field", event.target.value);
-
-    // if data is different, allow it to update, else keep it set the same (from currentData)
-    if (currentData.title === undefined || currentData.title === "") {
-      currentData.title = event.target.value;
-    }
-    //event.target.value is going to be an empty string at first
-    //   newData.title = event.target.value;
-
-    //! bug reproduction
-    //   newData.title = currentData.title;
-
-    //* give newData.title its updated value, while comparing it to currentData
-    //if new title is empty or undefined set it to the value of current title
-
-    //! have to get the index
-    //edge case
-    if (newData.title !== "" || newData.title !== undefined) {
-    }
-
-    //   console.log(event.target.value);
-    newData.title = event.target.value;
-  } else if (inputField === "intensity-field") {
-    newData.intensity = event.target.value;
+    default:
+      alert("error in switch case");
   }
 
   //^ if all fail ...
@@ -89,8 +75,8 @@ export const handleInputUpdate = (event, inputField, currentData, newData) => {
   //       "Error in handleInputUpdate while trying to match the inputField value"
   //     );
   //   }
-
   console.log("newData from", inputField.toUpperCase(), ":", newData);
+  return;
 };
 
 //
@@ -200,4 +186,11 @@ export const evaluateDataValues = (currentData, newData) => {
     newData.note = currentData.note;
   }
   console.log("new date at end of evaluateDataValues", newData.date);
+
+  return;
 };
+
+//
+//
+//
+//
