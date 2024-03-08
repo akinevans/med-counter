@@ -36,13 +36,13 @@ export default function SymptomCard(props) {
   //* replace newData with this object
   const [newData, setNewData] = useState({
     uniqueKey: props.uniqueKey,
-    index: null,
-    date: null,
-    time: null,
-    title: null,
-    intensity: null,
-    note: null,
-    accentColor: null,
+    // index: null,
+    // date: null,
+    // time: null,
+    // title: null,
+    // intensity: null,
+    // note: null,
+    // accentColor: null,
     // stateLength: null,
   });
 
@@ -98,7 +98,8 @@ export default function SymptomCard(props) {
         intensity: newData.intensity,
         note: newData.note,
         // // blue by default
-        // accentColor: userSelectedAccentColor,
+        //! change to newData.accentColor once ability to change color in implemented
+        accentColor: currentData.accentColor,
       })
     );
 
@@ -140,7 +141,6 @@ export default function SymptomCard(props) {
                 currentData,
                 symptomCardData,
                 currentSymptomCardKey,
-                // state variables
                 editEnabled,
                 setEditEnabled,
                 setCardIndex,
@@ -205,6 +205,9 @@ export default function SymptomCard(props) {
             </div>
             <div className='intensity-title-and-value-wrapper'>
               <h1 className='intensity-header'>Intensity</h1>
+
+              {/* //& INTENSITY  */}
+
               <input
                 type='number'
                 min='1'
@@ -218,7 +221,8 @@ export default function SymptomCard(props) {
                     event,
                     "intensity-field",
                     currentData,
-                    newData
+                    newData,
+                    setNewData
                   );
                 }}
               ></input>

@@ -79,7 +79,10 @@ export const handleInputUpdate = (
       break;
 
     case "intensity-field":
-      // newData.intensity = event.target.value;
+      alert("key is intensity");
+      setNewData(() => ({
+        intensity: event.target.value,
+      }));
       break;
 
     default:
@@ -94,7 +97,7 @@ export const handleInputUpdate = (
   //   }
   console.log("newData from", inputField.toUpperCase(), ":", newData);
 
-  // return;
+  return;
 };
 
 //
@@ -133,6 +136,11 @@ export const handleEditButton = (
       currentSymptomCardKey,
       setCardIndex
     );
+
+    // Update all properties in NewDataState as a safeguard, this will prevent propertied from going back to their currentData value when attempting to edit multiple form inputs
+
+    //add same switch case logic from above
+
     sendUpdatedData(newData, currentData);
   }
 };
@@ -144,10 +152,22 @@ export const handleEditButton = (
 
 // function for handling decision making for new data and current data directly before its sent to redux in sendUpdatedData
 export const evaluateDataValues = (currentData, newData) => {
-  // //!BUG when clicking edit then immediately save, data gets erased in SymptomCard
-  //^ FIX - By comparing if currentData !== newData you can decide if dispatch/editSymptom should be called or not
+  //* This logic prevents values from being overwritten by empty strings when edit mode is enabled, then immediately closed without user updating any values
+
+  //TODO add all other inputs tot his logic
   // Edge case for all input elements
-  // if new title is empty, set it to current title to prevent it from being overwritten as an empty string when sending data to redux
+  if (newData.date === "" || !newData.date) {
+    newData.date = currentData.date;
+  }
+  if (newData.title === "" || !newData.title) {
+    newData.title = currentData.title;
+  }
+  if (newData.intensity === "" || !newData.intensity) {
+    newData.intensity = currentData.intensity;
+  }
+  if (newData.note === "" || !newData.note) {
+    newData.note = currentData.note;
+  }
 
   //TODO: refactor the if expressions into a for in loop
   //   for (let key in newData) {
@@ -159,24 +179,6 @@ export const evaluateDataValues = (currentData, newData) => {
   //     }
   //   }
 
-  // do them in this order -> date, time, title, intensity, note
-
-  // date
-  if (newData.date === "" || !newData.date) {
-    newData.date = currentData.date;
-  }
-  // title
-  if (newData.title === "" || !newData.title) {
-    newData.title = currentData.title;
-  }
-  // intensity
-  if (newData.intensity === "" || !newData.intensity) {
-    newData.intensity = currentData.intensity;
-  }
-  // note
-  if (newData.note === "" || !newData.note) {
-    newData.note = currentData.note;
-  }
   console.log("new date at end of evaluateDataValues", newData.date);
 
   return;
