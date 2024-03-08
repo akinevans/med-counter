@@ -13,6 +13,7 @@ import {
   handleEditButton,
   handleInputUpdate,
   evaluateDataValues,
+  updateNewDataState,
 } from "../../utilityFunctions/symptomCardUtilities";
 
 //TODO make it so only one card can be in edit mode at a time. Try using state in App.js for this functionality
@@ -28,10 +29,36 @@ export default function SymptomCard(props) {
   console.clear();
 
   // state variables
-  const [dateValue, setDateValue] = useState(null);
+  // const [indexValue, setIndeValue] = useState(null);
   const [cardIndex, setCardIndex] = useState(0);
   const [editEnabled, setEditEnabled] = useState(false);
   const [currentSymptomCardKey, setCurrentSymptomCardKey] = useState("");
+
+  // Define the initial state obj
+  //* replace newData with this object
+  const [newData, setNewData] = useState({
+    uniqueKey: props.uniqueKey,
+    index: null,
+    date: null,
+    time: null,
+    title: null,
+    intensity: null,
+    note: null,
+    accentColor: null,
+    // stateLength: null,
+  });
+
+  // Function to update the state obj
+  // const updateNewDataState = (key, value) => {
+  //   if (key === "date") {
+  //     alert("key is date");
+  //     setNewData((prevState) => ({
+  //       // ...prevState,
+
+  //       date: value,
+  //     }));
+  //   }
+  // };
 
   // get data from Redux
   const symptomCardData = useSelector((state) => state.count.symptomList);
@@ -40,18 +67,18 @@ export default function SymptomCard(props) {
   const dispatch = useDispatch();
   const myElementRef = useRef(null);
 
-  const newData = {
-    uniqueKey: props.uniqueKey,
-    // index: null,
-    // title: null,
-    // intensity: null,
-    date: null,
-    // time: null,
-    // note: null,
-    // accentColor: null,
-    // uniqueKey: null,
-    // stateLength: null,
-  };
+  // const newData = {
+  //   uniqueKey: props.uniqueKey,
+  //   // index: null,
+  //   // title: null,
+  //   // intensity: null,
+  //   date: null,
+  //   // time: null,
+  //   // note: null,
+  //   // accentColor: null,
+  //   // uniqueKey: null,
+  //   // stateLength: null,
+  // };
   //^ newData must use the exact same key names
   const currentData = {
     uniqueKey: props.uniqueKey,
@@ -85,7 +112,8 @@ export default function SymptomCard(props) {
       editSymptom({
         index: newData.index,
         // date: newData.date,
-        date: dateValue || newData.date,
+        // date: dateValue || newData.date,
+        date: newData.date,
         time: newData.time,
         title: newData.title,
         intensity: newData.intensity,
@@ -148,13 +176,17 @@ export default function SymptomCard(props) {
             <input
               className={`date ${editEnabled ? "" : "non-selectable"}`}
               type='date'
-              // value={newData.date ? newData.date : props.date}
               // value={props.date}
-              value={dateValue ? dateValue : props.date}
+              value={newData.date ? newData.date : props.date}
               onChange={(event) => {
-                // newData.date = event.target.value;
-                setDateValue(event.target.value);
-                handleInputUpdate(event, "date-field", currentData, newData);
+                handleInputUpdate(
+                  event,
+                  "date-field",
+                  currentData,
+                  newData,
+                  updateNewDataState,
+                  setNewData
+                );
               }}
             ></input>
 

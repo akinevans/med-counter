@@ -41,7 +41,14 @@ function getCurrentIndex(
 //
 
 // function for updating the data on an input when it edited
-export const handleInputUpdate = (event, inputField, currentData, newData) => {
+export const handleInputUpdate = (
+  event,
+  inputField,
+  currentData,
+  newData,
+  updateNewDataState,
+  setNewData
+) => {
   //check which input in symptomCard the data is coming from
   console.log("currentData:", currentData);
 
@@ -53,10 +60,8 @@ export const handleInputUpdate = (event, inputField, currentData, newData) => {
 
   switch (inputField) {
     case "date-field":
-      alert("date field");
-      console.log(event);
-      //^ e target value is set to ""
-      newData.date = event.target.value;
+      // update newData state object
+      updateNewDataState("date", event.target.value, setNewData);
       break;
     case "symptom-title-field":
       newData.title = event.target.value;
@@ -76,7 +81,9 @@ export const handleInputUpdate = (event, inputField, currentData, newData) => {
   //     );
   //   }
   console.log("newData from", inputField.toUpperCase(), ":", newData);
-  return;
+
+  updateNewDataState(null, event, setNewData);
+  // return;
 };
 
 //
@@ -193,4 +200,14 @@ export const evaluateDataValues = (currentData, newData) => {
 //
 //
 //
-//
+// function for updating newDataState object
+export const updateNewDataState = (key, value, setNewData) => {
+  if (key === "date") {
+    alert("key is date");
+    setNewData((prevState) => ({
+      // ...prevState,
+
+      date: value,
+    }));
+  }
+};
