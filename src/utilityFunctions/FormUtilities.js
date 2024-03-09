@@ -1,6 +1,6 @@
 export const generateUniqueKey = () => {
-  const alpha1 = ["A", "B", "C", "D", "E", "F"];
-  const alpha2 = ["U", "V", "W", "X", "Y", "Z"];
+  const alpha1 = ["A", "B", "C", "D", "E", "F", "H"];
+  const alpha2 = ["T", "U", "V", "W", "X", "Y", "Z"];
 
   let randLetter1 = alpha1[Math.floor(Math.random() * alpha1.length)];
   let randLetter2 = alpha2[Math.floor(Math.random() * alpha2.length)];
@@ -30,8 +30,10 @@ export const displayAccentColors = () => {
 //
 //
 //
+//
 
 export const getDateAndTime = () => {
+  // These functions get the current date of the client device
   // Date logic
   const currentDate = new Date();
 
@@ -54,10 +56,13 @@ export const getDateAndTime = () => {
   let formattedDate = formatDateAndTime(dateObj);
   let formattedTime = formatDateAndTime(null, timeObj);
 
-  console.log("date", formattedDate, "time:", formattedTime);
-
   return [formattedDate, formattedTime];
 };
+
+//
+//
+//
+//
 
 // function for formatting date and time values after they are generated
 function formatDateAndTime(date, time) {
@@ -84,7 +89,7 @@ function formatDateAndTime(date, time) {
       ":" +
       (time.minute < 10 ? "0" : "") +
       time.minute;
-    // Uncomment to include seconds in the symptomCard time, you will have to adjust the width in css to accommodate
+    // Uncomment to include seconds in the symptomCard time, you will have to adjust the width in symptomCard css to accommodate
     // +
     // ":" +
     // (time.second < 10 ? "0" : "") +
@@ -94,21 +99,19 @@ function formatDateAndTime(date, time) {
   }
 }
 
-export const clearFormInputValues = (
-  setSymptom,
-  setIntensity,
-  setDate,
-  setTime,
-  setNote,
-  setColorSelected,
-  setUserSelectedAccentColor
-) => {
-  // set all relevant state values back to their default values when form is submitted or closed
+//
+//
+//
+//
+
+export const clearFormInputValues = (setSymptom, setIntensity, setNote) => {
+  // set all relevant state values back to default values when form is submitted or closed
   setSymptom("");
   setIntensity("");
-  // setDate();
-  // setTime();
   setNote("");
-  setColorSelected(false);
-  // setUserSelectedAccentColor();
 };
+
+//
+//
+//
+//

@@ -20,31 +20,13 @@ import {
 //TODO: make date, time, symptom, intensity, and notes content editable.
 //! NEXT - Continue working on edit functionality. Right now only the title can be edited. May need a handler function for each input
 
-//^ all p tags with data must be changed to input elements
-//^ all p tags with data must be changed to input elements
-//^ all p tags with data must be changed to input elements
-
 export default function SymptomCard(props) {
-  console.clear();
+  // console.clear();
 
   // state variables
   const [cardIndex, setCardIndex] = useState(0);
   const [editEnabled, setEditEnabled] = useState(false);
   const [currentSymptomCardKey, setCurrentSymptomCardKey] = useState("");
-
-  // Define the initial state obj
-  //* replace newData with this object
-  const [newData, setNewData] = useState({
-    uniqueKey: props.uniqueKey,
-    // index: null,
-    // date: null,
-    // time: null,
-    // title: null,
-    // intensity: null,
-    // note: null,
-    // accentColor: null,
-    // stateLength: null,
-  });
 
   // get data from Redux
   const symptomCardData = useSelector((state) => state.count.symptomList);
@@ -53,7 +35,14 @@ export default function SymptomCard(props) {
   const dispatch = useDispatch();
   const myElementRef = useRef(null);
 
-  //^ newData must use the exact same key names
+  // Define the initial state obj
+  //* replace newData with this object
+  const [newData, setNewData] = useState({
+    uniqueKey: props.uniqueKey,
+    // All data will be set from Redux state. No need to hard code initial values.
+    // Hard coding initial values will break the logic
+  });
+
   const currentData = {
     uniqueKey: props.uniqueKey,
     index: cardIndex,
@@ -83,27 +72,21 @@ export default function SymptomCard(props) {
     console.log("in sendUpdatedData here is NewData:", newData);
     alert("pause for console ");
 
-    // Redux state is immutable so editSymptom creates a new object in state arr
-    // check if new data == current data, if false, send data to redux, if true do nothing
-
-    //payload variables names must match exactly in redux function
+    //payload variables names must match exactly in redux
     dispatch(
       editSymptom({
         index: newData.index,
-        // date: newData.date,
-        // date: dateValue || newData.date,
         date: newData.date,
         time: newData.time,
         title: newData.title,
         intensity: newData.intensity,
         note: newData.note,
-        // // blue by default
-        //! change to newData.accentColor once ability to change color in implemented
+        //! change accentColor to newData.accentColor once ability to change from edit mode is color in implemented
         accentColor: currentData.accentColor,
       })
     );
 
-    // Next delete the duplicate entry created by editSymptom redux function
+    // Delete the duplicate symptomCard created by editSymptom in Redux
     dispatch(
       deleteDuplicateSymptom({
         index: cardIndex,
@@ -111,13 +94,11 @@ export default function SymptomCard(props) {
     );
   };
 
-  // helper for getting the current text inside of the p element with ref='unique-key-text'
+  // get the uniqueKey
   useEffect(() => {
-    // Access the DOM element by using the current property of the ref
     setCurrentSymptomCardKey(myElementRef.current.textContent);
   }, []);
-
-  console.log("CURRENT uniqueKey: ", currentSymptomCardKey);
+  // console.log("CURRENT uniqueKey: ", currentSymptomCardKey);
 
   return (
     <div className={`symptom-card-wrapper ${editEnabled ? "edit-mode" : ""}`}>
@@ -132,9 +113,6 @@ export default function SymptomCard(props) {
             //
             className='edit-btn'
             onClick={(e) => {
-              //TODO maybe...
-              // set edit mode?
-              // decide if edit mode is true? then handleEditBtn, if false...?
               handleEditButton(
                 e,
                 newData,
@@ -151,13 +129,10 @@ export default function SymptomCard(props) {
             {editEnabled ? "Save" : "Edit"}
           </button>
           <div className='date-time-wrapper'>
-            {/* //!BUG - when in edit mode and selecting a new date the value display doesnt change until save btn is pressed, try adding state variables */}
-
             {/* //& DATE  */}
             <input
               className={`date ${editEnabled ? "" : "non-selectable"}`}
               type='date'
-              // value={props.date}
               value={newData.date ? newData.date : props.date}
               onChange={(event) => {
                 handleInputUpdate(
@@ -172,7 +147,7 @@ export default function SymptomCard(props) {
 
             {/* //& TIME  */}
             <input
-              className='time'
+              className={`time ${editEnabled ? "" : "non-selectable"}`}
               type='time'
               placeholder={props.time}
               value={newData.time ? newData.time : props.time}
@@ -188,7 +163,6 @@ export default function SymptomCard(props) {
             ></input>
           </div>
           <div className='symptom-and-intensity-wrapper'>
-            {/* //! you can make a new content editable effect by triggering user select:none */}
             <div className='symptom-title-wrapper'>
               <h1 className='symptom-header'>Symptom</h1>
 
@@ -199,8 +173,6 @@ export default function SymptomCard(props) {
                   editEnabled ? "" : "non-selectable"
                 }`}
                 placeholder={props.title}
-                // contentEditable={editEnabled}
-
                 onChange={(event) => {
                   handleInputUpdate(
                     event,
@@ -216,7 +188,6 @@ export default function SymptomCard(props) {
               <h1 className='intensity-header'>Intensity</h1>
 
               {/* //& INTENSITY  */}
-
               <input
                 type='number'
                 min='1'
@@ -238,9 +209,8 @@ export default function SymptomCard(props) {
             </div>
           </div>
           <div className='note-wrapper'>
-            {/* <p className='note-title'>Notes:</p> */}
-
             {/* //& NOTE  */}
+            {/* //! KNOWN BUG - cant fully delete existing note when in edit mode*/}
             <textarea
               className={`note-text-area ${
                 editEnabled ? "" : "non-selectable"
@@ -262,11 +232,7 @@ export default function SymptomCard(props) {
                 );
               }}
             ></textarea>
-            <p
-              ref={myElementRef}
-              // id='unique-key-text'
-              className='unique-key-text'
-            >
+            <p ref={myElementRef} className='unique-key-text'>
               {props.uniqueKey}
             </p>
           </div>

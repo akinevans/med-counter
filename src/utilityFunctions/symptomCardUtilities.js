@@ -1,5 +1,5 @@
 //! KNOWN BUGS
-// When going into edit mode. Editing the date, then the time, then clicking save (in that order), the new date value will reset to the currentDate value
+// When going into edit mode. Editing multiple fields then clicking save only the last edited field will update
 
 //TODO: refactor all functions to use state / set state with newData state obj
 
@@ -10,8 +10,6 @@ function getCurrentIndex(
   currentSymptomCardKey,
   setCardIndex
 ) {
-  //   console.log("currentStateLength ", currentData.stateLength);
-
   //edge case
   if (symptomCardData.length === 0) {
     setCardIndex(0);
@@ -20,12 +18,12 @@ function getCurrentIndex(
     return 0;
   }
 
-  // find the correct data in symptomCard state array by matching the unique id property
+  // find the correct data in symptomCard state array by matching the uniqueKey property
   for (let i = 0; i < symptomCardData.length; i++) {
     if (symptomCardData[i].uniqueKey === currentSymptomCardKey) {
-      console.log("i: ", i);
-      console.log("data FOUND in: ", symptomCardData[i]);
-      console.log("some data found - title:: ", symptomCardData[i].title);
+      // console.log("i: ", i);
+      // console.log("data FOUND in: ", symptomCardData[i]);
+      // console.log("some data found - title:: ", symptomCardData[i].title);
 
       newData.index = symptomCardData[i].cardIndex;
       currentData.index = i;
@@ -44,7 +42,7 @@ function getCurrentIndex(
 //
 //
 
-// function for updating the data on an input when it edited
+// function for updating the data on an input field when it is changed
 export const handleInputUpdate = (
   event,
   inputField,
@@ -55,18 +53,18 @@ export const handleInputUpdate = (
   //check which input in symptomCard the data is coming from
   console.log("currentData:", currentData);
 
-  //!edge case - If user goes into edit mode but doesn't change data
-  // if currentData === newData
+  // edge case - If user goes into edit mode but doesn't change data
+  //TODO: this block needs reworking
   if (!inputField) {
     alert("nothing changed");
   }
 
-  // update newDataState key values by seeing what input the data is coming from
+  //! try multiple if blocks, no 'else if'
+  // see what input the data is coming from, update that inputs state
   switch (inputField) {
     case "date-field":
       // alert("key is date");
       setNewData((prevState) => ({
-        // ...prevState,
         date: event.target.value,
       }));
       break;
@@ -100,17 +98,9 @@ export const handleInputUpdate = (
       break;
 
     default:
-      alert("error in switch case");
+      throw new Error("akin - Error when deciding what input is being updated");
   }
-
-  //^ if all fail ...
-  //   else {
-  //     throw new Error(
-  //       "Error in handleInputUpdate while trying to match the inputField value"
-  //     );
-  //   }
   console.log("newData from", inputField.toUpperCase(), ":", newData);
-
   return;
 };
 
@@ -133,15 +123,14 @@ export const handleEditButton = (
 ) => {
   //edge case
   if (e.target.value === "" && e.target.textContent === "Edit") {
-    // trigger content editable attributes
+    // trigger edit mode
     setEditEnabled(!editEnabled);
-    // check what state editEnabled is in, if 'Edit', get all new input data
   }
+
+  // check what state editEnabled is in, if 'Edit', get all new input data
   if (e.target.textContent === "Save") {
     //^ update all inputs state
     //! be careful, e = the button event, not the data you're dealing with
-
-    //check if editEnabled is turned back off then send all data to redux
 
     getCurrentIndex(
       currentData,
@@ -151,7 +140,7 @@ export const handleEditButton = (
       setCardIndex
     );
 
-    // Update all properties in NewDataState as a safeguard, this will prevent propertied from going back to their currentData value when attempting to edit multiple form inputs
+    // Update all properties in NewDataState as a safeguard, this will hopefully prevent propertied from going back to their currentData value when attempting to edit multiple form inputs
 
     //add same switch case logic from above
 
@@ -170,6 +159,7 @@ export const evaluateDataValues = (currentData, newData) => {
 
   //TODO add all other inputs to this logic
   // Edge case for all input elements
+  //! this is causing the bug where you cant fully delete existing note
   if (newData.date === "" || !newData.date) {
     newData.date = currentData.date;
   }
@@ -182,19 +172,22 @@ export const evaluateDataValues = (currentData, newData) => {
   if (newData.intensity === "" || !newData.intensity) {
     newData.intensity = currentData.intensity;
   }
-  if (newData.note === "" || !newData.note) {
-    newData.note = currentData.note;
+  if (currentData.note) {
+    newData.note = "xxxx";
   }
+  // if (newData.accentColor === "" || !newData.accentColor) {
+  //   newData.accentColor = currentData.accentColor;
+  // }
 
   //TODO: refactor the if expressions into a for in loop
-  //   for (let key in newData) {
-  //     console.log(newData[key]);
-  //     console.log(key);
-  //     alert("pause for key");
-  //     if (newData[key] === "" || !newData[key]) {
-  //       newData[key] = currentData[key];
-  //     }
+  // for (let key in newData) {
+  //   console.log(newData[key]);
+  //   console.log(key);
+  //   alert("pause for key");
+  //   if (newData[key] === "" || !newData[key]) {
+  //     newData[key] = currentData[key];
   //   }
+  // }
 
   console.log("new date at end of evaluateDataValues", newData.date);
 

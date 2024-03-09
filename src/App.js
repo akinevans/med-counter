@@ -8,20 +8,15 @@ import SymptomCard from "./components/SymptomCard/SymptomCard";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAll } from "./redux/countReducer";
 
-//utility imports
-
-//TODO: Implement editable text list, with date / time
-//TODO get header icons
+//TODO get header icons for edit and delete symptomCord
 
 function App() {
-  // get data from Redux
-  const symptomCardData = useSelector((state) => state.count.symptomList);
-  const dispatch = useDispatch();
   //state variables
   const [formVisible, setFormVisible] = useState(false);
 
-  // const [userSelectedAccentColor, setUserSelectedAccentColor] =
-  //   useState("blue");
+  // get data from Redux
+  const symptomCardData = useSelector((state) => state.count.symptomList);
+  const dispatch = useDispatch();
 
   const handleDeletion = () => {
     const reply = prompt(
@@ -81,8 +76,7 @@ function App() {
           ? symptomCardData.map((data, index) => (
               <SymptomCard
                 // key prop and all other data will be pulled from redux store
-                // use index as the second parameter to get current arr index
-                // key={index}
+
                 title={data.title}
                 intensity={data.intensity}
                 date={data.date}
@@ -91,7 +85,6 @@ function App() {
                 accentColor={data.accentColor}
                 key={data.uniqueKey}
                 uniqueKey={data.uniqueKey}
-                //props for updating values in edit mode
               />
             ))
           : false}

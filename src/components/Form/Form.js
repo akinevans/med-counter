@@ -24,8 +24,6 @@ export default function Form(props) {
   const [userSelectedAccentColor, setUserSelectedAccentColor] =
     useState("blue");
 
-  // get local time zones, then set the local time wherever user is at
-
   const dispatch = useDispatch();
   const listOfAccentColors = displayAccentColors();
 
@@ -72,9 +70,7 @@ export default function Form(props) {
             value={time}
             contentEditable='true'
             onChange={(e) => {
-              // console.log(e.target.value);
               setTime(e.target.value);
-              console.log(time);
             }}
           />
         </label>
@@ -111,7 +107,6 @@ export default function Form(props) {
 
       <div className='form-bottom-wrapper'>
         <label>
-          {/* <input className='text-area' type='text' placeholder='Notes' /> */}
           <textarea
             name='notes'
             id='notes'
@@ -120,19 +115,19 @@ export default function Form(props) {
             value={note}
             placeholder='Notes'
             onChange={(e) => {
-              // console.log(e.target.value);
               setNote(e.target.value);
-              // console.log(note);
             }}
           ></textarea>
+
           {/* //& COLOR PICKER */}
-          {/* //! the 'color' className in Form.css is separate from the accent color classNames in SymptomCard.css */}
+          {/*the 'color' className in Form.css is separate from the accent color classNames in SymptomCard.css */}
           <div className='color-picker-wrapper'>
             <div
               className={`selected-color-view ${userSelectedAccentColor}`}
             ></div>
-            {listOfAccentColors.map((color) => (
+            {listOfAccentColors.map((color, index) => (
               <div
+                key={index}
                 className={`color-block ${color} ${
                   colorSelected ? "selected" : ""
                 }`}
@@ -158,15 +153,7 @@ export default function Form(props) {
           handleFormSubmission(e, symptom, intensity, date, time, note);
 
           // reset form modal data
-          clearFormInputValues(
-            setSymptom,
-            setIntensity,
-            setDate,
-            setTime,
-            setNote,
-            setColorSelected,
-            setUserSelectedAccentColor
-          );
+          clearFormInputValues(setSymptom, setIntensity, setNote);
 
           //close form modal
           props.closeBtnOnClick();
@@ -177,6 +164,7 @@ export default function Form(props) {
         className='close-btn'
         onClick={() => {
           // reset form modal data
+          clearFormInputValues(setSymptom, setIntensity, setNote);
 
           // close form modal
           props.closeBtnOnClick();
