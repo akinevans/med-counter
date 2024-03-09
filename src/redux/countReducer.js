@@ -1,5 +1,3 @@
-// Redux persist (in store.js) saves the state of the count so that when the page reloads the user will still have the latest count value
-
 //TODO: rename this file and every occurrence of 'count'
 
 import { createSlice } from "@reduxjs/toolkit";
@@ -15,10 +13,6 @@ export const countSlice = createSlice({
   name: "count",
   initialState,
   reducers: {
-    // first check if entry exists
-    //if false, create new entry
-    //else update existing entry
-
     addSymptomCard: (state, action) => {
       const { uniqueKey, date, time, title, intensity, note, accentColor } =
         action.payload;
@@ -56,20 +50,19 @@ export const countSlice = createSlice({
       };
     },
 
-    //TODO: create reducer for editing / updating an existing entry (one function that checks an objects key/values and updates each if necessary)
-
     editSymptom: (state, action) => {
-      const list = [...state.symptomList]; // Create a shallow copy of the array
+      // Create a shallow copy of the array
+      const list = [...state.symptomList];
 
       const { index, date, time, title, intensity, note, accentColor } =
         action.payload;
 
-      console.log("from edit reducer: date:", date);
-      console.log("from edit reducer: time:", time);
-      console.log("from edit reducer: title:", title);
-      console.log("from edit reducer: intensity:", intensity);
-      console.log("from edit reducer: note:", note);
-      console.log("from edit reducer: accent color:", accentColor);
+      // console.log("from edit reducer: date:", date);
+      // console.log("from edit reducer: time:", time);
+      // console.log("from edit reducer: title:", title);
+      // console.log("from edit reducer: intensity:", intensity);
+      // console.log("from edit reducer: note:", note);
+      // console.log("from edit reducer: accent color:", accentColor);
 
       // Create a new object with the updated values
       const updatedSymptom = {
@@ -88,7 +81,6 @@ export const countSlice = createSlice({
       // Update the copied array with the new object
       list[index] = updatedSymptom;
 
-      // Return the updated state object
       return {
         ...state,
         symptomList: list,
@@ -114,8 +106,6 @@ export const countSlice = createSlice({
     },
 
     deleteDuplicateSymptom: (state = initialState, action) => {
-      //TODO delete from listOfUniqueKeys as well
-      //TODO delete from listOfUniqueKeys as well
       const updatedSymptomListArray = [
         ...state.symptomList.slice(0, action.payload.index),
         ...state.symptomList.slice(action.payload.index),
@@ -131,8 +121,6 @@ export const countSlice = createSlice({
         symptomList: updatedSymptomListArray,
         listOfUniqueKeys: updatedListOfUniqueKeys,
       };
-
-      // handle other actions...
     },
 
     deleteAll: (state, action) => {
@@ -145,26 +133,11 @@ export const countSlice = createSlice({
         listOfUniqueKeys: updatedListOfUniqueKeys,
       };
     },
-
-    addSymptom: (state, action) => {
-      const { data } = action.payload;
-      state.symptomList.push(data);
-    },
-
-    updateIntensity: (state, action) => {
-      const { data } = action.payload;
-      state.intensityData.push(data);
-    },
   },
 });
 
-// Action creators are generated for each case reducer function
 export const {
-  updateCount,
-  resetCount,
-  addSymptom,
   addSymptomCard,
-  updateIntensity,
   deleteAll,
   editSymptom,
   deleteDuplicateSymptom,
