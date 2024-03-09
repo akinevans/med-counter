@@ -6,13 +6,19 @@ import "./SymptomCard.css";
 
 // redux imports
 import { useDispatch, useSelector } from "react-redux";
-import { editSymptom, deleteDuplicateSymptom } from "../../redux/countReducer";
+import {
+  editSymptom,
+  deleteDuplicateSymptom,
+  deleteSymptomCard,
+} from "../../redux/countReducer";
 
 // utility imports
 import {
   handleEditButton,
   handleInputUpdate,
   evaluateDataValues,
+  getIndexInSymptomsByUniqueKey,
+  getMatchingIndexInUniqueKeys,
 } from "../../utilityFunctions/symptomCardUtilities";
 
 //TODO make it so only one card can be in edit mode at a time. Try using state in App.js for this functionality
@@ -24,18 +30,23 @@ export default function SymptomCard(props) {
   // console.clear();
 
   // state variables
-  const [cardIndex, setCardIndex] = useState(0);
+  const [cardIndex, setCardIndex] = useState();
   const [editEnabled, setEditEnabled] = useState(false);
   const [currentSymptomCardKey, setCurrentSymptomCardKey] = useState("");
 
   // get data from Redux
   const symptomCardData = useSelector((state) => state.count.symptomList);
+  const listOfUniqueKeyData = useSelector(
+    (state) => state.count.listOfUniqueKeys
+  );
+
   console.log("symptomCardData", symptomCardData);
+  console.log("listOfUniqueKeys", listOfUniqueKeyData);
 
   const dispatch = useDispatch();
   const myElementRef = useRef(null);
 
-  // Define the initial state obj
+  // Define the initial new data state obj
   //* replace newData with this object
   const [newData, setNewData] = useState({
     uniqueKey: props.uniqueKey,
@@ -55,11 +66,19 @@ export default function SymptomCard(props) {
     stateLength: symptomCardData.length,
   };
 
+  // console.log("uniqueKeyIndex", uniqueKeyIndex);
+
   console.log("currentData", currentData);
-  console.log("newData ", newData);
+  // console.log("newData ", newData);
 
   const sendUpdatedData = (newData, currentData) => {
     //TODO refactor data decision making into a module in symptomCardUtilities
+    const uniqueKeyIndex = getMatchingIndexInUniqueKeys(
+      currentData.uniqueKey,
+      listOfUniqueKeyData
+    );
+    console.log("currentData", currentData.uniqueKey);
+    console.log("index of uKey", uniqueKeyIndex);
 
     setEditEnabled(false);
 
@@ -68,8 +87,8 @@ export default function SymptomCard(props) {
 
     evaluateDataValues(currentData, newData);
 
-    console.log("in sendUpdatedData here is currentData:", currentData);
-    console.log("in sendUpdatedData here is NewData:", newData);
+    // console.log("in sendUpdatedData here is currentData:", currentData);
+    // console.log("in sendUpdatedData here is NewData:", newData);
     alert("pause for console ");
 
     //payload variables names must match exactly in redux
@@ -90,6 +109,8 @@ export default function SymptomCard(props) {
     dispatch(
       deleteDuplicateSymptom({
         index: cardIndex,
+        uniqueKey: currentData.uniqueKey,
+        uniqueKeyIndex: uniqueKeyIndex,
       })
     );
   };
@@ -109,25 +130,48 @@ export default function SymptomCard(props) {
 
         <div className='symptom-card-data-wrapper'>
           {/* //TODO change edit button to an edit icon */}
-          <button
-            //
-            className='edit-btn'
-            onClick={(e) => {
-              handleEditButton(
-                e,
-                newData,
-                currentData,
-                symptomCardData,
-                currentSymptomCardKey,
-                editEnabled,
-                setEditEnabled,
-                setCardIndex,
-                sendUpdatedData
-              );
-            }}
-          >
-            {editEnabled ? "Save" : "Edit"}
-          </button>
+          <div className='delete-edit-btn-wrapper'>
+            <button
+              //
+              className={`delete-btn ${editEnabled ? "" : "hidden"}`}
+              onClick={(uniqueKeyIndex) => {
+                //get index of current card by matching its unique key
+                const indexViaUniqueKey = getIndexInSymptomsByUniqueKey(
+                  currentSymptomCardKey,
+                  symptomCardData
+                );
+
+                dispatch(
+                  deleteSymptomCard({
+                    indexToDelete: indexViaUniqueKey,
+                    uniqueKeyToDelete: currentData.uniqueKey,
+                    indexOfUniqueKey: uniqueKeyIndex,
+                  })
+                );
+              }}
+            >
+              Delete Card
+            </button>
+            <button
+              //
+              className='edit-btn'
+              onClick={(e) => {
+                handleEditButton(
+                  e,
+                  newData,
+                  currentData,
+                  symptomCardData,
+                  currentSymptomCardKey,
+                  editEnabled,
+                  setEditEnabled,
+                  setCardIndex,
+                  sendUpdatedData
+                );
+              }}
+            >
+              {editEnabled ? "Save" : "Edit"}
+            </button>
+          </div>
           <div className='date-time-wrapper'>
             {/* //& DATE  */}
             <input

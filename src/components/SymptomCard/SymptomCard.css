@@ -1,6 +1,7 @@
 .symptom-card-wrapper,
 .symptom-card-inner-wrapper,
 .symptom-card-data-wrapper,
+.delete-edit-btn-wrapper,
 .date-time-wrapper,
 .symptom-and-intensity-wrapper,
 .intensity-title-and-value-wrapper,
@@ -43,7 +44,6 @@
 }
 
 .symptom-card-data-wrapper {
-  position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -52,23 +52,38 @@
   padding: 20px 30px;
 }
 
-.edit-btn {
-  position: absolute;
-  top: 10px;
-  right: 30px;
+.delete-edit-btn-wrapper {
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+  /* outline: 2px solid blue; */
+}
+
+.delete-btn {
+  margin-right: 10px;
+}
+
+.edit-btn,
+.delete-btn {
   width: fit-content;
   height: fit-content;
-  padding: 2px 8px;
-  background-color: #c0c0c0;
+  padding: 2px 10px;
+  font-size: 0.9rem;
+  background-color: #d4d4d4;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.edit-btn:hover {
+.edit-btn:hover,
+.delete-btn:hover {
   opacity: 80%;
+  transition: all 0.2s ease;
 }
-.edit-btn:active {
+.edit-btn:active,
+.delete-btn:active {
   opacity: 60%;
 }
 
@@ -223,6 +238,10 @@
   user-select: none;
   /* removes ability to edit */
   pointer-events: none;
+}
+
+.hidden {
+  display: none;
 }
 
 /* accent colors */

@@ -83,7 +83,8 @@ function App() {
                 time={data.time}
                 note={data.note}
                 accentColor={data.accentColor}
-                key={data.uniqueKey}
+                // key={data.uniqueKey}
+                key={index}
                 uniqueKey={data.uniqueKey}
               />
             ))

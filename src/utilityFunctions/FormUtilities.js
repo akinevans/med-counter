@@ -1,11 +1,16 @@
 export const generateUniqueKey = () => {
-  const alpha1 = ["A", "B", "C", "D", "E", "F", "H"];
-  const alpha2 = ["T", "U", "V", "W", "X", "Y", "Z"];
+  // 648,000,000 possible combinations
+  const alpha1 = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
+  const alpha2 = ["J", "K", "L", "M", "N", "O", "P", "Q", "R"];
+  const alpha3 = ["S", "T", "U", "V", "W", "X", "Y", "Z"];
 
   let randLetter1 = alpha1[Math.floor(Math.random() * alpha1.length)];
   let randLetter2 = alpha2[Math.floor(Math.random() * alpha2.length)];
+  let randLetter3 = alpha3[Math.floor(Math.random() * alpha3.length)];
 
-  return Math.floor(Math.random() * 100000) + "-" + randLetter1 + randLetter2;
+  let alphaKey = randLetter1 + randLetter2 + randLetter3;
+
+  return Math.floor(Math.random() * 1000000) + "-" + alphaKey;
 };
 
 //

@@ -40,8 +40,6 @@ export const countSlice = createSlice({
       const newListOfUniqueKeys = [...state.listOfUniqueKeys, keyData];
       const newSymptomList = [...state.symptomList, cardData];
 
-      console.log("unique Keys ", newListOfUniqueKeys);
-
       // Return a new state object with the updated arrays
       return {
         ...state,
@@ -49,6 +47,11 @@ export const countSlice = createSlice({
         symptomList: newSymptomList,
       };
     },
+
+    //
+    //
+    //
+    //
 
     editSymptom: (state, action) => {
       // Create a shallow copy of the array
@@ -75,6 +78,7 @@ export const countSlice = createSlice({
         note: note,
         accentColor: accentColor,
       };
+
       console.log(updatedSymptom.date);
       alert("pause from reducer");
 
@@ -87,41 +91,96 @@ export const countSlice = createSlice({
       };
     },
 
-    deleteSymptom: (state, action) => {
-      //TODO delete from listOfUniqueKeys also
-      //TODO delete from listOfUniqueKeys also
-      //TODO delete from listOfUniqueKeys also
+    //
+    //
+    //
+    //
 
-      const list = [...state.symptomList]; // Create a shallow copy of the array
-      const indexToDelete = action.payload;
+    deleteSymptomCard: (state, action) => {
+      const { indexToDelete, uniqueKeyToDelete, uniqueKeyIndex } =
+        action.payload;
 
-      // Use array filtering to create a new array without the object to delete
-      const updatedList = list.filter((item, index) => index !== indexToDelete);
+      // Create a shallow copy of the symptom and uniqueKey arrays
+      let listOfSymptoms = [...state.symptomList];
+      let listOfUniqueKeys = [...state.listOfUniqueKeys];
 
-      // Return the updated state object
+      const symptomData = {
+        ...listOfSymptoms[indexToDelete],
+        deletionIndex: indexToDelete,
+      };
+
+      const uniqueKeyData = {
+        ...listOfUniqueKeys,
+        deletionKey: uniqueKeyToDelete,
+      };
+
+      console.log(
+        "index to delete:",
+        symptomData.deletionIndex,
+        "uniqueKey:",
+        uniqueKeyData.deletionKey
+      );
+
+      // Use splice to remove the element from the copied array
+      listOfSymptoms.splice(symptomData.deletionIndex, 1);
+      //! splice is incorrect for unique key arr
+      //! splice is incorrect for unique key arr
+      //! splice is incorrect for unique key arr
+      listOfUniqueKeys.splice(uniqueKeyIndex, 1);
+
+      console.log("INDEX", uniqueKeyIndex);
+      console.log("new symp arr:", listOfSymptoms);
+      console.log("new uniq arr:", listOfUniqueKeys);
+      alert("pause for deleteSymptomCard");
+
+      // Return the updated state object with the modified arrays
       return {
         ...state,
-        symptomList: updatedList,
+        symptomList: listOfSymptoms,
+        listOfUniqueKeys: listOfUniqueKeys,
       };
     },
 
+    //
+    //
+    //
+    //
+
     deleteDuplicateSymptom: (state = initialState, action) => {
+      const { index, uniqueKey, uniqueKeyIndex } = action.payload;
+
       const updatedSymptomListArray = [
-        ...state.symptomList.slice(0, action.payload.index),
-        ...state.symptomList.slice(action.payload.index),
+        ...state.symptomList.slice(0, index),
+        ...state.symptomList.slice(index),
       ];
 
       const updatedListOfUniqueKeys = [
-        ...state.listOfUniqueKeys.slice(0, action.payload.index),
-        ...state.listOfUniqueKeys.slice(action.payload.index),
+        ...state.listOfUniqueKeys.slice(0, uniqueKeyIndex),
+        ...state.listOfUniqueKeys.slice(uniqueKeyIndex),
       ];
 
-      return {
-        ...state,
-        symptomList: updatedSymptomListArray,
-        listOfUniqueKeys: updatedListOfUniqueKeys,
-      };
+      console.log(
+        "symptom arr near end of delete duplicate",
+        updatedSymptomListArray
+      );
+      console.log(
+        "unique arr near end of delete duplicate",
+        updatedListOfUniqueKeys
+      );
+      alert("pause for deleteDuplicate");
+
+      // unsure why but removing the return statement ensures duplicates are deleted
+      // return {
+      //   ...state,
+      //   symptomList: updatedSymptomListArray,
+      //   listOfUniqueKeys: updatedListOfUniqueKeys,
+      // };
     },
+
+    //
+    //
+    //
+    //
 
     deleteAll: (state, action) => {
       const updatedSymptomListArray = [];
@@ -140,6 +199,7 @@ export const {
   addSymptomCard,
   deleteAll,
   editSymptom,
+  deleteSymptomCard,
   deleteDuplicateSymptom,
 } = countSlice.actions;
 

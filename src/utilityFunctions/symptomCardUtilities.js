@@ -3,6 +3,44 @@
 
 //TODO: refactor all functions to use state / set state with newData state obj
 
+export const getMatchingIndexInUniqueKeys = (key, uniqueKeyStateArr) => {
+  //edge case
+
+  if (uniqueKeyStateArr.length === 0 || !uniqueKeyStateArr) {
+    return null;
+  }
+  for (let i = 0; i < uniqueKeyStateArr.length; i++) {
+    if (uniqueKeyStateArr[i].uniqueKey === key) {
+      console.log("FounD indeX", i);
+      return i;
+    }
+  }
+  return null;
+};
+
+export const getIndexInSymptomsByUniqueKey = (key, symptomStateArr) => {
+  // edge case
+  if (!symptomStateArr || symptomStateArr.length === 0) {
+    return null;
+  }
+
+  // loop over state array and find the index where the matching key, (uniqueKey), resides
+  for (let i = 0; i < symptomStateArr.length; i++) {
+    if (symptomStateArr[i].uniqueKey === key) {
+      console.log("FOUND KEY AT", i);
+      return i;
+    } else if (i === symptomStateArr.length - 1) {
+      return false;
+    }
+  }
+  return false;
+};
+
+//
+//
+//
+//
+
 function getCurrentIndex(
   newData,
   currentData,
@@ -51,7 +89,7 @@ export const handleInputUpdate = (
   setNewData
 ) => {
   //check which input in symptomCard the data is coming from
-  console.log("currentData:", currentData);
+  // console.log("currentData:", currentData);
 
   // edge case - If user goes into edit mode but doesn't change data
   //TODO: this block needs reworking
@@ -189,7 +227,7 @@ export const evaluateDataValues = (currentData, newData) => {
   //   }
   // }
 
-  console.log("new date at end of evaluateDataValues", newData.date);
+  // console.log("new date at end of evaluateDataValues", newData.date);
 
   return;
 };
