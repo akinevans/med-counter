@@ -17,6 +17,7 @@ import {
   handleEditButton,
   handleInputUpdate,
   evaluateDataValues,
+  populateNewDataValues,
   getIndexInSymptomsByUniqueKey,
   getMatchingIndexInUniqueKeys,
 } from "../../utilityFunctions/symptomCardUtilities";
@@ -30,7 +31,6 @@ export default function SymptomCard(props) {
   console.clear();
 
   // state variables
-  // const [cardIndex, setCardIndex] = useState();
   const [editEnabled, setEditEnabled] = useState(false);
   const [currentSymptomCardKey, setCurrentSymptomCardKey] = useState("");
 
@@ -86,7 +86,7 @@ export default function SymptomCard(props) {
     //& check if any data has been altered, if true send date to redux
     //& do this by populating currentData variable (hardcode is fine) then compare it to newData
 
-    evaluateDataValues(currentData, newData);
+    evaluateDataValues(currentData, newData, setNewData);
 
     // console.log("in sendUpdatedData here is currentData:", currentData);
     // console.log("in sendUpdatedData here is NewData:", newData);
@@ -99,11 +99,15 @@ export default function SymptomCard(props) {
           currentSymptomCardKey,
           symptomCardData
         ),
-        date: newData.date,
-        time: newData.time,
-        title: newData.title,
-        intensity: newData.intensity,
-        note: newData.note,
+        // check if user provided new values, if false revert to currentData
+        //^ this causes a bug where you cant delete field text
+        date: newData.date ? newData.date : currentData.date,
+        time: newData.time ? newData.time : currentData.time,
+        title: populateNewDataValues("title", newData, props.title),
+        intensity: newData.intensity
+          ? newData.intensity
+          : currentData.intensity,
+        note: newData.note ? newData.note : currentData.note,
         //! change accentColor to newData.accentColor once ability to change from edit mode is color in implemented
         accentColor: currentData.accentColor,
       })
@@ -163,6 +167,7 @@ export default function SymptomCard(props) {
                 handleEditButton(
                   e,
                   newData,
+                  setNewData,
                   currentData,
                   symptomCardData,
                   currentSymptomCardKey,
@@ -219,7 +224,8 @@ export default function SymptomCard(props) {
                 className={`symptom-title ${
                   editEnabled ? "" : "non-selectable"
                 }`}
-                placeholder={props.title}
+                // placeholder={"Symptom"}
+                value={populateNewDataValues("title", newData, props.title)}
                 onChange={(event) => {
                   handleInputUpdate(
                     event,

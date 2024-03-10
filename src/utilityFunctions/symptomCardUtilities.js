@@ -1,10 +1,6 @@
 //! KNOWN BUGS
 // When going into edit mode. Editing multiple fields then clicking save only the last edited field will update
 
-//TODO: refactor functions to use state/set state with newData state obj - use handleInputUpdate for reference
-
-//TODO: refactor functions to use state/set state with newData state obj - use handleInputUpdate for reference
-
 export const getIndexInSymptomsByUniqueKey = (key, symptomStateArr) => {
   // edge case
   if (!symptomStateArr) {
@@ -55,6 +51,7 @@ export const getMatchingIndexInUniqueKeys = (key, uniqueKeyStateArr) => {
 
 function getCurrentIndex(
   newData,
+  setNewData,
   currentData,
   symptomCardData,
   currentSymptomCardKey
@@ -62,7 +59,10 @@ function getCurrentIndex(
 ) {
   //edge case
   if (symptomCardData.length === 0) {
-    newData.index = 0;
+    // newData.index = 0;
+    setNewData(() => ({
+      index: 0,
+    }));
     currentData.index = 0;
     return 0;
   }
@@ -74,7 +74,10 @@ function getCurrentIndex(
       // console.log("data FOUND in: ", symptomCardData[i]);
       // console.log("some data found - title:: ", symptomCardData[i].title);
 
-      newData.index = symptomCardData[i].cardIndex;
+      // newData.index = symptomCardData[i].cardIndex;
+      setNewData(() => ({
+        index: symptomCardData[i].cardIndex,
+      }));
       currentData.index = i;
 
       break;
@@ -114,18 +117,23 @@ export const handleInputUpdate = (
       }));
       break;
 
-    case "symptom-title-field":
-      // alert("key is title");
-      setNewData(() => ({
-        title: event.target.value,
-      }));
-      break;
-
     case "time-field":
       // alert("key is time");
       setNewData(() => ({
         time: event.target.value,
       }));
+      break;
+
+    case "symptom-title-field":
+      // alert("key is title");
+      setNewData(() => ({
+        title:
+          event.target.value || event.target.value === ""
+            ? event.target.value
+            : currentData.title,
+      }));
+
+      console.log("title:", event.target.value.length);
       break;
 
     case "intensity-field":
@@ -146,6 +154,7 @@ export const handleInputUpdate = (
       throw new Error("akin - Error when deciding what input is being updated");
   }
   console.log("newData from", inputField.toUpperCase(), ":", newData);
+  // alert("pause for console");
   return;
 };
 
@@ -158,6 +167,7 @@ export const handleInputUpdate = (
 export const handleEditButton = (
   e,
   newData,
+  setNewData,
   currentData,
   symptomCardData,
   currentSymptomCardKey,
@@ -177,8 +187,9 @@ export const handleEditButton = (
     //^ CAUTION. e = the button event, not the data you're dealing with
 
     getCurrentIndex(
-      currentData,
       newData,
+      setNewData,
+      currentData,
       symptomCardData,
       currentSymptomCardKey
     );
@@ -197,27 +208,45 @@ export const handleEditButton = (
 //
 
 // function for handling decision making for new data and current data directly before its sent to redux in sendUpdatedData
-export const evaluateDataValues = (currentData, newData) => {
+export const evaluateDataValues = (currentData, newData, setNewData) => {
   // This logic prevents values from being overwritten by empty strings when edit mode is enabled, then immediately closed without user updating any values
 
   // Edge case for all input elements
-  //! this is causing the bug where you cant fully delete existing note
   //TODO: refactor the if expressions into a for in loop
 
   if (newData.date === "" || !newData.date) {
-    newData.date = currentData.date;
+    setNewData(() => ({
+      date: currentData.date,
+    }));
   }
   if (newData.time === "" || !newData.time) {
-    newData.time = currentData.time;
+    setNewData(() => ({
+      time: currentData.time,
+    }));
   }
-  if (newData.title === "" || !newData.title) {
-    newData.title = currentData.title;
+
+  if (newData.title === "") {
+    setNewData(() => ({
+      title: "",
+    }));
+    return;
+  } else if (!newData.title) {
+    setNewData(() => ({
+      title: currentData.title,
+    }));
   }
+
   if (newData.intensity === "" || !newData.intensity) {
-    newData.intensity = currentData.intensity;
+    setNewData(() => ({
+      intensity: currentData.intensity,
+    }));
   }
   if (currentData.note) {
-    newData.note = "xxxx";
+    // newData.note = "xxxx";
+    setNewData(() => ({
+      // note: currentData.date,
+      note: currentData.note,
+    }));
   }
 
   // if (newData.accentColor === "" || !newData.accentColor) {
@@ -230,3 +259,16 @@ export const evaluateDataValues = (currentData, newData) => {
 //
 //
 //
+// use obj bracket notation when the property name is dynamic [key]
+// use obj dot notation when the property name is valid (.title .date .time etc)
+export const populateNewDataValues = (key, newData, existingValue) => {
+  if (newData[key]) {
+    return newData[key];
+  } else if (newData[key] === "") {
+    return "";
+  } else if (!newData[key]) {
+    return existingValue;
+  } else {
+    throw new Error("akin - Error in setting form value");
+  }
+};

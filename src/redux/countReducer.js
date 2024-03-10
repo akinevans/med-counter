@@ -76,7 +76,7 @@ export const countSlice = createSlice({
         accentColor: accentColor,
       };
 
-      console.log(updatedSymptom.date);
+      console.log(updatedSymptom);
       alert("pause from reducer");
 
       // Update the copied array with the new object
