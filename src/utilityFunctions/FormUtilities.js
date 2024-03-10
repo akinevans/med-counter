@@ -1,12 +1,42 @@
 export const generateUniqueKey = () => {
   // 648,000,000 possible combinations
-  const letters1 = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
-  const letters2 = ["J", "K", "L", "M", "N", "O", "P", "Q", "R"];
-  const letters3 = ["S", "T", "U", "V", "W", "X", "Y", "Z"];
+  const letters = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+  ];
 
-  let randLetter1 = letters1[Math.floor(Math.random() * letters1.length)];
-  let randLetter2 = letters2[Math.floor(Math.random() * letters2.length)];
-  let randLetter3 = letters3[Math.floor(Math.random() * letters3.length)];
+  // generate letter between A -> I
+  const randLetter1 = letters[Math.floor(Math.random() * 9)];
+
+  // generate letter between J -> R
+  const randLetter2 = letters[Math.floor(Math.random() * 9) + 9];
+
+  // generate letter between S -> Z
+  const randLetter3 = letters[Math.floor(Math.random() * 8) + 18];
 
   let lettersKey = randLetter1 + randLetter2 + randLetter3;
 
@@ -17,20 +47,18 @@ export const generateUniqueKey = () => {
 //
 //
 
-export const displayAccentColors = () => {
-  return [
-    "blue",
-    "light-blue",
-    "teal",
-    "gold",
-    "orange",
-    "green",
-    "dark-green",
-    "purple",
-    "fuchsia",
-    "crimson",
-  ];
-};
+export const displayAccentColors = () => [
+  "blue",
+  "light-blue",
+  "teal",
+  "gold",
+  "orange",
+  "green",
+  "dark-green",
+  "purple",
+  "fuchsia",
+  "crimson",
+];
 
 //
 //
