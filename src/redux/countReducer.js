@@ -18,12 +18,13 @@ export const countSlice = createSlice({
         action.payload;
 
       // get this symptomCards index, then place it in cardData obj
-      const cardIndex =
+      // will always add a card to the END of the state array
+      const index =
         state.symptomList.length === 0 ? 0 : state.symptomList.length;
 
       const cardData = {
         uniqueKey: uniqueKey,
-        cardIndex: cardIndex,
+        // index: index,
         title: title,
         intensity: intensity,
         date: date,
@@ -123,10 +124,19 @@ export const countSlice = createSlice({
 
       // Use splice to remove the element from the copied array
       listOfSymptoms.splice(symptomData.deletionIndex, 1);
-      //! splice is incorrect for unique key arr
-      //! splice is incorrect for unique key arr
-      //! splice is incorrect for unique key arr
-      listOfUniqueKeys.splice(uniqueKeyIndex, 1);
+
+      //^ To fix bug where uniqueKey arr is being edited incorrectly.
+      // erase the whole arr then loop over listOfSymptoms, while accessing the unique key property of each and pushing the values into new listOfKeys
+      // this is O(n) operation
+
+      // listOfUniqueKeys.splice(uniqueKeyIndex, 1);
+
+      for (let i = 0; i < listOfUniqueKeys.length; i++) {
+        if (listOfUniqueKeys[i].uniqueKey === uniqueKeyToDelete) {
+          // remove from array
+          listOfUniqueKeys.splice(i, 1);
+        }
+      }
 
       console.log("INDEX", uniqueKeyIndex);
       console.log("new symp arr:", listOfSymptoms);

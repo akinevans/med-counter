@@ -3,25 +3,16 @@
 
 //TODO: refactor all functions to use state / set state with newData state obj
 
-export const getMatchingIndexInUniqueKeys = (key, uniqueKeyStateArr) => {
-  //edge case
-
-  if (uniqueKeyStateArr.length === 0 || !uniqueKeyStateArr) {
-    return null;
-  }
-  for (let i = 0; i < uniqueKeyStateArr.length; i++) {
-    if (uniqueKeyStateArr[i].uniqueKey === key) {
-      console.log("FounD indeX", i);
-      return i;
-    }
-  }
-  return null;
-};
-
 export const getIndexInSymptomsByUniqueKey = (key, symptomStateArr) => {
   // edge case
-  if (!symptomStateArr || symptomStateArr.length === 0) {
-    return null;
+  if (!symptomStateArr) {
+    throw new Error("akin - symptomStateArr parameter is null or undefined");
+    // return null;
+  }
+
+  // by this point you've already added 1 symptomCard
+  if (symptomStateArr.length === 1) {
+    return 0;
   }
 
   // loop over state array and find the index where the matching key, (uniqueKey), resides
@@ -29,11 +20,30 @@ export const getIndexInSymptomsByUniqueKey = (key, symptomStateArr) => {
     if (symptomStateArr[i].uniqueKey === key) {
       console.log("FOUND KEY AT", i);
       return i;
-    } else if (i === symptomStateArr.length - 1) {
-      return false;
     }
   }
   return false;
+};
+
+//
+//
+//
+//
+
+export const getMatchingIndexInUniqueKeys = (key, uniqueKeyStateArr) => {
+  //edge case
+
+  if (uniqueKeyStateArr.length === 0 || !uniqueKeyStateArr) {
+    return null;
+  }
+
+  for (let i = 0; i < uniqueKeyStateArr.length; i++) {
+    if (uniqueKeyStateArr[i].uniqueKey === key) {
+      console.log("FounD indeX", i);
+      return i;
+    }
+  }
+  return null;
 };
 
 //
@@ -45,12 +55,12 @@ function getCurrentIndex(
   newData,
   currentData,
   symptomCardData,
-  currentSymptomCardKey,
-  setCardIndex
+  currentSymptomCardKey
+  // setCardIndex
 ) {
   //edge case
   if (symptomCardData.length === 0) {
-    setCardIndex(0);
+    // setCardIndex(0);
     newData.index = 0;
     currentData.index = 0;
     return 0;
@@ -65,6 +75,7 @@ function getCurrentIndex(
 
       newData.index = symptomCardData[i].cardIndex;
       currentData.index = i;
+      // setCardIndex(i);
 
       break;
     } else if (i !== symptomCardData.length) {
@@ -156,7 +167,7 @@ export const handleEditButton = (
   currentSymptomCardKey,
   editEnabled,
   setEditEnabled,
-  setCardIndex,
+  // setCardIndex,
   sendUpdatedData
 ) => {
   //edge case
@@ -174,8 +185,8 @@ export const handleEditButton = (
       currentData,
       newData,
       symptomCardData,
-      currentSymptomCardKey,
-      setCardIndex
+      currentSymptomCardKey
+      // setCardIndex
     );
 
     // Update all properties in NewDataState as a safeguard, this will hopefully prevent propertied from going back to their currentData value when attempting to edit multiple form inputs

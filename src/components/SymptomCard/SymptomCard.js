@@ -27,10 +27,10 @@ import {
 //! NEXT - Continue working on edit functionality. Right now only the title can be edited. May need a handler function for each input
 
 export default function SymptomCard(props) {
-  // console.clear();
+  console.clear();
 
   // state variables
-  const [cardIndex, setCardIndex] = useState();
+  // const [cardIndex, setCardIndex] = useState();
   const [editEnabled, setEditEnabled] = useState(false);
   const [currentSymptomCardKey, setCurrentSymptomCardKey] = useState("");
 
@@ -56,7 +56,7 @@ export default function SymptomCard(props) {
 
   const currentData = {
     uniqueKey: props.uniqueKey,
-    index: cardIndex,
+    // index: cardIndex,
     title: props.title,
     intensity: props.intensity,
     date: props.date,
@@ -68,7 +68,10 @@ export default function SymptomCard(props) {
 
   // console.log("uniqueKeyIndex", uniqueKeyIndex);
 
-  console.log("currentData", currentData);
+  // console.log(
+  //   "currentData  -> only shows last item in array, for all data look at symptomCard state arr ",
+  //   currentData
+  // );
   // console.log("newData ", newData);
 
   const sendUpdatedData = (newData, currentData) => {
@@ -77,7 +80,7 @@ export default function SymptomCard(props) {
       currentData.uniqueKey,
       listOfUniqueKeyData
     );
-    console.log("currentData", currentData.uniqueKey);
+    console.log(currentData.uniqueKey);
     console.log("index of uKey", uniqueKeyIndex);
 
     setEditEnabled(false);
@@ -94,7 +97,11 @@ export default function SymptomCard(props) {
     //payload variables names must match exactly in redux
     dispatch(
       editSymptom({
-        index: newData.index,
+        // index: newData.index,
+        index: getIndexInSymptomsByUniqueKey(
+          currentSymptomCardKey,
+          symptomCardData
+        ),
         date: newData.date,
         time: newData.time,
         title: newData.title,
@@ -108,7 +115,11 @@ export default function SymptomCard(props) {
     // Delete the duplicate symptomCard created by editSymptom in Redux
     dispatch(
       deleteDuplicateSymptom({
-        index: cardIndex,
+        // index: cardIndex,
+        index: getIndexInSymptomsByUniqueKey(
+          currentSymptomCardKey,
+          symptomCardData
+        ),
         uniqueKey: currentData.uniqueKey,
         uniqueKeyIndex: uniqueKeyIndex,
       })
@@ -118,6 +129,13 @@ export default function SymptomCard(props) {
   // get the uniqueKey
   useEffect(() => {
     setCurrentSymptomCardKey(myElementRef.current.textContent);
+
+    const foundIndex = getIndexInSymptomsByUniqueKey(
+      currentSymptomCardKey,
+      symptomCardData
+    );
+
+    // setCardIndex(foundIndex);
   }, []);
   // console.log("CURRENT uniqueKey: ", currentSymptomCardKey);
 
@@ -164,7 +182,7 @@ export default function SymptomCard(props) {
                   currentSymptomCardKey,
                   editEnabled,
                   setEditEnabled,
-                  setCardIndex,
+                  // setCardIndex,
                   sendUpdatedData
                 );
               }}
