@@ -259,6 +259,9 @@ export const evaluateDataValues = (currentData, newData, setNewData) => {
 //
 //
 //
+//
+
+// function for correctly populating the string values in each input for existing symptomCard components
 // use obj bracket notation when the property name is dynamic [key]
 // use obj dot notation when the property name is valid (.title .date .time etc)
 export const populateNewDataValues = (key, newData, existingValue) => {
