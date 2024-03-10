@@ -162,17 +162,26 @@ export default function Form(props) {
 
           //close form modal
           props.closeBtnOnClick();
+
+          //reset date and time inputs
+          setDate(getDateAndTime()[0]);
+          setTime(getDateAndTime()[1]);
         }}
       />
       <button
         //
         className='close-btn'
-        onClick={() => {
-          // reset form modal data
-          clearFormInputValues(setSymptom, setIntensity, setNote);
+        onClick={(e) => {
+          e.preventDefault();
 
           // close form modal
           props.closeBtnOnClick();
+
+          // remove these lines to keep data in the form on close, may be useful to the end user
+          // reset form modal data
+          clearFormInputValues(setSymptom, setIntensity, setNote);
+          setDate(getDateAndTime()[0]);
+          setTime(getDateAndTime()[1]);
         }}
       >
         Close

@@ -140,11 +140,9 @@ function formatDateAndTime(date, time) {
 //
 //
 
-export const clearFormInputValues = (setSymptom, setIntensity, setNote) => {
+export const clearFormInputValues = (...setters) => {
   // set all relevant state values back to default values when form is submitted or closed
-  setSymptom("");
-  setIntensity("");
-  setNote("");
+  setters.forEach((setter) => setter(""));
 };
 
 //
