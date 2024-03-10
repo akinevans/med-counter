@@ -47,7 +47,6 @@ export default function SymptomCard(props) {
   const myElementRef = useRef(null);
 
   // Define the initial new data state obj
-  //* replace newData with this object
   const [newData, setNewData] = useState({
     uniqueKey: props.uniqueKey,
     // All data will be set from Redux state. No need to hard code initial values.
@@ -68,14 +67,13 @@ export default function SymptomCard(props) {
 
   // console.log("uniqueKeyIndex", uniqueKeyIndex);
 
-  // console.log(
-  //   "currentData  -> only shows last item in array, for all data look at symptomCard state arr ",
-  //   currentData
-  // );
+  console.log(
+    "currentData  -> only shows last item in array, for all data look at symptomCard state arr ",
+    currentData
+  );
   // console.log("newData ", newData);
 
   const sendUpdatedData = (newData, currentData) => {
-    //TODO refactor data decision making into a module in symptomCardUtilities
     const uniqueKeyIndex = getMatchingIndexInUniqueKeys(
       currentData.uniqueKey,
       listOfUniqueKeyData
@@ -97,7 +95,6 @@ export default function SymptomCard(props) {
     //payload variables names must match exactly in redux
     dispatch(
       editSymptom({
-        // index: newData.index,
         index: getIndexInSymptomsByUniqueKey(
           currentSymptomCardKey,
           symptomCardData
@@ -115,7 +112,6 @@ export default function SymptomCard(props) {
     // Delete the duplicate symptomCard created by editSymptom in Redux
     dispatch(
       deleteDuplicateSymptom({
-        // index: cardIndex,
         index: getIndexInSymptomsByUniqueKey(
           currentSymptomCardKey,
           symptomCardData
@@ -126,31 +122,21 @@ export default function SymptomCard(props) {
     );
   };
 
-  // get the uniqueKey
+  // get the uniqueKey of the component on render
   useEffect(() => {
     setCurrentSymptomCardKey(myElementRef.current.textContent);
-
-    const foundIndex = getIndexInSymptomsByUniqueKey(
-      currentSymptomCardKey,
-      symptomCardData
-    );
-
-    // setCardIndex(foundIndex);
   }, []);
+
   // console.log("CURRENT uniqueKey: ", currentSymptomCardKey);
 
   return (
     <div className={`symptom-card-wrapper ${editEnabled ? "edit-mode" : ""}`}>
       <div className='symptom-card-inner-wrapper'>
-        {/* //TODO Have a delete entry button that appears when editing btn is pressed */}
-
         <div className={`card-accent-color ${props.accentColor} red`}></div>
-
         <div className='symptom-card-data-wrapper'>
           {/* //TODO change edit button to an edit icon */}
           <div className='delete-edit-btn-wrapper'>
             <button
-              //
               className={`delete-btn ${editEnabled ? "" : "hidden"}`}
               onClick={(uniqueKeyIndex) => {
                 //get index of current card by matching its unique key
@@ -182,7 +168,6 @@ export default function SymptomCard(props) {
                   currentSymptomCardKey,
                   editEnabled,
                   setEditEnabled,
-                  // setCardIndex,
                   sendUpdatedData
                 );
               }}

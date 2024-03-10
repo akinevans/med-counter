@@ -1,16 +1,16 @@
 export const generateUniqueKey = () => {
   // 648,000,000 possible combinations
-  const alpha1 = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
-  const alpha2 = ["J", "K", "L", "M", "N", "O", "P", "Q", "R"];
-  const alpha3 = ["S", "T", "U", "V", "W", "X", "Y", "Z"];
+  const letters1 = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
+  const letters2 = ["J", "K", "L", "M", "N", "O", "P", "Q", "R"];
+  const letters3 = ["S", "T", "U", "V", "W", "X", "Y", "Z"];
 
-  let randLetter1 = alpha1[Math.floor(Math.random() * alpha1.length)];
-  let randLetter2 = alpha2[Math.floor(Math.random() * alpha2.length)];
-  let randLetter3 = alpha3[Math.floor(Math.random() * alpha3.length)];
+  let randLetter1 = letters1[Math.floor(Math.random() * letters1.length)];
+  let randLetter2 = letters2[Math.floor(Math.random() * letters2.length)];
+  let randLetter3 = letters3[Math.floor(Math.random() * letters3.length)];
 
-  let alphaKey = randLetter1 + randLetter2 + randLetter3;
+  let lettersKey = randLetter1 + randLetter2 + randLetter3;
 
-  return Math.floor(Math.random() * 1000000) + "-" + alphaKey;
+  return Math.floor(Math.random() * 1000000) + "-" + lettersKey;
 };
 
 //
@@ -38,11 +38,10 @@ export const displayAccentColors = () => {
 //
 
 export const getDateAndTime = () => {
-  // These functions get the current date of the client device
+  // These functions get the current date of the client device. So time zones are taken into account
   // Date logic
   const currentDate = new Date();
 
-  // get year, month, and day
   let dateObj = {
     year: currentDate.getFullYear(),
     // Months are zero-based, so add 1
@@ -51,17 +50,18 @@ export const getDateAndTime = () => {
   };
 
   // Time logic
-  // get hours, min, sec
   let timeObj = {
     hour: currentDate.getHours(),
     minute: currentDate.getMinutes(),
     second: currentDate.getSeconds(),
   };
 
-  let formattedDate = formatDateAndTime(dateObj);
-  let formattedTime = formatDateAndTime(null, timeObj);
+  let formattedDate = formatDateAndTime(dateObj)[0];
+  let formattedTime = formatDateAndTime(null, timeObj)[1];
+  let formattedTimeWithSeconds = formatDateAndTime(null, timeObj)[2];
 
-  return [formattedDate, formattedTime];
+  //editedTimeWithSeconds is not in use. I created in case its needed in the future
+  return [formattedDate, formattedTime, formattedTimeWithSeconds];
 };
 
 //
@@ -71,37 +71,28 @@ export const getDateAndTime = () => {
 
 // function for formatting date and time values after they are generated
 function formatDateAndTime(date, time) {
-  // shorten the operation by seeing if the function needs date or time
+  let editedDate, editedTime, editedTimeWithSeconds;
+  // shorten the operation by checking if the caller needs date or time
+
   if (!time) {
     // Format  date as YYYY-MM-DD
-    let editedDate =
-      date.year +
-      "-" +
-      (date.month < 10 ? "0" : "") +
-      date.month +
-      "-" +
-      (date.day < 10 ? "0" : "") +
-      date.day;
-
-    return editedDate;
+    editedDate = `${date.year}-${date.month < 10 ? "0" : ""}${date.month}-${
+      date.day < 10 ? "0" : ""
+    }${date.day}`;
   }
 
   if (!date) {
     // Format time as HH:MM
-    let editedTime =
-      (time.hour < 10 ? "0" : "") +
-      time.hour +
-      ":" +
-      (time.minute < 10 ? "0" : "") +
-      time.minute;
-    // Uncomment to include seconds in the symptomCard time, you will have to adjust the width in symptomCard css to accommodate
-    // +
-    // ":" +
-    // (time.second < 10 ? "0" : "") +
-    // time.second;
 
-    return editedTime;
+    editedTime = `${(time.hour < 10 ? "0" : "") + time.hour}:${
+      time.minute < 10 ? "0" : ""
+    }${time.minute}`;
+
+    editedTimeWithSeconds = `${(time.hour < 10 ? "0" : "") + time.hour}:${
+      time.minute < 10 ? "0" : ""
+    }${time.minute}:${time.second < 10 ? "0" : ""}${time.second}`;
   }
+  return [editedDate, editedTime, editedTimeWithSeconds];
 }
 
 //

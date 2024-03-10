@@ -17,14 +17,9 @@ export const countSlice = createSlice({
       const { uniqueKey, date, time, title, intensity, note, accentColor } =
         action.payload;
 
-      // get this symptomCards index, then place it in cardData obj
-      // will always add a card to the END of the state array
-      const index =
-        state.symptomList.length === 0 ? 0 : state.symptomList.length;
-
+      // new data to go into symptomList array
       const cardData = {
         uniqueKey: uniqueKey,
-        // index: index,
         title: title,
         intensity: intensity,
         date: date,
@@ -33,6 +28,7 @@ export const countSlice = createSlice({
         accentColor: accentColor,
       };
 
+      // new data to go into uniqueKey array
       const keyData = {
         uniqueKey: uniqueKey,
       };
@@ -139,7 +135,7 @@ export const countSlice = createSlice({
       }
 
       console.log("INDEX", uniqueKeyIndex);
-      console.log("new symp arr:", listOfSymptoms);
+      console.log("new symptom arr:", listOfSymptoms);
       console.log("new uniq arr:", listOfUniqueKeys);
       alert("pause for deleteSymptomCard");
 
@@ -157,7 +153,7 @@ export const countSlice = createSlice({
     //
 
     deleteDuplicateSymptom: (state = initialState, action) => {
-      const { index, uniqueKey, uniqueKeyIndex } = action.payload;
+      const { index, uniqueKeyIndex } = action.payload;
 
       const updatedSymptomListArray = [
         ...state.symptomList.slice(0, index),

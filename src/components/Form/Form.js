@@ -1,10 +1,10 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./Form.css";
+
+// Redux imports
 import { useDispatch } from "react-redux";
 import { addSymptomCard } from "../../redux/countReducer";
-
-//TODO: from should reset all its inputs each
 
 //utility imports
 import {
@@ -18,6 +18,7 @@ export default function Form(props) {
   const [symptom, setSymptom] = useState("");
   const [intensity, setIntensity] = useState("");
   const [date, setDate] = useState(getDateAndTime()[0]);
+  // To get time with seconds call (getDateAndTime()[2])
   const [time, setTime] = useState(getDateAndTime()[1]);
   const [note, setNote] = useState("");
   const [colorSelected, setColorSelected] = useState(false);
@@ -28,12 +29,14 @@ export default function Form(props) {
   const listOfAccentColors = displayAccentColors();
 
   //TODO: check if generated unique key exists in state.listOfUniqueKeys, if false continue code, else generate a new one
+
   let uniqueKey = generateUniqueKey();
 
   const handleFormSubmission = (e) => {
     // Do not submit the form
     e.preventDefault();
-    //* Create new symptomCard by sending data to redux
+
+    // create new symptomCard component
     dispatch(
       addSymptomCard({
         uniqueKey: uniqueKey,
@@ -47,6 +50,8 @@ export default function Form(props) {
     );
   };
 
+  //TODO: add inputs for symptom frequency, duration, mood, and list of medication taken,
+
   return (
     <form className={`form ${props.className}`}>
       <div className='form-date-time-wrapper'>
@@ -58,7 +63,6 @@ export default function Form(props) {
             value={date}
             onChange={(e) => {
               setDate(e.target.value);
-              //! undefined error
               // console.log(date);
             }}
           />
@@ -133,7 +137,7 @@ export default function Form(props) {
                 }`}
                 onClick={() => {
                   // console.log(color);
-                  //on click outside turn it to false ?
+                  //on click outside of color box turn it to false ?
                   setColorSelected(!colorSelected);
                   setUserSelectedAccentColor(color);
                 }}
@@ -146,13 +150,11 @@ export default function Form(props) {
         className='submit-btn'
         type='text'
         value='Create new entry'
-        //TODO: update onchange logic
-        // onChange={null}
         onClick={(e) => {
-          // Create new SymptomCard
+          // create new SymptomCard
           handleFormSubmission(e, symptom, intensity, date, time, note);
 
-          // reset form modal data
+          // clear all form inputs
           clearFormInputValues(setSymptom, setIntensity, setNote);
 
           //close form modal

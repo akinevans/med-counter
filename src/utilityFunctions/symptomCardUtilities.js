@@ -1,7 +1,9 @@
 //! KNOWN BUGS
 // When going into edit mode. Editing multiple fields then clicking save only the last edited field will update
 
-//TODO: refactor all functions to use state / set state with newData state obj
+//TODO: refactor functions to use state/set state with newData state obj - use handleInputUpdate for reference
+
+//TODO: refactor functions to use state/set state with newData state obj - use handleInputUpdate for reference
 
 export const getIndexInSymptomsByUniqueKey = (key, symptomStateArr) => {
   // edge case
@@ -10,7 +12,7 @@ export const getIndexInSymptomsByUniqueKey = (key, symptomStateArr) => {
     // return null;
   }
 
-  // by this point you've already added 1 symptomCard
+  // by this point symptomCard state arr already has 1 item
   if (symptomStateArr.length === 1) {
     return 0;
   }
@@ -60,7 +62,6 @@ function getCurrentIndex(
 ) {
   //edge case
   if (symptomCardData.length === 0) {
-    // setCardIndex(0);
     newData.index = 0;
     currentData.index = 0;
     return 0;
@@ -75,7 +76,6 @@ function getCurrentIndex(
 
       newData.index = symptomCardData[i].cardIndex;
       currentData.index = i;
-      // setCardIndex(i);
 
       break;
     } else if (i !== symptomCardData.length) {
@@ -99,16 +99,12 @@ export const handleInputUpdate = (
   newData,
   setNewData
 ) => {
-  //check which input in symptomCard the data is coming from
-  // console.log("currentData:", currentData);
-
   // edge case - If user goes into edit mode but doesn't change data
   //TODO: this block needs reworking
   if (!inputField) {
     alert("nothing changed");
   }
 
-  //! try multiple if blocks, no 'else if'
   // see what input the data is coming from, update that inputs state
   switch (inputField) {
     case "date-field":
@@ -167,7 +163,6 @@ export const handleEditButton = (
   currentSymptomCardKey,
   editEnabled,
   setEditEnabled,
-  // setCardIndex,
   sendUpdatedData
 ) => {
   //edge case
@@ -178,15 +173,14 @@ export const handleEditButton = (
 
   // check what state editEnabled is in, if 'Edit', get all new input data
   if (e.target.textContent === "Save") {
-    //^ update all inputs state
-    //! be careful, e = the button event, not the data you're dealing with
+    // update all inputs state
+    //^ CAUTION. e = the button event, not the data you're dealing with
 
     getCurrentIndex(
       currentData,
       newData,
       symptomCardData,
       currentSymptomCardKey
-      // setCardIndex
     );
 
     // Update all properties in NewDataState as a safeguard, this will hopefully prevent propertied from going back to their currentData value when attempting to edit multiple form inputs
@@ -204,11 +198,12 @@ export const handleEditButton = (
 
 // function for handling decision making for new data and current data directly before its sent to redux in sendUpdatedData
 export const evaluateDataValues = (currentData, newData) => {
-  //* This logic prevents values from being overwritten by empty strings when edit mode is enabled, then immediately closed without user updating any values
+  // This logic prevents values from being overwritten by empty strings when edit mode is enabled, then immediately closed without user updating any values
 
-  //TODO add all other inputs to this logic
   // Edge case for all input elements
   //! this is causing the bug where you cant fully delete existing note
+  //TODO: refactor the if expressions into a for in loop
+
   if (newData.date === "" || !newData.date) {
     newData.date = currentData.date;
   }
@@ -224,21 +219,10 @@ export const evaluateDataValues = (currentData, newData) => {
   if (currentData.note) {
     newData.note = "xxxx";
   }
+
   // if (newData.accentColor === "" || !newData.accentColor) {
   //   newData.accentColor = currentData.accentColor;
   // }
-
-  //TODO: refactor the if expressions into a for in loop
-  // for (let key in newData) {
-  //   console.log(newData[key]);
-  //   console.log(key);
-  //   alert("pause for key");
-  //   if (newData[key] === "" || !newData[key]) {
-  //     newData[key] = currentData[key];
-  //   }
-  // }
-
-  // console.log("new date at end of evaluateDataValues", newData.date);
 
   return;
 };

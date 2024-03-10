@@ -47,7 +47,7 @@ function App() {
         }}
       />
 
-      {/* //! Delete all entries btn is for testing purposes only */}
+      {/* // Delete all entries btn is for testing purposes only */}
       <button
         className='delete-all-btn'
         onClick={() => {
@@ -83,7 +83,7 @@ function App() {
                 time={data.time}
                 note={data.note}
                 accentColor={data.accentColor}
-                // key={data.uniqueKey}
+                //use the index as the key instead of uniqueKey b/c there is a zero % chance of having a duplicate key value
                 key={index}
                 uniqueKey={data.uniqueKey}
               />

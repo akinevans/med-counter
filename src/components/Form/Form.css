@@ -76,6 +76,10 @@ input,
   /* margin-bottom: 15px; */
 }
 
+.time-picker {
+  width: fit-content;
+}
+
 textarea {
   width: 100%;
   margin: 0;
