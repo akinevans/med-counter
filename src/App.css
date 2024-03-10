@@ -39,7 +39,7 @@
 
 .symptom-card-component-list-wrapper {
   display: flex;
-  /* //! column-reverse shows newest symptom cards first */
+  /* //* column-reverse shows newest symptom cards first */
   flex-direction: column-reverse;
   justify-content: center;
   align-items: center;

@@ -1,3 +1,15 @@
+// function for properly toggling the classnames inside of the accentColor map function in Form.js
+export const toggleColorClassNames = (
+  isColorSelected,
+  userSelectedAccentColor,
+  color
+) => (isColorSelected && userSelectedAccentColor === color ? "selected" : "");
+
+//
+//
+//
+//
+
 export const generateUniqueKey = () => {
   // 648,000,000 possible combinations
   const letters = [

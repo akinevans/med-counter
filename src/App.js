@@ -74,6 +74,8 @@ function App() {
         </h1>
         {symptomCardData.length
           ? symptomCardData.map((data, index) => (
+              /* //* column-reverse in App.css for class symptom-card-component-list-wrapper shows newest symptom cards first */
+
               <SymptomCard
                 // key prop and all other data will be pulled from redux store
 

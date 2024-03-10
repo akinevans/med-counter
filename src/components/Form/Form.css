@@ -97,12 +97,11 @@ textarea {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-
   margin: 15px auto;
   width: 51.5%;
   height: fit-content;
   background-color: #fff;
-  outline: 3px solid #000;
+  outline: 2px solid #000;
 }
 
 .selected-color-view {
@@ -144,7 +143,10 @@ input.submit-btn:active {
 
 /* color block selected */
 .selected {
-  /* transform: scale(1.5); */
+  /* transform: scale(1.2); */
+  outline-offset: -2px;
+  outline: 2px solid #000000;
+  z-index: 1;
 }
 
 /* accent colors */

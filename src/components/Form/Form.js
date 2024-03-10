@@ -12,6 +12,7 @@ import {
   generateUniqueKey,
   getDateAndTime,
   clearFormInputValues,
+  toggleColorClassNames,
 } from "../../utilityFunctions/FormUtilities";
 
 export default function Form(props) {
@@ -21,7 +22,7 @@ export default function Form(props) {
   // To get time with seconds call (getDateAndTime()[2])
   const [time, setTime] = useState(getDateAndTime()[1]);
   const [note, setNote] = useState("");
-  const [colorSelected, setColorSelected] = useState(false);
+  const [isColorSelected, setIsColorSelected] = useState(false);
   const [userSelectedAccentColor, setUserSelectedAccentColor] =
     useState("blue");
 
@@ -132,13 +133,15 @@ export default function Form(props) {
             {listOfAccentColors.map((color, index) => (
               <div
                 key={index}
-                className={`color-block ${color} ${
-                  colorSelected ? "selected" : ""
-                }`}
+                className={`color-block ${color} ${toggleColorClassNames(
+                  isColorSelected,
+                  userSelectedAccentColor,
+                  color
+                )}`}
                 onClick={() => {
-                  // console.log(color);
+                  console.log(color);
                   //on click outside of color box turn it to false ?
-                  setColorSelected(!colorSelected);
+                  setIsColorSelected(true);
                   setUserSelectedAccentColor(color);
                 }}
               ></div>
