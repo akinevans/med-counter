@@ -77,14 +77,15 @@ export const displayAccentColors = () => [
 //
 //
 
+// function for getting and formatting date / time
 export const getDateAndTime = () => {
   // These functions get the current date of the client device. So time zones are taken into account
+
   // Date logic
   const currentDate = new Date();
 
   let dateObj = {
     year: currentDate.getFullYear(),
-    // Months are zero-based, so add 1
     month: currentDate.getMonth() + 1,
     day: currentDate.getDate(),
   };
@@ -96,43 +97,26 @@ export const getDateAndTime = () => {
     second: currentDate.getSeconds(),
   };
 
-  let formattedDate = formatDateAndTime(dateObj)[0];
-  let formattedTime = formatDateAndTime(null, timeObj)[1];
-  let formattedTimeWithSeconds = formatDateAndTime(null, timeObj)[2];
-
-  //editedTimeWithSeconds is not in use. I created in case its needed in the future
-  return [formattedDate, formattedTime, formattedTimeWithSeconds];
+  return formatDateTime(dateObj, timeObj);
 };
 
-//
-//
-//
-//
+function formatDateTime(date, time) {
+  // Format date as YYYY-MM-DD
+  let formattedDate = `${date.year}-${date.month < 10 ? "0" : ""}${
+    date.month
+  }-${date.day < 10 ? "0" : ""}${date.day}`;
 
-// function for formatting date and time values after they are generated
-function formatDateAndTime(date, time) {
-  let editedDate, editedTime, editedTimeWithSeconds;
-  // shorten the operation by checking if the caller needs date or time
+  // Format time as HH:MM
+  let formattedTime = `${(time.hour < 10 ? "0" : "") + time.hour}:${
+    time.minute < 10 ? "0" : ""
+  }${time.minute}`;
 
-  if (!time) {
-    // Format  date as YYYY-MM-DD
-    editedDate = `${date.year}-${date.month < 10 ? "0" : ""}${date.month}-${
-      date.day < 10 ? "0" : ""
-    }${date.day}`;
-  }
+  //formattedTimeWithSeconds is not in use. I created in case its needed in the future
+  let formattedTimeWithSeconds = `${(time.hour < 10 ? "0" : "") + time.hour}:${
+    (time.minute < 10 ? "0" : "") + time.minute
+  }:${time.second < 10 ? "0" : ""}${time.second}`;
 
-  if (!date) {
-    // Format time as HH:MM
-
-    editedTime = `${(time.hour < 10 ? "0" : "") + time.hour}:${
-      time.minute < 10 ? "0" : ""
-    }${time.minute}`;
-
-    editedTimeWithSeconds = `${(time.hour < 10 ? "0" : "") + time.hour}:${
-      time.minute < 10 ? "0" : ""
-    }${time.minute}:${time.second < 10 ? "0" : ""}${time.second}`;
-  }
-  return [editedDate, editedTime, editedTimeWithSeconds];
+  return [formattedDate, formattedTime, formattedTimeWithSeconds];
 }
 
 //
