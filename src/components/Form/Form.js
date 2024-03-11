@@ -14,6 +14,7 @@ import {
   clearFormInputValues,
   toggleColorClassNames,
 } from "../../utilityFunctions/FormUtilities";
+import { checkIntensityValidForm } from "../../utilityFunctions/FormUtilities";
 
 export default function Form(props) {
   const [symptom, setSymptom] = useState("");
@@ -43,7 +44,8 @@ export default function Form(props) {
         uniqueKey: uniqueKey,
         title: symptom,
         // if !intensity send 1 to addSymptomCard
-        intensity: intensity || 1,
+        // intensity: intensity || 1,
+        intensity: checkIntensityValidForm(intensity),
         date: date,
         time: time,
         note: note,

@@ -185,7 +185,7 @@
 }
 
 .symptom-intensity {
-  width: 100%;
+  width: 75px;
   outline: 2px solid #dadada;
   /* outline: 2px solid red; */
 }

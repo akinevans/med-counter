@@ -133,3 +133,13 @@ export const clearFormInputValues = (...setters) => {
 //
 //
 //
+
+export const checkIntensityValidForm = (data) => {
+  if (data) {
+    return Math.min(Math.max(data, 1), 10);
+  } else if (!data || data === "") {
+    return 1;
+  } else {
+    throw new Error("akin - Error in setting intensity in Form.js");
+  }
+};
