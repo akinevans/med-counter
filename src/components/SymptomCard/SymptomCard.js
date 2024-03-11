@@ -1,6 +1,4 @@
-//TODO Make modals for editing date, time, title, intensity - not for notes
-
-//TODO Implement Binary search algorithm for finding data in state arrays if length > 50 or so. Currently linear search is implemented.
+//TODO Implement Binary search algorithm O(log n) for finding data in state arrays. Currently linear search O(n) is implemented and is slow depending on length of array.
 
 //FIXME: make it so only one card can be in edit mode at a time. Try using state in App.js for this functionality
 
@@ -57,10 +55,10 @@ export default function SymptomCard(props) {
   const currentData = {
     uniqueKey: props.uniqueKey,
     // index: cardIndex,
-    title: props.title,
-    intensity: props.intensity,
     date: props.date,
     time: props.time,
+    title: props.title,
+    intensity: props.intensity,
     note: props.note,
     accentColor: props.accentColor,
     // stateLength: symptomCardData.length,
@@ -75,6 +73,9 @@ export default function SymptomCard(props) {
   // console.log("newData ", newData);
 
   const sendUpdatedData = (newData, currentData) => {
+    //& check if any data has been altered, if true send date to redux
+    //& do this by populating currentData variable (hardcode is fine) then compare it to newData
+
     const uniqueKeyIndex = getMatchingIndexInUniqueKeys(
       currentData.uniqueKey,
       listOfUniqueKeyData
@@ -101,12 +102,11 @@ export default function SymptomCard(props) {
           symptomCardData
         ),
         // check if user provided new values, if false revert to currentData
-        //^ this causes a bug where you cant delete field text
-        date: newData.date ? newData.date : currentData.date,
-        time: newData.time ? newData.time : currentData.time,
+        date: populateNewDataValues("date", newData, props.date),
+        time: populateNewDataValues("time", newData, props.time),
         title: populateNewDataValues("title", newData, props.title),
         intensity: populateNewDataValues("intensity", newData, props.intensity),
-        note: newData.note ? newData.note : currentData.note,
+        note: populateNewDataValues("note", newData, props.note),
         //! change accentColor to newData.accentColor once ability to change from edit mode is color in implemented
         accentColor: currentData.accentColor,
       })
@@ -182,9 +182,9 @@ export default function SymptomCard(props) {
           <div className='date-time-wrapper'>
             {/* //& DATE  */}
             <input
-              className={`date ${editEnabled ? "" : "non-selectable"}`}
               type='date'
-              value={newData.date ? newData.date : props.date}
+              className={`date ${editEnabled ? "" : "non-selectable"}`}
+              value={populateNewDataValues("date", newData, props.date)}
               onChange={(event) => {
                 handleInputUpdate(
                   event,
@@ -198,10 +198,10 @@ export default function SymptomCard(props) {
 
             {/* //& TIME  */}
             <input
-              className={`time ${editEnabled ? "" : "non-selectable"}`}
               type='time'
-              placeholder={props.time}
-              value={newData.time ? newData.time : props.time}
+              className={`time ${editEnabled ? "" : "non-selectable"}`}
+              // placeholder={props.time}
+              value={populateNewDataValues("time", newData, props.time)}
               onChange={(event) => {
                 handleInputUpdate(
                   event,
@@ -276,9 +276,9 @@ export default function SymptomCard(props) {
               id='note'
               cols='5'
               rows='4'
-              value={newData.note ? newData.note : props.note}
               placeholder='Notes...'
-              readOnly={editEnabled ? false : true}
+              // readOnly={editEnabled ? false : true}
+              value={populateNewDataValues("note", newData, props.note)}
               onChange={(event) => {
                 handleInputUpdate(
                   event,

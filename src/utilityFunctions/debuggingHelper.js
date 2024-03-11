@@ -35,7 +35,7 @@ export const generateRandomCardValues = (key) => {
       "Tight muscles and some tenderness",
       "Feeling lightheaded and unsteady",
       "Change in the color or texture of the skin",
-      "Difficulty in passing stools or infrequent bowel movements",
+      "Infrequent bowel movements",
       "Difficulty falling asleep or staying asleep",
       "Reduced strength or power in muscles",
       "Elevated body temperature",

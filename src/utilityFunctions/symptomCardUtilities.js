@@ -102,53 +102,45 @@ export const handleInputUpdate = (
   newData,
   setNewData
 ) => {
-  // edge case - If user goes into edit mode but doesn't change data
-  //TODO: this block needs reworking
+  // edge case - If the user goes into edit mode but doesn't change data
   if (!inputField) {
-    alert("nothing changed");
+    throw new Error("akin - No input field provided");
   }
 
-  // see what input the data is coming from, update that inputs state
+  // update only the specific field related to the current input
   switch (inputField) {
     case "date-field":
-      // alert("key is date");
+      // prevState preserves the value of each state variable. This allows you to edit multiple fields at once
       setNewData((prevState) => ({
+        ...prevState,
         date: event.target.value,
       }));
       break;
 
     case "time-field":
-      // alert("key is time");
-      setNewData(() => ({
+      setNewData((prevState) => ({
+        ...prevState,
         time: event.target.value,
       }));
       break;
 
     case "symptom-title-field":
-      // alert("key is title");
-      setNewData(() => ({
-        title:
-          event.target.value || event.target.value === ""
-            ? event.target.value
-            : currentData.title,
+      setNewData((prevState) => ({
+        ...prevState,
+        title: event.target.value,
       }));
-
-      console.log("title:", event.target.value.length);
       break;
 
     case "intensity-field":
-      // alert("key is intensity");
-      setNewData(() => ({
-        intensity:
-          event.target.value || event.target.value === ""
-            ? event.target.value
-            : currentData.intensity,
+      setNewData((prevState) => ({
+        ...prevState,
+        intensity: event.target.value,
       }));
       break;
 
     case "note-field":
-      // alert("key is note");
-      setNewData(() => ({
+      setNewData((prevState) => ({
+        ...prevState,
         note: event.target.value,
       }));
       break;
@@ -156,8 +148,8 @@ export const handleInputUpdate = (
     default:
       throw new Error("akin - Error when deciding what input is being updated");
   }
+
   console.log("newData from", inputField.toUpperCase(), ":", newData);
-  // alert("pause for console");
   return;
 };
 
@@ -210,6 +202,27 @@ export const handleEditButton = (
 //
 //
 
+// function for correctly populating the string values in each input for existing symptomCard components
+// use obj bracket notation when the property name is dynamic at runtime [key]
+// use obj dot notation when the property name is valid / hardcoded (.title .date .time etc)
+export const populateNewDataValues = (key, newData, existingValue) => {
+  if (newData[key]) {
+    return newData[key];
+  } else if (newData[key] === "") {
+    return "";
+  } else if (!newData[key]) {
+    return existingValue;
+  } else {
+    throw new Error("akin - Error in setting form value");
+  }
+};
+
+//
+//
+//
+//
+//
+
 // function for handling decision making for new data and current data directly before its sent to redux in sendUpdatedData
 export const evaluateDataValues = (currentData, newData, setNewData) => {
   // This logic prevents values from being overwritten by empty strings when edit mode is enabled, then immediately closed without user updating any values
@@ -217,12 +230,23 @@ export const evaluateDataValues = (currentData, newData, setNewData) => {
   // Edge case for all input elements
   //TODO: refactor the if expressions into a for in loop
 
-  if (newData.date === "" || !newData.date) {
+  if (newData.date === "") {
+    setNewData(() => ({
+      date: "",
+    }));
+    return;
+  } else if (!newData.date) {
     setNewData(() => ({
       date: currentData.date,
     }));
   }
-  if (newData.time === "" || !newData.time) {
+
+  if (newData.time === "") {
+    setNewData(() => ({
+      time: "",
+    }));
+    return;
+  } else if (!newData.time) {
     setNewData(() => ({
       time: currentData.time,
     }));
@@ -250,10 +274,13 @@ export const evaluateDataValues = (currentData, newData, setNewData) => {
     }));
   }
 
-  if (currentData.note) {
-    // newData.note = "xxxx";
+  if (newData.note === "") {
     setNewData(() => ({
-      // note: currentData.date,
+      note: "",
+    }));
+    return;
+  } else if (!newData.note) {
+    setNewData(() => ({
       note: currentData.note,
     }));
   }
@@ -269,18 +296,3 @@ export const evaluateDataValues = (currentData, newData, setNewData) => {
 //
 //
 //
-
-// function for correctly populating the string values in each input for existing symptomCard components
-// use obj bracket notation when the property name is dynamic [key]
-// use obj dot notation when the property name is valid (.title .date .time etc)
-export const populateNewDataValues = (key, newData, existingValue) => {
-  if (newData[key]) {
-    return newData[key];
-  } else if (newData[key] === "") {
-    return "";
-  } else if (!newData[key]) {
-    return existingValue;
-  } else {
-    throw new Error("akin - Error in setting form value");
-  }
-};
