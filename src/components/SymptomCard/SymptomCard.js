@@ -1,5 +1,7 @@
 //TODO Make modals for editing date, time, title, intensity - not for notes
 
+//TODO: Implement Binary search algorithm for finding data in state arrays if length > 50 or so. Currently linear search is implemented.
+
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import "./SymptomCard.css";

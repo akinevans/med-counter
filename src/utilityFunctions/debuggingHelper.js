@@ -1,4 +1,4 @@
-// function for generating X number of symptomCards with random data for testing purposes
+// function for generating X number of symptomCards with random data for testing / data generation purposes
 export const generateRandomCardValues = (key) => {
   const dataOptions = {
     title: [
