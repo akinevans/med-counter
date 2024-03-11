@@ -1,5 +1,7 @@
 //TODO Implement Binary search algorithm O(log n) for finding data in state arrays. Currently linear search O(n) is implemented and is slow depending on length of array.
 
+//TODO Implement restore function to bring back deleted cards
+
 //FIXME: make it so only one card can be in edit mode at a time. Try using state in App.js for this functionality
 
 //TODO: add inputs for symptom frequency, duration, mood, and list of medication taken,
@@ -92,7 +94,6 @@ export default function SymptomCard(props) {
 
     // console.log("in sendUpdatedData here is currentData:", currentData);
     // console.log("in sendUpdatedData here is NewData:", newData);
-    alert("pause for console ");
 
     //payload variables names must match exactly in redux
     dispatch(

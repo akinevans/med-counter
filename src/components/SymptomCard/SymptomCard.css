@@ -157,6 +157,7 @@
   min-height: 1.6rem;
   color: #000;
   outline: 2px solid #dadada;
+  cursor: auto;
 }
 
 /* .symptom-title::placeholder,

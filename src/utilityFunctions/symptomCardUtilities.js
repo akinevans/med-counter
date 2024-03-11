@@ -227,68 +227,14 @@ export const populateNewDataValues = (key, newData, existingValue) => {
 export const evaluateDataValues = (currentData, newData, setNewData) => {
   // This logic prevents values from being overwritten by empty strings when edit mode is enabled, then immediately closed without user updating any values
 
-  // Edge case for all input elements
-  //TODO: refactor the if expressions into a for in loop
-
-  if (newData.date === "") {
-    setNewData(() => ({
-      date: "",
-    }));
-    return;
-  } else if (!newData.date) {
-    setNewData(() => ({
-      date: currentData.date,
-    }));
+  for (let key in newData) {
+    // bracket notation when accessing an objects key with a dynamic name
+    if (newData[key] === "") {
+      setNewData((prevData) => ({ ...prevData, [key]: "" }));
+    } else if (!newData[key]) {
+      setNewData((prevData) => ({ ...prevData, [key]: currentData[key] }));
+    }
   }
-
-  if (newData.time === "") {
-    setNewData(() => ({
-      time: "",
-    }));
-    return;
-  } else if (!newData.time) {
-    setNewData(() => ({
-      time: currentData.time,
-    }));
-  }
-
-  if (newData.title === "") {
-    setNewData(() => ({
-      title: "",
-    }));
-    return;
-  } else if (!newData.title) {
-    setNewData(() => ({
-      title: currentData.title,
-    }));
-  }
-
-  if (newData.intensity === "") {
-    setNewData(() => ({
-      intensity: "",
-    }));
-    return;
-  } else if (!newData.intensity) {
-    setNewData(() => ({
-      intensity: currentData.intensity,
-    }));
-  }
-
-  if (newData.note === "") {
-    setNewData(() => ({
-      note: "",
-    }));
-    return;
-  } else if (!newData.note) {
-    setNewData(() => ({
-      note: currentData.note,
-    }));
-  }
-
-  // if (newData.accentColor === "" || !newData.accentColor) {
-  //   newData.accentColor = currentData.accentColor;
-  // }
-
   return;
 };
 
