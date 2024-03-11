@@ -17,7 +17,7 @@ import {
 
 export default function Form(props) {
   const [symptom, setSymptom] = useState("");
-  const [intensity, setIntensity] = useState("");
+  const [intensity, setIntensity] = useState();
   const [date, setDate] = useState(getDateAndTime()[0]);
   // To get time with seconds call (getDateAndTime()[2])
   const [time, setTime] = useState(getDateAndTime()[1]);
@@ -42,7 +42,8 @@ export default function Form(props) {
       addSymptomCard({
         uniqueKey: uniqueKey,
         title: symptom,
-        intensity: intensity,
+        // if !intensity send 1 to addSymptomCard
+        intensity: intensity || 1,
         date: date,
         time: time,
         note: note,

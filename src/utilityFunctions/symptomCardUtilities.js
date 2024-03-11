@@ -132,10 +132,12 @@ export const handleInputUpdate = (
       break;
 
     case "intensity-field":
+      //check if value is >= 1 && <= 10
       setNewData((prevState) => ({
         ...prevState,
         intensity: event.target.value,
       }));
+
       break;
 
     case "note-field":
@@ -202,27 +204,6 @@ export const handleEditButton = (
 //
 //
 
-// function for correctly populating the string values in each input for existing symptomCard components
-// use obj bracket notation when the property name is dynamic at runtime [key]
-// use obj dot notation when the property name is valid / hardcoded (.title .date .time etc)
-export const populateNewDataValues = (key, newData, existingValue) => {
-  if (newData[key]) {
-    return newData[key];
-  } else if (newData[key] === "") {
-    return "";
-  } else if (!newData[key]) {
-    return existingValue;
-  } else {
-    throw new Error("akin - Error in setting form value");
-  }
-};
-
-//
-//
-//
-//
-//
-
 // function for handling decision making for new data and current data directly before its sent to redux in sendUpdatedData
 export const evaluateDataValues = (currentData, newData, setNewData) => {
   // This logic prevents values from being overwritten by empty strings when edit mode is enabled, then immediately closed without user updating any values
@@ -242,3 +223,46 @@ export const evaluateDataValues = (currentData, newData, setNewData) => {
 //
 //
 //
+
+// function for correctly populating the string values in each input for existing symptomCard components
+// use obj bracket notation when the property name is dynamic at runtime [key]
+// use obj dot notation when the property name is valid / hardcoded (.title .date .time etc)
+export const populateNewDataValues = (
+  key,
+  newData,
+  currentData,
+  existingValue
+) => {
+  if (newData[key]) {
+    return newData[key];
+  } else if (newData[key] === "") {
+    return "";
+  } else if (!newData[key]) {
+    return existingValue;
+  } else {
+    throw new Error("akin - Error in setting form value");
+  }
+};
+
+//
+//
+//
+//
+//
+
+export const checkIntensityValid = (
+  newData,
+  currentData,
+  populateNewDataValues,
+  intensityProp
+) => {
+  const intensityValue = populateNewDataValues(
+    "intensity",
+    newData,
+    currentData,
+    intensityProp
+  );
+
+  // FIXME: User can enter values like 010, 02, 03, etc. Force a value between 1 - 10
+  return Math.min(Math.max(intensityValue, 1), 10);
+};

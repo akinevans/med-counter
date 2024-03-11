@@ -26,6 +26,7 @@ import {
   populateNewDataValues,
   getIndexInSymptomsByUniqueKey,
   getMatchingIndexInUniqueKeys,
+  checkIntensityValid,
 } from "../../utilityFunctions/symptomCardUtilities";
 
 export default function SymptomCard(props) {
@@ -103,11 +104,18 @@ export default function SymptomCard(props) {
           symptomCardData
         ),
         // check if user provided new values, if false revert to currentData
-        date: populateNewDataValues("date", newData, props.date),
-        time: populateNewDataValues("time", newData, props.time),
-        title: populateNewDataValues("title", newData, props.title),
-        intensity: populateNewDataValues("intensity", newData, props.intensity),
-        note: populateNewDataValues("note", newData, props.note),
+        date: populateNewDataValues("date", newData, null, props.date),
+        time: populateNewDataValues("time", newData, null, props.time),
+        title: populateNewDataValues("title", newData, null, props.title),
+        //check that user entered intensity is between 1 -> 10
+        intensity: checkIntensityValid(
+          newData,
+          currentData,
+          populateNewDataValues,
+          props.intensity
+        ),
+
+        note: populateNewDataValues("note", newData, null, props.note),
         //! change accentColor to newData.accentColor once ability to change from edit mode is color in implemented
         accentColor: currentData.accentColor,
       })
@@ -185,7 +193,7 @@ export default function SymptomCard(props) {
             <input
               type='date'
               className={`date ${editEnabled ? "" : "non-selectable"}`}
-              value={populateNewDataValues("date", newData, props.date)}
+              value={populateNewDataValues("date", newData, null, props.date)}
               onChange={(event) => {
                 handleInputUpdate(
                   event,
@@ -202,7 +210,7 @@ export default function SymptomCard(props) {
               type='time'
               className={`time ${editEnabled ? "" : "non-selectable"}`}
               // placeholder={props.time}
-              value={populateNewDataValues("time", newData, props.time)}
+              value={populateNewDataValues("time", newData, null, props.time)}
               onChange={(event) => {
                 handleInputUpdate(
                   event,
@@ -225,7 +233,12 @@ export default function SymptomCard(props) {
                   editEnabled ? "" : "non-selectable"
                 }`}
                 // placeholder={"Symptom"}
-                value={populateNewDataValues("title", newData, props.title)}
+                value={populateNewDataValues(
+                  "title",
+                  newData,
+                  null,
+                  props.title
+                )}
                 onChange={(event) => {
                   handleInputUpdate(
                     event,
@@ -245,6 +258,7 @@ export default function SymptomCard(props) {
                 type='number'
                 min='1'
                 max='10'
+                // contentEditable={false}
                 className={`symptom-intensity ${
                   editEnabled ? "" : "non-selectable"
                 }`}
@@ -252,6 +266,7 @@ export default function SymptomCard(props) {
                 value={populateNewDataValues(
                   "intensity",
                   newData,
+                  currentData,
                   props.intensity
                 )}
                 onChange={(event) => {
@@ -279,7 +294,7 @@ export default function SymptomCard(props) {
               rows='4'
               placeholder='Notes...'
               // readOnly={editEnabled ? false : true}
-              value={populateNewDataValues("note", newData, props.note)}
+              value={populateNewDataValues("note", newData, null, props.note)}
               onChange={(event) => {
                 handleInputUpdate(
                   event,
