@@ -6,7 +6,14 @@ import SymptomCard from "./components/SymptomCard/SymptomCard";
 
 // redux imports
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAll } from "./redux/countReducer";
+import { deleteAll, addSymptomCard } from "./redux/countReducer";
+
+//utility imports
+import {
+  generateUniqueKey,
+  getDateAndTime,
+} from "./utilityFunctions/FormUtilities";
+import { generateRandomCardValues } from "./utilityFunctions/debuggingHelper";
 
 //TODO get header icons for edit and delete symptomCord
 
@@ -38,6 +45,25 @@ function App() {
       return false;
     }
   };
+
+  // create a script to generate x number of symptom cards with some prefilled data
+  const generateRandomCards = () => {
+    const numOfCards = prompt("How many cards do you want to generate?");
+    for (let i = 1; i <= numOfCards; i++) {
+      dispatch(
+        addSymptomCard({
+          uniqueKey: generateUniqueKey(),
+          // date and time wont be random
+          date: getDateAndTime()[0],
+          time: getDateAndTime()[1],
+          title: generateRandomCardValues("title"),
+          intensity: Math.floor(Math.random() * 10) + 1,
+          note: generateRandomCardValues("note"),
+          accentColor: generateRandomCardValues("color"),
+        })
+      );
+    }
+  };
   return (
     <div className='App'>
       <AppHeader
@@ -55,6 +81,14 @@ function App() {
         }}
       >
         Delete All Entries
+      </button>
+      <button
+        className='generate-cards-helper-btn'
+        onClick={() => {
+          generateRandomCards();
+        }}
+      >
+        Generate Some Data
       </button>
 
       <Form

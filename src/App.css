@@ -25,16 +25,22 @@
   /* display: none; */
 }
 
-.delete-all-btn {
-  margin: 20px;
+.delete-all-btn,
+.generate-cards-helper-btn {
+  margin: 20px auto;
   padding: 5px 10px;
   font-size: 1rem;
   font-weight: 600;
   color: #fff;
-  background-color: rgb(175, 3, 3);
+  background-color: #af0303;
   border-radius: 6px;
   border: none;
   cursor: pointer;
+}
+
+.generate-cards-helper-btn {
+  margin: 0 auto 10px;
+  background-color: #089208;
 }
 
 .symptom-card-component-list-wrapper {
