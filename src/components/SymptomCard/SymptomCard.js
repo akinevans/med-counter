@@ -1,6 +1,10 @@
 //TODO Make modals for editing date, time, title, intensity - not for notes
 
-//TODO: Implement Binary search algorithm for finding data in state arrays if length > 50 or so. Currently linear search is implemented.
+//TODO Implement Binary search algorithm for finding data in state arrays if length > 50 or so. Currently linear search is implemented.
+
+//FIXME: make it so only one card can be in edit mode at a time. Try using state in App.js for this functionality
+
+//TODO: add inputs for symptom frequency, duration, mood, and list of medication taken,
 
 import React from "react";
 import { useState, useEffect, useRef } from "react";
@@ -23,11 +27,6 @@ import {
   getIndexInSymptomsByUniqueKey,
   getMatchingIndexInUniqueKeys,
 } from "../../utilityFunctions/symptomCardUtilities";
-
-//TODO make it so only one card can be in edit mode at a time. Try using state in App.js for this functionality
-
-//TODO: make date, time, symptom, intensity, and notes content editable.
-//! NEXT - Continue working on edit functionality. Right now only the title can be edited. May need a handler function for each input
 
 export default function SymptomCard(props) {
   console.clear();
@@ -64,7 +63,7 @@ export default function SymptomCard(props) {
     time: props.time,
     note: props.note,
     accentColor: props.accentColor,
-    stateLength: symptomCardData.length,
+    // stateLength: symptomCardData.length,
   };
 
   // console.log("uniqueKeyIndex", uniqueKeyIndex);
@@ -106,9 +105,7 @@ export default function SymptomCard(props) {
         date: newData.date ? newData.date : currentData.date,
         time: newData.time ? newData.time : currentData.time,
         title: populateNewDataValues("title", newData, props.title),
-        intensity: newData.intensity
-          ? newData.intensity
-          : currentData.intensity,
+        intensity: populateNewDataValues("intensity", newData, props.intensity),
         note: newData.note ? newData.note : currentData.note,
         //! change accentColor to newData.accentColor once ability to change from edit mode is color in implemented
         accentColor: currentData.accentColor,
@@ -250,7 +247,12 @@ export default function SymptomCard(props) {
                 className={`symptom-intensity ${
                   editEnabled ? "" : "non-selectable"
                 }`}
-                placeholder={props.intensity}
+                // placeholder={props.intensity}
+                value={populateNewDataValues(
+                  "intensity",
+                  newData,
+                  props.intensity
+                )}
                 onChange={(event) => {
                   handleInputUpdate(
                     event,

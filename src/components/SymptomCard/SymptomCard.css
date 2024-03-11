@@ -150,12 +150,27 @@
   color: #000;
 }
 
+.symptom-title {
+  width: 100%;
+  min-width: 50px;
+  max-width: 350px;
+  min-height: 1.6rem;
+  color: #000;
+  outline: 2px solid #dadada;
+}
+
+/* .symptom-title::placeholder,
+.symptom-intensity::placeholder {
+  color: #000000;
+  opacity: 0.4;
+} */
+
 .symptom-title,
 .symptom-intensity {
   width: 100%;
   font-size: 1.5rem;
   font-weight: 500;
-  color: var(--text-grey);
+  color: #000;
 }
 
 .intensity-header {
@@ -172,22 +187,6 @@
   width: 100%;
   outline: 2px solid #dadada;
   /* outline: 2px solid red; */
-}
-
-.symptom-title {
-  width: 100%;
-  min-width: 50px;
-  max-width: 350px;
-  min-height: 1.6rem;
-  color: #000;
-  outline: 2px solid #dadada;
-}
-
-.symptom-title::placeholder,
-.symptom-intensity::placeholder {
-  color: #000000;
-  /* apply full opacity */
-  opacity: 0.4;
 }
 
 .note-wrapper {

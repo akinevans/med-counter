@@ -51,8 +51,6 @@ export default function Form(props) {
     );
   };
 
-  //TODO: add inputs for symptom frequency, duration, mood, and list of medication taken,
-
   return (
     <form className={`form ${props.className}`}>
       <div className='form-date-time-wrapper'>

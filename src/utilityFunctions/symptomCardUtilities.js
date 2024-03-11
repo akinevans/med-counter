@@ -139,7 +139,10 @@ export const handleInputUpdate = (
     case "intensity-field":
       // alert("key is intensity");
       setNewData(() => ({
-        intensity: event.target.value,
+        intensity:
+          event.target.value || event.target.value === ""
+            ? event.target.value
+            : currentData.intensity,
       }));
       break;
 
@@ -236,11 +239,17 @@ export const evaluateDataValues = (currentData, newData, setNewData) => {
     }));
   }
 
-  if (newData.intensity === "" || !newData.intensity) {
+  if (newData.intensity === "") {
+    setNewData(() => ({
+      intensity: "",
+    }));
+    return;
+  } else if (!newData.intensity) {
     setNewData(() => ({
       intensity: currentData.intensity,
     }));
   }
+
   if (currentData.note) {
     // newData.note = "xxxx";
     setNewData(() => ({
