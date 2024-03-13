@@ -233,14 +233,10 @@ export const populateNewDataValues = (
   currentData,
   existingValue
 ) => {
-  if (newData[key]) {
+  if (newData[key] !== undefined) {
     return newData[key];
-  } else if (newData[key] === "") {
-    return "";
-  } else if (!newData[key]) {
-    return existingValue;
   } else {
-    throw new Error("akin - Error in setting form value");
+    return existingValue;
   }
 };
 
@@ -263,6 +259,5 @@ export const checkIntensityValid = (
     intensityProp
   );
 
-  // FIXME: User can enter values like 010, 02, 03, etc. Force a value between 1 - 10
   return Math.min(Math.max(intensityValue, 1), 10);
 };
