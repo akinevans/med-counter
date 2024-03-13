@@ -3,10 +3,10 @@
 
 export const getIndexInSymptomsByUniqueKey = (key, symptomStateArr) => {
   // edge case
-  if (!symptomStateArr) {
-    throw new Error("akin - symptomStateArr parameter is null or undefined");
-    // return null;
-  }
+  // if (!symptomStateArr) {
+  //   throw new Error("akin - symptomStateArr parameter is null or undefined");
+  //   // return null;
+  // }
 
   // by this point symptomCard state arr already has 1 item
   if (symptomStateArr.length === 1) {
@@ -30,15 +30,16 @@ export const getIndexInSymptomsByUniqueKey = (key, symptomStateArr) => {
 
 export const getMatchingIndexInUniqueKeys = (key, uniqueKeyStateArr) => {
   //edge case
-
   if (uniqueKeyStateArr.length === 0 || !uniqueKeyStateArr) {
-    return null;
+    return 0;
   }
 
   for (let i = 0; i < uniqueKeyStateArr.length; i++) {
-    if (uniqueKeyStateArr[i].uniqueKey === key) {
+    if (uniqueKeyStateArr[i] === key) {
       console.log("FounD indeX", i);
       return i;
+    } else if (i !== uniqueKeyStateArr.length - 1) {
+      continue;
     }
   }
   return null;

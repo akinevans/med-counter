@@ -90,47 +90,44 @@ export const countSlice = createSlice({
     //
 
     deleteSymptomCard: (state, action) => {
-      const { indexToDelete, uniqueKeyToDelete, uniqueKeyIndex } =
+      const { indexToDelete, uniqueKeyToDelete, indexOfUniqueKey } =
         action.payload;
 
       // Create a shallow copy of the symptom and uniqueKey arrays
       let listOfSymptoms = [...state.symptomList];
       let listOfUniqueKeys = [...state.listOfUniqueKeys];
 
-      const symptomData = {
-        ...listOfSymptoms[indexToDelete],
-        deletionIndex: indexToDelete,
-      };
-
-      const uniqueKeyData = {
-        ...listOfUniqueKeys,
-        deletionKey: uniqueKeyToDelete,
-      };
+      // const symptomData = {
+      //   ...listOfSymptoms[indexToDelete],
+      //   deletionIndex: indexToDelete,
+      // };
 
       console.log(
         "index to delete:",
-        symptomData.deletionIndex,
-        "uniqueKey:",
-        uniqueKeyData.deletionKey
+        indexToDelete,
+        "uniqueKey index to delete:",
+        indexOfUniqueKey
       );
 
+      alert("pause for deleteSymptom");
+
       // Use splice to remove the element from the copied array
-      listOfSymptoms.splice(symptomData.deletionIndex, 1);
+      listOfSymptoms.splice(indexToDelete, 1);
 
       //^ To fix bug where uniqueKey arr is being edited incorrectly.
       // erase the whole arr then loop over listOfSymptoms, while accessing the unique key property of each and pushing the values into new listOfKeys
       // this is O(n) operation
 
-      // listOfUniqueKeys.splice(uniqueKeyIndex, 1);
+      listOfUniqueKeys.splice(indexOfUniqueKey, 1);
 
-      for (let i = 0; i < listOfUniqueKeys.length; i++) {
-        if (listOfUniqueKeys[i].uniqueKey === uniqueKeyToDelete) {
-          // remove from array
-          listOfUniqueKeys.splice(i, 1);
-        }
-      }
+      // for (let i = 0; i < listOfUniqueKeys.length; i++) {
+      //   if (listOfUniqueKeys[i].uniqueKey === uniqueKeyToDelete) {
+      //     // remove from array
+      //     listOfUniqueKeys.splice(i, 1);
+      //   }
+      // }
 
-      console.log("INDEX", uniqueKeyIndex);
+      console.log("INDEX", indexOfUniqueKey);
       console.log("new symptom arr:", listOfSymptoms);
       console.log("new uniq arr:", listOfUniqueKeys);
       alert("pause for deleteSymptomCard");

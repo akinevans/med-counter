@@ -2,8 +2,6 @@
 
 //TODO Implement restore function to bring back deleted cards
 
-//FIXME: make it so only one card can be in edit mode at a time. Try using state in App.js for this functionality
-
 //TODO: add inputs for symptom frequency, duration, mood, and list of medication taken,
 
 import React from "react";
@@ -34,7 +32,9 @@ export default function SymptomCard(props) {
 
   // state variables
   const [editEnabled, setEditEnabled] = useState(false);
-  const [currentSymptomCardKey, setCurrentSymptomCardKey] = useState("");
+  const [currentSymptomCardKey, setCurrentSymptomCardKey] = useState(
+    props.uniqueKey
+  );
 
   // get data from Redux
   const symptomCardData = useSelector((state) => state.count.symptomList);
@@ -67,22 +67,21 @@ export default function SymptomCard(props) {
     // stateLength: symptomCardData.length,
   };
 
-  // console.log("uniqueKeyIndex", uniqueKeyIndex);
-
   console.log(
     "currentData  -> only shows last item in array, for all data look at symptomCard state arr ",
     currentData
   );
   // console.log("newData ", newData);
 
+  let uniqueKeyIndex = getMatchingIndexInUniqueKeys(
+    currentData.uniqueKey,
+    listOfUniqueKeyData
+  );
+
   const sendUpdatedData = (newData, currentData) => {
     //& check if any data has been altered, if true send date to redux
     //& do this by populating currentData variable (hardcode is fine) then compare it to newData
 
-    const uniqueKeyIndex = getMatchingIndexInUniqueKeys(
-      currentData.uniqueKey,
-      listOfUniqueKeyData
-    );
     console.log(currentData.uniqueKey);
     console.log("index of uKey", uniqueKeyIndex);
 
@@ -128,7 +127,7 @@ export default function SymptomCard(props) {
           currentSymptomCardKey,
           symptomCardData
         ),
-        uniqueKey: currentData.uniqueKey,
+        uniqueKeyToDelete: currentData.uniqueKey,
         uniqueKeyIndex: uniqueKeyIndex,
       })
     );
@@ -136,7 +135,7 @@ export default function SymptomCard(props) {
 
   // get the uniqueKey of the component on render
   useEffect(() => {
-    setCurrentSymptomCardKey(myElementRef.current.textContent);
+    // setCurrentSymptomCardKey(myElementRef.current.textContent);
   }, []);
 
   // console.log("CURRENT uniqueKey: ", currentSymptomCardKey);
@@ -150,20 +149,31 @@ export default function SymptomCard(props) {
           <div className='delete-edit-btn-wrapper'>
             <button
               className={`delete-btn ${editEnabled ? "" : "hidden"}`}
-              onClick={(uniqueKeyIndex) => {
+              onClick={() => {
                 //get index of current card by matching its unique key
                 const indexViaUniqueKey = getIndexInSymptomsByUniqueKey(
                   currentSymptomCardKey,
                   symptomCardData
                 );
+                console.log(currentData.uniqueKey, uniqueKeyIndex);
 
                 dispatch(
                   deleteSymptomCard({
-                    indexToDelete: indexViaUniqueKey,
+                    // indexToDelete: indexViaUniqueKey,
+                    indexToDelete: getIndexInSymptomsByUniqueKey(
+                      currentData.uniqueKey,
+                      symptomCardData
+                    ),
                     uniqueKeyToDelete: currentData.uniqueKey,
-                    indexOfUniqueKey: uniqueKeyIndex,
+                    indexOfUniqueKey: getMatchingIndexInUniqueKeys(
+                      currentData.uniqueKey,
+                      listOfUniqueKeyData
+                    ),
                   })
                 );
+                // finally reset edit enabled back to false
+                // this keeps the remaining undeleted cards from accidentally going into edit mode automatically
+                setEditEnabled(false);
               }}
             >
               Delete Card
