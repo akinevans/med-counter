@@ -17,25 +17,21 @@ export const countSlice = createSlice({
       const { uniqueKey, date, time, title, intensity, note, accentColor } =
         action.payload;
 
-      // new data to go into symptomList array
-      const cardData = {
-        uniqueKey: uniqueKey,
-        title: title,
-        intensity: intensity,
-        date: date,
-        time: time,
-        note: note,
-        accentColor: accentColor,
-      };
-
-      // new data to go into uniqueKey array
-      const keyData = {
-        uniqueKey: uniqueKey,
-      };
-
-      // Create new arrays with the updated data
-      const newListOfUniqueKeys = [...state.listOfUniqueKeys, keyData];
-      const newSymptomList = [...state.symptomList, cardData];
+      // Cannot manipulate redux state arrays directly
+      // Create new arr's by spreading existing state arr's into new arr's
+      const newListOfUniqueKeys = [...state.listOfUniqueKeys, uniqueKey];
+      const newSymptomList = [
+        ...state.symptomList,
+        {
+          uniqueKey,
+          title,
+          intensity,
+          date,
+          time,
+          note,
+          accentColor,
+        },
+      ];
 
       // Return a new state object with the updated arrays
       return {
