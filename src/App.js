@@ -122,6 +122,7 @@ function App() {
                 //use the index as the key instead of uniqueKey b/c there is a zero % chance of having a duplicate key value
                 key={index}
                 uniqueKey={data.uniqueKey}
+                thisCardsIndex={index}
               />
             ))
           : false}

@@ -32,11 +32,8 @@ export default function SymptomCard(props) {
 
   // state variables
   const [editEnabled, setEditEnabled] = useState(false);
-  const [currentSymptomCardKey, setCurrentSymptomCardKey] = useState(
-    props.uniqueKey
-  );
 
-  // get data from Redux
+  // Redux state arrays
   const symptomCardData = useSelector((state) => state.count.symptomList);
   const listOfUniqueKeyData = useSelector(
     (state) => state.count.listOfUniqueKeys
@@ -57,7 +54,6 @@ export default function SymptomCard(props) {
 
   const currentData = {
     uniqueKey: props.uniqueKey,
-    // index: cardIndex,
     date: props.date,
     time: props.time,
     title: props.title,
@@ -99,13 +95,13 @@ export default function SymptomCard(props) {
     dispatch(
       editSymptom({
         index: getIndexInSymptomsByUniqueKey(
-          currentSymptomCardKey,
+          currentData.uniqueKey,
           symptomCardData
         ),
         // check if user provided new values, if false revert to currentData
-        date: populateNewDataValues("date", newData, null, props.date),
-        time: populateNewDataValues("time", newData, null, props.time),
-        title: populateNewDataValues("title", newData, null, props.title),
+        date: populateNewDataValues("date", newData, props.date),
+        time: populateNewDataValues("time", newData, props.time),
+        title: populateNewDataValues("title", newData, props.title),
         //check that user entered intensity is between 1 -> 10
         intensity: checkIntensityValid(
           newData,
@@ -114,7 +110,7 @@ export default function SymptomCard(props) {
           props.intensity
         ),
 
-        note: populateNewDataValues("note", newData, null, props.note),
+        note: populateNewDataValues("note", newData, props.note),
         //! change accentColor to newData.accentColor once ability to change from edit mode is color in implemented
         accentColor: currentData.accentColor,
       })
@@ -124,7 +120,7 @@ export default function SymptomCard(props) {
     dispatch(
       deleteDuplicateSymptom({
         index: getIndexInSymptomsByUniqueKey(
-          currentSymptomCardKey,
+          currentData.uniqueKey,
           symptomCardData
         ),
         uniqueKeyToDelete: currentData.uniqueKey,
@@ -151,11 +147,7 @@ export default function SymptomCard(props) {
               className={`delete-btn ${editEnabled ? "" : "hidden"}`}
               onClick={() => {
                 //get index of current card by matching its unique key
-                const indexViaUniqueKey = getIndexInSymptomsByUniqueKey(
-                  currentSymptomCardKey,
-                  symptomCardData
-                );
-                console.log(currentData.uniqueKey, uniqueKeyIndex);
+                // console.log(currentData.uniqueKey, uniqueKeyIndex);
 
                 dispatch(
                   deleteSymptomCard({
@@ -188,7 +180,6 @@ export default function SymptomCard(props) {
                   setNewData,
                   currentData,
                   symptomCardData,
-                  currentSymptomCardKey,
                   editEnabled,
                   setEditEnabled,
                   sendUpdatedData
@@ -203,15 +194,9 @@ export default function SymptomCard(props) {
             <input
               type='date'
               className={`date ${editEnabled ? "" : "non-selectable"}`}
-              value={populateNewDataValues("date", newData, null, props.date)}
+              value={populateNewDataValues("date", newData, props.date)}
               onChange={(event) => {
-                handleInputUpdate(
-                  event,
-                  "date-field",
-                  currentData,
-                  newData,
-                  setNewData
-                );
+                handleInputUpdate(event, "date-field", newData, setNewData);
               }}
             ></input>
 
@@ -220,15 +205,9 @@ export default function SymptomCard(props) {
               type='time'
               className={`time ${editEnabled ? "" : "non-selectable"}`}
               // placeholder={props.time}
-              value={populateNewDataValues("time", newData, null, props.time)}
+              value={populateNewDataValues("time", newData, props.time)}
               onChange={(event) => {
-                handleInputUpdate(
-                  event,
-                  "time-field",
-                  currentData,
-                  newData,
-                  setNewData
-                );
+                handleInputUpdate(event, "time-field", newData, setNewData);
               }}
             ></input>
           </div>
@@ -243,17 +222,11 @@ export default function SymptomCard(props) {
                   editEnabled ? "" : "non-selectable"
                 }`}
                 // placeholder={"Symptom"}
-                value={populateNewDataValues(
-                  "title",
-                  newData,
-                  null,
-                  props.title
-                )}
+                value={populateNewDataValues("title", newData, props.title)}
                 onChange={(event) => {
                   handleInputUpdate(
                     event,
                     "symptom-title-field",
-                    currentData,
                     newData,
                     setNewData
                   );
@@ -276,14 +249,12 @@ export default function SymptomCard(props) {
                 value={populateNewDataValues(
                   "intensity",
                   newData,
-                  currentData,
                   props.intensity
                 )}
                 onChange={(event) => {
                   handleInputUpdate(
                     event,
                     "intensity-field",
-                    currentData,
                     newData,
                     setNewData
                   );
@@ -304,20 +275,19 @@ export default function SymptomCard(props) {
               rows='4'
               placeholder='Notes...'
               // readOnly={editEnabled ? false : true}
-              value={populateNewDataValues("note", newData, null, props.note)}
+              value={populateNewDataValues("note", newData, props.note)}
               onChange={(event) => {
-                handleInputUpdate(
-                  event,
-                  "note-field",
-                  currentData,
-                  newData,
-                  setNewData
-                );
+                handleInputUpdate(event, "note-field", newData, setNewData);
               }}
             ></textarea>
-            <p ref={myElementRef} className='unique-key-text'>
-              {props.uniqueKey}
-            </p>
+            <div className='footer-text-display'>
+              <p ref={myElementRef} className='unique-key-text'>
+                {props.uniqueKey}
+              </p>
+              <p className='card-index-display'>
+                Index: {props.thisCardsIndex}
+              </p>
+            </div>
           </div>
         </div>
       </div>

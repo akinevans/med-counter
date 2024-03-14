@@ -220,11 +220,22 @@
   color: #000;
 }
 
-.unique-key-text {
-  width: fit-content;
-  margin: 0 auto;
+.footer-text-display {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.unique-key-text,
+.card-index-display {
+  margin: 10px 0;
   font-size: 0.9rem;
   opacity: 0.4;
+}
+
+.card-index-display {
 }
 
 /* Utility Classes */

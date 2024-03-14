@@ -127,7 +127,7 @@ export const countSlice = createSlice({
       //   }
       // }
 
-      console.log("INDEX", indexOfUniqueKey);
+      // console.log("INDEX", indexOfUniqueKey);
       console.log("new symptom arr:", listOfSymptoms);
       console.log("new uniq arr:", listOfUniqueKeys);
       alert("pause for deleteSymptomCard");

@@ -50,14 +50,7 @@ export const getMatchingIndexInUniqueKeys = (key, uniqueKeyStateArr) => {
 //
 //
 
-function getCurrentIndex(
-  newData,
-  setNewData,
-  currentData,
-  symptomCardData,
-  currentSymptomCardKey
-  // setCardIndex
-) {
+function getCurrentIndex(setNewData, currentData, symptomCardData) {
   //edge case
   if (symptomCardData.length === 0) {
     // newData.index = 0;
@@ -70,7 +63,7 @@ function getCurrentIndex(
 
   // find the correct data in symptomCard state array by matching the uniqueKey property
   for (let i = 0; i < symptomCardData.length; i++) {
-    if (symptomCardData[i].uniqueKey === currentSymptomCardKey) {
+    if (symptomCardData[i].uniqueKey === currentData.uniqueKey) {
       // console.log("i: ", i);
       // console.log("data FOUND in: ", symptomCardData[i]);
       // console.log("some data found - title:: ", symptomCardData[i].title);
@@ -96,13 +89,7 @@ function getCurrentIndex(
 //
 
 // function for updating the data on an input field when it is changed
-export const handleInputUpdate = (
-  event,
-  inputField,
-  currentData,
-  newData,
-  setNewData
-) => {
+export const handleInputUpdate = (event, inputField, newData, setNewData) => {
   // edge case - If the user goes into edit mode but doesn't change data
   if (!inputField) {
     throw new Error("akin - No input field provided");
@@ -168,7 +155,6 @@ export const handleEditButton = (
   setNewData,
   currentData,
   symptomCardData,
-  currentSymptomCardKey,
   editEnabled,
   setEditEnabled,
   sendUpdatedData
@@ -184,13 +170,7 @@ export const handleEditButton = (
     // update all inputs state
     //^ CAUTION. e = the button event, not the data you're dealing with
 
-    getCurrentIndex(
-      newData,
-      setNewData,
-      currentData,
-      symptomCardData,
-      currentSymptomCardKey
-    );
+    getCurrentIndex(setNewData, currentData, symptomCardData, currentData);
 
     // Update all properties in NewDataState as a safeguard, this will hopefully prevent propertied from going back to their currentData value when attempting to edit multiple form inputs
 
@@ -228,12 +208,7 @@ export const evaluateDataValues = (currentData, newData, setNewData) => {
 // function for correctly populating the string values in each input for existing symptomCard components
 // use obj bracket notation when the property name is dynamic at runtime [key]
 // use obj dot notation when the property name is valid / hardcoded (.title .date .time etc)
-export const populateNewDataValues = (
-  key,
-  newData,
-  currentData,
-  existingValue
-) => {
+export const populateNewDataValues = (key, newData, existingValue) => {
   if (newData[key] !== undefined) {
     return newData[key];
   } else {
@@ -241,7 +216,6 @@ export const populateNewDataValues = (
   }
 };
 
-//
 //
 //
 //
@@ -256,7 +230,6 @@ export const checkIntensityValid = (
   const intensityValue = populateNewDataValues(
     "intensity",
     newData,
-    currentData,
     intensityProp
   );
 
