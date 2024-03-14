@@ -79,7 +79,7 @@ export const generateRandomDateTime = () => {
   }${day}`;
 
   // Format the time string
-  var formattedTime = `${hours < 10 ? "0" + hours : hours}:${
+  let formattedTime = `${hours < 10 ? "0" + hours : hours}:${
     minutes < 10 ? "0" + minutes : minutes
   }`;
 

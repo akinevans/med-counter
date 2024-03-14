@@ -6,10 +6,8 @@
 
 //TODO add inputs for symptom frequency, duration, mood, and list of medication taken,
 
-//& TODO: replace all uniqueKey logic with the cards index
-
 import React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import "./SymptomCard.css";
 
 // redux imports
@@ -26,43 +24,28 @@ import {
   handleInputUpdate,
   evaluateDataValues,
   populateNewDataValues,
-  // getIndexInSymptomsByUniqueKey,
-  // getMatchingIndexInUniqueKeys,
   checkIntensityValid,
 } from "../../utilityFunctions/symptomCardUtilities";
 
 export default function SymptomCard(props) {
   console.clear();
-  const myElementRef = useRef(null);
-  // const cardIndexRef = useRef();
 
   // state variables
   const [editEnabled, setEditEnabled] = useState(false);
-  // const [cardIndex, setCardIndex] = useState(cardIndexRef);
 
   // Redux state arrays
   const symptomCardData = useSelector((state) => state.count.symptomList);
-  const listOfUniqueKeyData = useSelector(
-    (state) => state.count.listOfUniqueKeys
-  );
-
   console.log("symptomCardData", symptomCardData);
-  // console.log("listOfUniqueKeys", listOfUniqueKeyData);
 
   const dispatch = useDispatch();
 
-  // console.log("INDEX REF VALUE", cardIndexRef.current.textContent);
-  // console.log("INDEX REF VALUE", cardIndexRef);
-
   // Define the initial new data state obj
   const [newData, setNewData] = useState({
-    // uniqueKey: props.uniqueKey,
-    // All data will be set from Redux state. No need to hard code initial values.
+    // All data will be set from Redux state.
     // Hard coding initial values will break the logic
   });
 
   const currentData = {
-    // uniqueKey: props.uniqueKey,
     index: props.thisCardsIndex,
     date: props.date,
     time: props.time,
@@ -70,7 +53,6 @@ export default function SymptomCard(props) {
     intensity: props.intensity,
     note: props.note,
     accentColor: props.accentColor,
-    // stateLength: symptomCardData.length,
   };
 
   console.log(
@@ -79,23 +61,11 @@ export default function SymptomCard(props) {
   );
   // console.log("newData ", newData);
 
-  // let uniqueKeyIndex = getMatchingIndexInUniqueKeys(
-  //   currentData.uniqueKey,
-  //   listOfUniqueKeyData
-  // );
-
   const sendUpdatedData = (newData, currentData) => {
     //& check if any data has been altered, if true send date to redux
     //& do this by populating currentData variable (hardcode is fine) then compare it to newData
 
-    console.log(currentData.uniqueKey);
-    // console.log("index of uKey", uniqueKeyIndex);
-
     setEditEnabled(false);
-
-    //& check if any data has been altered, if true send date to redux
-    //& do this by populating currentData variable (hardcode is fine) then compare it to newData
-
     evaluateDataValues(currentData, newData, setNewData);
 
     // console.log("in sendUpdatedData here is currentData:", currentData);
@@ -126,20 +96,9 @@ export default function SymptomCard(props) {
     dispatch(
       deleteDuplicateSymptom({
         index: props.thisCardsIndex,
-
-        // uniqueKeyToDelete: currentData.uniqueKey,
-        // uniqueKeyIndex: uniqueKeyIndex,
       })
     );
   };
-
-  // get the uniqueKey of the component on render
-  // useEffect(() => {
-  //   setCardIndex(cardIndexRef.current.textContent);
-  //   setCurrentSymptomCardKey(myElementRef.current.textContent);
-  // }, []);
-
-  // console.log("CURRENT uniqueKey: ", currentSymptomCardKey);
 
   return (
     <div className={`symptom-card-wrapper ${editEnabled ? "edit-mode" : ""}`}>
@@ -151,23 +110,13 @@ export default function SymptomCard(props) {
             <button
               className={`delete-btn ${editEnabled ? "" : "hidden"}`}
               onClick={() => {
-                //get index of current card by matching its unique key
-                // console.log(currentData.uniqueKey, uniqueKeyIndex);
-
                 dispatch(
                   deleteSymptomCard({
-                    // indexToDelete: indexViaUniqueKey,
                     indexToDelete: props.thisCardsIndex,
-
-                    // uniqueKeyToDelete: currentData.uniqueKey,
-                    // indexOfUniqueKey: getMatchingIndexInUniqueKeys(
-                    //   currentData.uniqueKey,
-                    //   listOfUniqueKeyData
-                    // ),
                   })
                 );
                 // finally reset edit enabled back to false
-                // this keeps the remaining undeleted cards from accidentally going into edit mode automatically
+                // this keeps the remaining cards from accidentally going into edit mode automatically
                 setEditEnabled(false);
               }}
             >
@@ -180,9 +129,7 @@ export default function SymptomCard(props) {
                 handleEditButton(
                   e,
                   newData,
-                  setNewData,
                   currentData,
-                  symptomCardData,
                   editEnabled,
                   setEditEnabled,
                   sendUpdatedData
@@ -207,7 +154,6 @@ export default function SymptomCard(props) {
             <input
               type='time'
               className={`time ${editEnabled ? "" : "non-selectable"}`}
-              // placeholder={props.time}
               value={populateNewDataValues("time", newData, props.time)}
               onChange={(event) => {
                 handleInputUpdate(event, "time-field", newData, setNewData);
@@ -265,9 +211,9 @@ export default function SymptomCard(props) {
               ></input>
             </div>
           </div>
+
           <div className='note-wrapper'>
             {/* //& NOTE  */}
-            {/* //! KNOWN BUG - cant fully delete existing note when in edit mode*/}
             <textarea
               className={`note-text-area ${
                 editEnabled ? "" : "non-selectable"
@@ -284,14 +230,7 @@ export default function SymptomCard(props) {
               }}
             ></textarea>
             <div className='footer-text-display'>
-              <p ref={myElementRef} className='unique-key-text'>
-                {props.uniqueKey}
-              </p>
-              <p
-                //
-                // ref={cardIndexRef}
-                className='card-index-display'
-              >
+              <p className='card-index-display'>
                 index: {props.thisCardsIndex}
               </p>
             </div>

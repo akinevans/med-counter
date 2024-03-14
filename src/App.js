@@ -10,10 +10,6 @@ import { deleteAll, addSymptomCard } from "./redux/countReducer";
 
 //utility imports
 import {
-  // generateUniqueKey,
-  getDateAndTime,
-} from "./utilityFunctions/FormUtilities";
-import {
   generateRandomCardValues,
   generateRandomDateTime,
 } from "./utilityFunctions/debuggingHelper";
@@ -56,7 +52,6 @@ function App() {
     for (let i = 1; i <= numOfCards; i++) {
       dispatch(
         addSymptomCard({
-          // uniqueKey: generateUniqueKey(),
           date: generateRandomDateTime()[0],
           time: generateRandomDateTime()[1],
           title: generateRandomCardValues("title"),
@@ -100,7 +95,7 @@ function App() {
           onClick={() => {
             if (sortByDate === "descending") {
               setSortByDate("ascending");
-            } else if (sortByDate === "ascending") {
+            } else {
               setSortByDate("descending");
             }
           }}
@@ -142,17 +137,14 @@ function App() {
 
               <SymptomCard
                 // key prop and all other data will be pulled from redux store
-
+                key={index}
+                thisCardsIndex={index}
                 title={data.title}
                 intensity={data.intensity}
                 date={data.date}
                 time={data.time}
                 note={data.note}
                 accentColor={data.accentColor}
-                //use the index as the key instead of uniqueKey b/c there is a zero % chance of having a duplicate key value
-                key={index}
-                // uniqueKey={data.uniqueKey}
-                thisCardsIndex={index}
               />
             ))
           : false}

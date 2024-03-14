@@ -10,55 +10,6 @@ export const toggleColorClassNames = (
 //
 //
 
-// export const generateUniqueKey = () => {
-//   // 648,000,000 possible combinations
-//   const letters = [
-//     "A",
-//     "B",
-//     "C",
-//     "D",
-//     "E",
-//     "F",
-//     "G",
-//     "H",
-//     "I",
-//     "J",
-//     "K",
-//     "L",
-//     "M",
-//     "N",
-//     "O",
-//     "P",
-//     "Q",
-//     "R",
-//     "S",
-//     "T",
-//     "U",
-//     "V",
-//     "W",
-//     "X",
-//     "Y",
-//     "Z",
-//   ];
-
-//   // generate letter between A -> I
-//   const randLetter1 = letters[Math.floor(Math.random() * 9)];
-
-//   // generate letter between J -> R
-//   const randLetter2 = letters[Math.floor(Math.random() * 9) + 9];
-
-//   // generate letter between S -> Z
-//   const randLetter3 = letters[Math.floor(Math.random() * 8) + 18];
-
-//   let lettersKey = randLetter1 + randLetter2 + randLetter3;
-
-//   return Math.floor(Math.random() * 1000000) + "-" + lettersKey;
-// };
-
-//
-//
-//
-
 export const displayAccentColors = () => [
   "blue",
   "light-blue",
@@ -143,3 +94,53 @@ export const checkIntensityValidForm = (data) => {
     throw new Error("akin - Error in setting intensity in Form.js");
   }
 };
+
+//
+//
+//
+//
+
+// export const generateUniqueKey = () => {
+//   // 648,000,000 possible combinations
+//   const letters = [
+//     "A",
+//     "B",
+//     "C",
+//     "D",
+//     "E",
+//     "F",
+//     "G",
+//     "H",
+//     "I",
+//     "J",
+//     "K",
+//     "L",
+//     "M",
+//     "N",
+//     "O",
+//     "P",
+//     "Q",
+//     "R",
+//     "S",
+//     "T",
+//     "U",
+//     "V",
+//     "W",
+//     "X",
+//     "Y",
+//     "Z",
+//   ];
+
+//   // generate letter between A -> I
+//   const randLetter1 = letters[Math.floor(Math.random() * 9)];
+
+//   // generate letter between J -> R
+//   const randLetter2 = letters[Math.floor(Math.random() * 9) + 9];
+
+//   // generate letter between S -> Z
+//   const randLetter3 = letters[Math.floor(Math.random() * 8) + 18];
+
+//   let lettersKey = randLetter1 + randLetter2 + randLetter3;
+
+//   return Math.floor(Math.random() * 1000000) + "-" + lettersKey;
+// };

@@ -8,13 +8,12 @@ import { addSymptomCard } from "../../redux/countReducer";
 
 //utility imports
 import {
-  displayAccentColors,
-  // generateUniqueKey,
   getDateAndTime,
+  displayAccentColors,
   clearFormInputValues,
   toggleColorClassNames,
+  checkIntensityValidForm,
 } from "../../utilityFunctions/FormUtilities";
-import { checkIntensityValidForm } from "../../utilityFunctions/FormUtilities";
 
 export default function Form(props) {
   const [symptom, setSymptom] = useState("");
@@ -30,19 +29,14 @@ export default function Form(props) {
   const dispatch = useDispatch();
   const listOfAccentColors = displayAccentColors();
 
-  // let uniqueKey = generateUniqueKey();
-
   const handleFormSubmission = (e) => {
     // Do not submit the form
     e.preventDefault();
 
-    // create new symptomCard component
+    // Create new symptomCard component
     dispatch(
       addSymptomCard({
-        // uniqueKey: uniqueKey,
         title: symptom,
-        // if !intensity send 1 to addSymptomCard
-        // intensity: intensity || 1,
         intensity: checkIntensityValidForm(intensity),
         date: date,
         time: time,
@@ -82,7 +76,6 @@ export default function Form(props) {
       <div className='form-symptom-and-intensity-wrapper'>
         <label>
           <input
-            //
             className='symptom-input'
             type='text'
             placeholder='Symptom'
@@ -124,7 +117,9 @@ export default function Form(props) {
           ></textarea>
 
           {/* //& COLOR PICKER */}
-          {/*the 'color' className in Form.css is separate from the accent color classNames in SymptomCard.css */}
+          {
+            //*the 'color' className in Form.css is separate from the accent color classNames in SymptomCard.css */
+          }
           <div className='color-picker-wrapper'>
             <div
               className={`selected-color-view ${userSelectedAccentColor}`}
