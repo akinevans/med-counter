@@ -9,7 +9,7 @@ import { addSymptomCard } from "../../redux/countReducer";
 //utility imports
 import {
   displayAccentColors,
-  generateUniqueKey,
+  // generateUniqueKey,
   getDateAndTime,
   clearFormInputValues,
   toggleColorClassNames,
@@ -20,8 +20,8 @@ export default function Form(props) {
   const [symptom, setSymptom] = useState("");
   const [intensity, setIntensity] = useState();
   const [date, setDate] = useState(getDateAndTime()[0]);
-  // To get time with seconds call (getDateAndTime()[2])
   const [time, setTime] = useState(getDateAndTime()[1]);
+  // To get time with seconds call (getDateAndTime()[2])
   const [note, setNote] = useState("");
   const [isColorSelected, setIsColorSelected] = useState(false);
   const [userSelectedAccentColor, setUserSelectedAccentColor] =
@@ -30,9 +30,7 @@ export default function Form(props) {
   const dispatch = useDispatch();
   const listOfAccentColors = displayAccentColors();
 
-  //TODO: check if generated unique key exists in state.listOfUniqueKeys, if false continue code, else generate a new one
-
-  let uniqueKey = generateUniqueKey();
+  // let uniqueKey = generateUniqueKey();
 
   const handleFormSubmission = (e) => {
     // Do not submit the form
@@ -41,7 +39,7 @@ export default function Form(props) {
     // create new symptomCard component
     dispatch(
       addSymptomCard({
-        uniqueKey: uniqueKey,
+        // uniqueKey: uniqueKey,
         title: symptom,
         // if !intensity send 1 to addSymptomCard
         // intensity: intensity || 1,

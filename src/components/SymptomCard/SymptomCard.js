@@ -26,16 +26,19 @@ import {
   handleInputUpdate,
   evaluateDataValues,
   populateNewDataValues,
-  getIndexInSymptomsByUniqueKey,
-  getMatchingIndexInUniqueKeys,
+  // getIndexInSymptomsByUniqueKey,
+  // getMatchingIndexInUniqueKeys,
   checkIntensityValid,
 } from "../../utilityFunctions/symptomCardUtilities";
 
 export default function SymptomCard(props) {
   console.clear();
+  const myElementRef = useRef(null);
+  // const cardIndexRef = useRef();
 
   // state variables
   const [editEnabled, setEditEnabled] = useState(false);
+  // const [cardIndex, setCardIndex] = useState(cardIndexRef);
 
   // Redux state arrays
   const symptomCardData = useSelector((state) => state.count.symptomList);
@@ -44,20 +47,23 @@ export default function SymptomCard(props) {
   );
 
   console.log("symptomCardData", symptomCardData);
-  console.log("listOfUniqueKeys", listOfUniqueKeyData);
+  // console.log("listOfUniqueKeys", listOfUniqueKeyData);
 
   const dispatch = useDispatch();
-  const myElementRef = useRef(null);
+
+  // console.log("INDEX REF VALUE", cardIndexRef.current.textContent);
+  // console.log("INDEX REF VALUE", cardIndexRef);
 
   // Define the initial new data state obj
   const [newData, setNewData] = useState({
-    uniqueKey: props.uniqueKey,
+    // uniqueKey: props.uniqueKey,
     // All data will be set from Redux state. No need to hard code initial values.
     // Hard coding initial values will break the logic
   });
 
   const currentData = {
-    uniqueKey: props.uniqueKey,
+    // uniqueKey: props.uniqueKey,
+    index: props.thisCardsIndex,
     date: props.date,
     time: props.time,
     title: props.title,
@@ -73,17 +79,17 @@ export default function SymptomCard(props) {
   );
   // console.log("newData ", newData);
 
-  let uniqueKeyIndex = getMatchingIndexInUniqueKeys(
-    currentData.uniqueKey,
-    listOfUniqueKeyData
-  );
+  // let uniqueKeyIndex = getMatchingIndexInUniqueKeys(
+  //   currentData.uniqueKey,
+  //   listOfUniqueKeyData
+  // );
 
   const sendUpdatedData = (newData, currentData) => {
     //& check if any data has been altered, if true send date to redux
     //& do this by populating currentData variable (hardcode is fine) then compare it to newData
 
     console.log(currentData.uniqueKey);
-    console.log("index of uKey", uniqueKeyIndex);
+    // console.log("index of uKey", uniqueKeyIndex);
 
     setEditEnabled(false);
 
@@ -98,10 +104,7 @@ export default function SymptomCard(props) {
     //payload variables names must match exactly in redux
     dispatch(
       editSymptom({
-        index: getIndexInSymptomsByUniqueKey(
-          currentData.uniqueKey,
-          symptomCardData
-        ),
+        index: props.thisCardsIndex,
         // check if user provided new values, if false revert to currentData
         date: populateNewDataValues("date", newData, props.date),
         time: populateNewDataValues("time", newData, props.time),
@@ -109,7 +112,6 @@ export default function SymptomCard(props) {
         //check that user entered intensity is between 1 -> 10
         intensity: checkIntensityValid(
           newData,
-          currentData,
           populateNewDataValues,
           props.intensity
         ),
@@ -123,20 +125,19 @@ export default function SymptomCard(props) {
     // Delete the duplicate symptomCard created by editSymptom in Redux
     dispatch(
       deleteDuplicateSymptom({
-        index: getIndexInSymptomsByUniqueKey(
-          currentData.uniqueKey,
-          symptomCardData
-        ),
-        uniqueKeyToDelete: currentData.uniqueKey,
-        uniqueKeyIndex: uniqueKeyIndex,
+        index: props.thisCardsIndex,
+
+        // uniqueKeyToDelete: currentData.uniqueKey,
+        // uniqueKeyIndex: uniqueKeyIndex,
       })
     );
   };
 
   // get the uniqueKey of the component on render
-  useEffect(() => {
-    // setCurrentSymptomCardKey(myElementRef.current.textContent);
-  }, []);
+  // useEffect(() => {
+  //   setCardIndex(cardIndexRef.current.textContent);
+  //   setCurrentSymptomCardKey(myElementRef.current.textContent);
+  // }, []);
 
   // console.log("CURRENT uniqueKey: ", currentSymptomCardKey);
 
@@ -156,15 +157,13 @@ export default function SymptomCard(props) {
                 dispatch(
                   deleteSymptomCard({
                     // indexToDelete: indexViaUniqueKey,
-                    indexToDelete: getIndexInSymptomsByUniqueKey(
-                      currentData.uniqueKey,
-                      symptomCardData
-                    ),
-                    uniqueKeyToDelete: currentData.uniqueKey,
-                    indexOfUniqueKey: getMatchingIndexInUniqueKeys(
-                      currentData.uniqueKey,
-                      listOfUniqueKeyData
-                    ),
+                    indexToDelete: props.thisCardsIndex,
+
+                    // uniqueKeyToDelete: currentData.uniqueKey,
+                    // indexOfUniqueKey: getMatchingIndexInUniqueKeys(
+                    //   currentData.uniqueKey,
+                    //   listOfUniqueKeyData
+                    // ),
                   })
                 );
                 // finally reset edit enabled back to false
@@ -288,8 +287,12 @@ export default function SymptomCard(props) {
               <p ref={myElementRef} className='unique-key-text'>
                 {props.uniqueKey}
               </p>
-              <p className='card-index-display'>
-                Index: {props.thisCardsIndex}
+              <p
+                //
+                // ref={cardIndexRef}
+                className='card-index-display'
+              >
+                index: {props.thisCardsIndex}
               </p>
             </div>
           </div>

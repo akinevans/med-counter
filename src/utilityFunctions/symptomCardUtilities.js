@@ -1,87 +1,84 @@
-//! KNOWN BUGS
-// When going into edit mode. Editing multiple fields then clicking save only the last edited field will update
+// export const getIndexInSymptomsByUniqueKey = (key, symptomStateArr) => {
+//   // edge case
+//   // if (!symptomStateArr) {
+//   //   throw new Error("akin - symptomStateArr parameter is null or undefined");
+//   //   // return null;
+//   // }
 
-export const getIndexInSymptomsByUniqueKey = (key, symptomStateArr) => {
-  // edge case
-  // if (!symptomStateArr) {
-  //   throw new Error("akin - symptomStateArr parameter is null or undefined");
-  //   // return null;
-  // }
+//   // by this point symptomCard state arr already has 1 item
+//   if (symptomStateArr.length === 1) {
+//     return 0;
+//   }
 
-  // by this point symptomCard state arr already has 1 item
-  if (symptomStateArr.length === 1) {
-    return 0;
-  }
-
-  // loop over state array and find the index where the matching key, (uniqueKey), resides
-  for (let i = 0; i < symptomStateArr.length; i++) {
-    if (symptomStateArr[i].uniqueKey === key) {
-      console.log("FOUND KEY AT", i);
-      return i;
-    }
-  }
-  return false;
-};
+//   // loop over state array and find the index where the matching key, (uniqueKey), resides
+//   for (let i = 0; i < symptomStateArr.length; i++) {
+//     if (symptomStateArr[i].uniqueKey === key) {
+//       console.log("FOUND KEY AT", i);
+//       return i;
+//     }
+//   }
+//   return false;
+// };
 
 //
 //
 //
 //
 
-export const getMatchingIndexInUniqueKeys = (key, uniqueKeyStateArr) => {
-  //edge case
-  if (uniqueKeyStateArr.length === 0 || !uniqueKeyStateArr) {
-    return 0;
-  }
+// export const getMatchingIndexInUniqueKeys = (key, uniqueKeyStateArr) => {
+//   //edge case
+//   if (uniqueKeyStateArr.length === 0 || !uniqueKeyStateArr) {
+//     return 0;
+//   }
 
-  for (let i = 0; i < uniqueKeyStateArr.length; i++) {
-    if (uniqueKeyStateArr[i] === key) {
-      console.log("FounD indeX", i);
-      return i;
-    } else if (i !== uniqueKeyStateArr.length - 1) {
-      continue;
-    }
-  }
-  return null;
-};
+//   for (let i = 0; i < uniqueKeyStateArr.length; i++) {
+//     if (uniqueKeyStateArr[i] === key) {
+//       console.log("FounD indeX", i);
+//       return i;
+//     } else if (i !== uniqueKeyStateArr.length - 1) {
+//       continue;
+//     }
+//   }
+//   return null;
+// };
 
 //
 //
 //
 //
 
-function getCurrentIndex(setNewData, currentData, symptomCardData) {
-  //edge case
-  if (symptomCardData.length === 0) {
-    // newData.index = 0;
-    setNewData(() => ({
-      index: 0,
-    }));
-    currentData.index = 0;
-    return 0;
-  }
+// function getCurrentIndex(setNewData, currentData, symptomCardData) {
+//   //edge case
+//   if (symptomCardData.length === 0) {
+//     // newData.index = 0;
+//     setNewData(() => ({
+//       index: 0,
+//     }));
+//     currentData.index = 0;
+//     return 0;
+//   }
 
-  // find the correct data in symptomCard state array by matching the uniqueKey property
-  for (let i = 0; i < symptomCardData.length; i++) {
-    if (symptomCardData[i].uniqueKey === currentData.uniqueKey) {
-      // console.log("i: ", i);
-      // console.log("data FOUND in: ", symptomCardData[i]);
-      // console.log("some data found - title:: ", symptomCardData[i].title);
+//   // find the correct data in symptomCard state array by matching the uniqueKey property
+//   for (let i = 0; i < symptomCardData.length; i++) {
+//     if (symptomCardData[i].uniqueKey === currentData.uniqueKey) {
+//       // console.log("i: ", i);
+//       // console.log("data FOUND in: ", symptomCardData[i]);
+//       // console.log("some data found - title:: ", symptomCardData[i].title);
 
-      // newData.index = symptomCardData[i].cardIndex;
-      setNewData(() => ({
-        index: symptomCardData[i].cardIndex,
-      }));
-      currentData.index = i;
+//       // newData.index = symptomCardData[i].cardIndex;
+//       setNewData(() => ({
+//         index: symptomCardData[i].cardIndex,
+//       }));
+//       currentData.index = i;
 
-      break;
-    } else if (i !== symptomCardData.length) {
-      continue;
-    }
-    return i;
-  }
-  return 0;
-}
+//       break;
+//     } else if (i !== symptomCardData.length) {
+//       continue;
+//     }
+//     return i;
+//   }
+//   return 0;
+// }
 
 //
 //
@@ -170,7 +167,7 @@ export const handleEditButton = (
     // update all inputs state
     //^ CAUTION. e = the button event, not the data you're dealing with
 
-    getCurrentIndex(setNewData, currentData, symptomCardData, currentData);
+    // getCurrentIndex(setNewData, currentData, symptomCardData, currentData);
 
     // Update all properties in NewDataState as a safeguard, this will hopefully prevent propertied from going back to their currentData value when attempting to edit multiple form inputs
 
@@ -223,7 +220,6 @@ export const populateNewDataValues = (key, newData, existingValue) => {
 
 export const checkIntensityValid = (
   newData,
-  currentData,
   populateNewDataValues,
   intensityProp
 ) => {

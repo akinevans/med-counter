@@ -1,11 +1,13 @@
 //TODO: rename this file and every occurrence of 'count'
 
+// FIXME: Duplicate cards fail to be deleted under unknown conditions
+
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   count: [],
   symptomList: [],
-  listOfUniqueKeys: [],
+  // listOfUniqueKeys: [],
   intensityData: [],
 };
 
@@ -19,11 +21,11 @@ export const countSlice = createSlice({
 
       // Cannot manipulate redux state arrays directly
       // Create new arr's by spreading existing state arr's into new arr's
-      const newListOfUniqueKeys = [...state.listOfUniqueKeys, uniqueKey];
+      // const newListOfUniqueKeys = [...state.listOfUniqueKeys, uniqueKey];
       const newSymptomList = [
         ...state.symptomList,
         {
-          uniqueKey,
+          // uniqueKey,
           date,
           time,
           title,
@@ -43,7 +45,7 @@ export const countSlice = createSlice({
       // Return a new state object with the updated arrays
       return {
         ...state,
-        listOfUniqueKeys: newListOfUniqueKeys,
+        // listOfUniqueKeys: newListOfUniqueKeys,
         symptomList: newSymptomList,
       };
     },
@@ -109,19 +111,14 @@ export const countSlice = createSlice({
 
       // Create a shallow copy of the symptom and uniqueKey arrays
       let listOfSymptoms = [...state.symptomList];
-      let listOfUniqueKeys = [...state.listOfUniqueKeys];
+      // let listOfUniqueKeys = [...state.listOfUniqueKeys];
 
       // const symptomData = {
       //   ...listOfSymptoms[indexToDelete],
       //   deletionIndex: indexToDelete,
       // };
 
-      console.log(
-        "index to delete:",
-        indexToDelete,
-        "uniqueKey index to delete:",
-        indexOfUniqueKey
-      );
+      console.log("index to delete:", indexToDelete);
 
       alert("pause for deleteSymptom");
 
@@ -132,7 +129,7 @@ export const countSlice = createSlice({
       // erase the whole arr then loop over listOfSymptoms, while accessing the unique key property of each and pushing the values into new listOfKeys
       // this is O(n) operation
 
-      listOfUniqueKeys.splice(indexOfUniqueKey, 1);
+      // listOfUniqueKeys.splice(indexOfUniqueKey, 1);
 
       // for (let i = 0; i < listOfUniqueKeys.length; i++) {
       //   if (listOfUniqueKeys[i].uniqueKey === uniqueKeyToDelete) {
@@ -143,14 +140,14 @@ export const countSlice = createSlice({
 
       // console.log("INDEX", indexOfUniqueKey);
       console.log("new symptom arr:", listOfSymptoms);
-      console.log("new uniq arr:", listOfUniqueKeys);
+      // console.log("new uniq arr:", listOfUniqueKeys);
       alert("pause for deleteSymptomCard");
 
       // Return the updated state object with the modified arrays
       return {
         ...state,
         symptomList: listOfSymptoms,
-        listOfUniqueKeys: listOfUniqueKeys,
+        // listOfUniqueKeys: listOfUniqueKeys,
       };
     },
 
@@ -167,19 +164,19 @@ export const countSlice = createSlice({
         ...state.symptomList.slice(index),
       ];
 
-      const updatedListOfUniqueKeys = [
-        ...state.listOfUniqueKeys.slice(0, uniqueKeyIndex),
-        ...state.listOfUniqueKeys.slice(uniqueKeyIndex),
-      ];
+      // const updatedListOfUniqueKeys = [
+      //   ...state.listOfUniqueKeys.slice(0, uniqueKeyIndex),
+      //   ...state.listOfUniqueKeys.slice(uniqueKeyIndex),
+      // ];
 
       console.log(
         "symptom arr near end of delete duplicate",
         updatedSymptomListArray
       );
-      console.log(
-        "unique arr near end of delete duplicate",
-        updatedListOfUniqueKeys
-      );
+      // console.log(
+      //   "unique arr near end of delete duplicate",
+      //   updatedListOfUniqueKeys
+      // );
       alert("pause for deleteDuplicate");
 
       // unsure why but removing the return statement ensures duplicates are deleted
@@ -197,12 +194,12 @@ export const countSlice = createSlice({
 
     deleteAll: (state, action) => {
       const updatedSymptomListArray = [];
-      const updatedListOfUniqueKeys = [];
+      // const updatedListOfUniqueKeys = [];
 
       return {
         ...state,
         symptomList: updatedSymptomListArray,
-        listOfUniqueKeys: updatedListOfUniqueKeys,
+        // listOfUniqueKeys: updatedListOfUniqueKeys,
       };
     },
   },

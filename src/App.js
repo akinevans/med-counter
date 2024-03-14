@@ -10,7 +10,7 @@ import { deleteAll, addSymptomCard } from "./redux/countReducer";
 
 //utility imports
 import {
-  generateUniqueKey,
+  // generateUniqueKey,
   getDateAndTime,
 } from "./utilityFunctions/FormUtilities";
 import { generateRandomCardValues } from "./utilityFunctions/debuggingHelper";
@@ -53,7 +53,7 @@ function App() {
     for (let i = 1; i <= numOfCards; i++) {
       dispatch(
         addSymptomCard({
-          uniqueKey: generateUniqueKey(),
+          // uniqueKey: generateUniqueKey(),
           // date and time wont be random
           date: getDateAndTime()[0],
           time: getDateAndTime()[1],
@@ -114,7 +114,13 @@ function App() {
           setFormVisible(false);
         }}
       />
-
+      <h1
+        className={`sort-order-message ${
+          symptomCardData.length !== 0 ? "" : "hidden"
+        }`}
+      >
+        Sorted by {sortByDate === "ascending" ? "ascending" : "descending"}
+      </h1>
       <div
         className={`symptom-card-component-list-wrapper ${
           sortByDate === "descending" ? "descending-date" : "ascending-date"
@@ -127,6 +133,7 @@ function App() {
         >
           Begin by adding some entries.
         </h1>
+
         {symptomCardData.length
           ? symptomCardData.map((data, index) => (
               /* //* column-reverse in App.css for class symptom-card-component-list-wrapper shows newest symptom cards first */
@@ -142,7 +149,7 @@ function App() {
                 accentColor={data.accentColor}
                 //use the index as the key instead of uniqueKey b/c there is a zero % chance of having a duplicate key value
                 key={index}
-                uniqueKey={data.uniqueKey}
+                // uniqueKey={data.uniqueKey}
                 thisCardsIndex={index}
               />
             ))

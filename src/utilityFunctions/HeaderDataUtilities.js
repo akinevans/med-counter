@@ -16,6 +16,7 @@ export const getAverageIntensity = (symptomCardData, totalNumOfCards) => {
 
 // calculates the number of mild and severe symptoms tracked
 export const calculateIntensityCounts = (symptomCardData) => {
+  // preset all count values to 0
   let counts = [0, 0, 0];
 
   symptomCardData.forEach((card) => {

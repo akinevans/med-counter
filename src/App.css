@@ -58,7 +58,18 @@
 }
 
 .sort-by-date-btn {
+  width: 220px;
   background-color: #636363;
+}
+
+.sort-order-message,
+.empty-message {
+  width: 100%;
+  height: fit-content;
+  margin: 15px auto 0;
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-align: center;
 }
 
 .symptom-card-component-list-wrapper {
@@ -69,15 +80,6 @@
   align-items: center;
   width: 100%;
   height: fit-content;
-}
-
-.empty-message {
-  width: 100%;
-  height: fit-content;
-  margin: 0 auto;
-  font-size: 1.5rem;
-  font-weight: 400;
-  text-align: center;
 }
 
 /* Utility Class for for sorting cards by date descending / ascending */
