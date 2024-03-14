@@ -2,6 +2,8 @@
 
 //TODO Implement restore function to bring back deleted cards
 
+//TODO Implement ability to check off and delete multiple cards at once
+
 //TODO: add inputs for symptom frequency, duration, mood, and list of medication taken,
 
 import React from "react";
