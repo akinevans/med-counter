@@ -1,4 +1,4 @@
-//TODO Implement Binary search algorithm O(log n) for finding data in state arrays. Currently linear search O(n) is implemented and is slow depending on length of array.
+// Was able to track each symptomCards index across the Redux state array. This takes the old search process via uniqueKey from an O(n) operation down to 0(1) 😎
 
 //TODO Implement restore function to bring back deleted cards
 

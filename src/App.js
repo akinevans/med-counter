@@ -13,7 +13,10 @@ import {
   // generateUniqueKey,
   getDateAndTime,
 } from "./utilityFunctions/FormUtilities";
-import { generateRandomCardValues } from "./utilityFunctions/debuggingHelper";
+import {
+  generateRandomCardValues,
+  generateRandomDateTime,
+} from "./utilityFunctions/debuggingHelper";
 
 //TODO get header icons for edit and delete symptomCord
 
@@ -47,16 +50,15 @@ function App() {
     }
   };
 
-  // create a script to generate x number of symptom cards with some prefilled data
+  // function to generate X number of symptom cards with some prefilled data
   const generateRandomCards = () => {
     const numOfCards = prompt("How many cards do you want to generate?");
     for (let i = 1; i <= numOfCards; i++) {
       dispatch(
         addSymptomCard({
           // uniqueKey: generateUniqueKey(),
-          // date and time wont be random
-          date: getDateAndTime()[0],
-          time: getDateAndTime()[1],
+          date: generateRandomDateTime()[0],
+          time: generateRandomDateTime()[1],
           title: generateRandomCardValues("title"),
           intensity: Math.floor(Math.random() * 10) + 1,
           note: generateRandomCardValues("note"),
