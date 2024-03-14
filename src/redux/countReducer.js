@@ -24,14 +24,21 @@ export const countSlice = createSlice({
         ...state.symptomList,
         {
           uniqueKey,
-          title,
-          intensity,
           date,
           time,
+          title,
+          intensity,
           note,
           accentColor,
         },
       ];
+
+      // Sort the newSymptomList array by date and time
+      newSymptomList.sort((a, b) => {
+        const dateA = new Date(`${a.date} ${a.time}`);
+        const dateB = new Date(`${b.date} ${b.time}`);
+        return dateA - dateB;
+      });
 
       // Return a new state object with the updated arrays
       return {
@@ -77,6 +84,13 @@ export const countSlice = createSlice({
 
       // Update the copied array with the new object
       list[index] = updatedSymptom;
+
+      // Sort the list array by date and time
+      list.sort((a, b) => {
+        const dateA = new Date(`${a.date} ${a.time}`);
+        const dateB = new Date(`${b.date} ${b.time}`);
+        return dateA - dateB;
+      });
 
       return {
         ...state,

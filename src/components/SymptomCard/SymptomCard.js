@@ -4,7 +4,9 @@
 
 //TODO Implement ability to check off and delete multiple cards at once
 
-//TODO: add inputs for symptom frequency, duration, mood, and list of medication taken,
+//TODO add inputs for symptom frequency, duration, mood, and list of medication taken,
+
+//& TODO: replace all uniqueKey logic with the cards index
 
 import React from "react";
 import { useState, useEffect, useRef } from "react";

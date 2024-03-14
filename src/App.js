@@ -20,6 +20,7 @@ import { generateRandomCardValues } from "./utilityFunctions/debuggingHelper";
 function App() {
   //state variables
   const [formVisible, setFormVisible] = useState(false);
+  const [sortByDate, setSortByDate] = useState("descending");
 
   // get data from Redux
   const symptomCardData = useSelector((state) => state.count.symptomList);
@@ -74,23 +75,39 @@ function App() {
       />
 
       {/* // Delete all entries btn is for testing purposes only */}
-      <button
-        className='delete-all-btn'
-        onClick={() => {
-          handleDeletion();
-        }}
-      >
-        Delete All Entries
-      </button>
-      <button
-        className='generate-cards-helper-btn'
-        onClick={() => {
-          generateRandomCards();
-        }}
-      >
-        Generate Some Data
-      </button>
+      <div className='helper-buttons-wrapper'>
+        <button
+          className='delete-all-btn'
+          onClick={() => {
+            handleDeletion();
+          }}
+        >
+          Delete All Entries
+        </button>
+        <button
+          className='generate-cards-helper-btn'
+          onClick={() => {
+            generateRandomCards();
+          }}
+        >
+          Generate Some Data
+        </button>
 
+        <button
+          className='sort-by-date-btn'
+          onClick={() => {
+            if (sortByDate === "descending") {
+              setSortByDate("ascending");
+            } else if (sortByDate === "ascending") {
+              setSortByDate("descending");
+            }
+          }}
+        >
+          {sortByDate === "descending"
+            ? "Sort by date ascending"
+            : "Sort by date descending"}
+        </button>
+      </div>
       <Form
         className={`${!formVisible ? "hidden" : ""}`}
         closeBtnOnClick={() => {
@@ -98,7 +115,11 @@ function App() {
         }}
       />
 
-      <div className='symptom-card-component-list-wrapper'>
+      <div
+        className={`symptom-card-component-list-wrapper ${
+          sortByDate === "descending" ? "descending-date" : "ascending-date"
+        }`}
+      >
         <h1
           className={`empty-message ${
             symptomCardData.length === 0 ? "" : "hidden"

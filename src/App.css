@@ -25,26 +25,40 @@
   /* display: none; */
 }
 
+.helper-buttons-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 80%;
+  max-width: 630px;
+  margin: 110px 0 10px 0;
+  /* outline: 2px solid red; */
+}
+
 .delete-all-btn,
-.generate-cards-helper-btn {
-  margin: 20px auto;
+.generate-cards-helper-btn,
+.sort-by-date-btn {
+  /* margin: 20px auto; */
   padding: 5px 10px;
   font-size: 1rem;
   font-weight: 600;
   color: #fff;
-  background-color: #af0303;
   border-radius: 6px;
   border: none;
   cursor: pointer;
 }
 
 .delete-all-btn {
-  margin-top: 100px;
+  background-color: #af0303;
 }
 
 .generate-cards-helper-btn {
-  margin: 0 auto 10px;
   background-color: #089208;
+}
+
+.sort-by-date-btn {
+  background-color: #636363;
 }
 
 .symptom-card-component-list-wrapper {
@@ -64,4 +78,13 @@
   font-size: 1.5rem;
   font-weight: 400;
   text-align: center;
+}
+
+/* Utility Class for for sorting cards by date descending / ascending */
+
+.descending-date {
+  flex-direction: column-reverse;
+}
+.ascending-date {
+  flex-direction: column;
 }
