@@ -2,6 +2,9 @@ import React from "react";
 import { useState } from "react";
 import "./Form.css";
 
+// Component imports
+import AccentColorPicker from "../AccentColorPicker/AccentColorPicker";
+
 // Redux imports
 import { useDispatch } from "react-redux";
 import { addSymptomCard } from "../../redux/countReducer";
@@ -9,9 +12,7 @@ import { addSymptomCard } from "../../redux/countReducer";
 //utility imports
 import {
   getDateAndTime,
-  displayAccentColors,
   clearFormInputValues,
-  toggleColorClassNames,
   checkIntensityValidForm,
 } from "../../utilityFunctions/FormUtilities";
 
@@ -22,12 +23,9 @@ export default function Form(props) {
   const [time, setTime] = useState(getDateAndTime()[1]);
   // To get time with seconds call (getDateAndTime()[2])
   const [note, setNote] = useState("");
-  const [isColorSelected, setIsColorSelected] = useState(false);
-  const [userSelectedAccentColor, setUserSelectedAccentColor] =
-    useState("blue");
+  const [userSelectedColor, setUserSelectedColor] = useState("blue");
 
   const dispatch = useDispatch();
-  const listOfAccentColors = displayAccentColors();
 
   const handleFormSubmission = (e) => {
     // Do not submit the form
@@ -41,7 +39,7 @@ export default function Form(props) {
         date: date,
         time: time,
         note: note,
-        accentColor: userSelectedAccentColor,
+        accentColor: userSelectedColor,
       })
     );
   };
@@ -118,29 +116,13 @@ export default function Form(props) {
 
           {/* //& COLOR PICKER */}
           {
-            //*the 'color' className in Form.css is separate from the accent color classNames in SymptomCard.css */
+            //the 'color' className in Form.css is separate from the accent color classNames in SymptomCard.css */
           }
-          <div className='color-picker-wrapper'>
-            <div
-              className={`selected-color-view ${userSelectedAccentColor}`}
-            ></div>
-            {listOfAccentColors.map((color, index) => (
-              <div
-                key={index}
-                className={`color-block ${color} ${toggleColorClassNames(
-                  isColorSelected,
-                  userSelectedAccentColor,
-                  color
-                )}`}
-                onClick={() => {
-                  console.log(color);
-                  //on click outside of color box turn it to false ?
-                  setIsColorSelected(true);
-                  setUserSelectedAccentColor(color);
-                }}
-              ></div>
-            ))}
-          </div>
+          <AccentColorPicker
+            colorOnClick={(passedColor) => {
+              setUserSelectedColor(passedColor);
+            }}
+          />
         </label>
       </div>
       <input
