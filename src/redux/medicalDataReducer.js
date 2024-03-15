@@ -1,17 +1,15 @@
-//TODO: rename this file and every occurrence of 'count'
-
 // FIXME: Duplicate cards fail to be deleted under unknown conditions
 
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  count: [],
+  medicalData: [],
   symptomList: [],
   intensityData: [],
 };
 
-export const countSlice = createSlice({
-  name: "count",
+export const medicalDataSlice = createSlice({
+  name: "medicalData",
   initialState,
   reducers: {
     addSymptomCard: (state, action) => {
@@ -58,12 +56,12 @@ export const countSlice = createSlice({
       const { index, date, time, title, intensity, note, accentColor } =
         action.payload;
 
-      // console.log("from edit reducer: date:", date);
-      // console.log("from edit reducer: time:", time);
-      // console.log("from edit reducer: title:", title);
-      // console.log("from edit reducer: intensity:", intensity);
-      // console.log("from edit reducer: note:", note);
-      console.log("from edit reducer: accent color:", accentColor);
+      // console.log("edit reducer: date:", date);
+      // console.log("edit reducer: time:", time);
+      // console.log("edit reducer: title:", title);
+      // console.log("edit reducer: intensity:", intensity);
+      // console.log("edit reducer: note:", note);
+      // console.log("edit reducer: accent color:", accentColor);
 
       // Create a new object with the updated values
       const updatedSymptom = {
@@ -173,6 +171,6 @@ export const {
   editSymptom,
   deleteSymptomCard,
   deleteDuplicateSymptom,
-} = countSlice.actions;
+} = medicalDataSlice.actions;
 
-export default countSlice.reducer;
+export default medicalDataSlice.reducer;

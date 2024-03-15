@@ -6,7 +6,7 @@ import SymptomCard from "./components/SymptomCard/SymptomCard";
 
 // redux imports
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAll, addSymptomCard } from "./redux/countReducer";
+import { deleteAll, addSymptomCard } from "./redux/medicalDataReducer";
 
 //utility imports
 import {
@@ -22,7 +22,7 @@ function App() {
   const [sortByDate, setSortByDate] = useState("descending");
 
   // get data from Redux
-  const symptomCardData = useSelector((state) => state.count.symptomList);
+  const symptomCardData = useSelector((state) => state.medicalData.symptomList);
   const dispatch = useDispatch();
 
   const handleDeletion = () => {

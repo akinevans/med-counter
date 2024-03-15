@@ -17,7 +17,7 @@ import hamburger from "../../assets/hamburger.png";
 
 export default function AppHeader(props) {
   // Redux symptom state array
-  const symptomCardData = useSelector((state) => state.count.symptomList);
+  const symptomCardData = useSelector((state) => state.medicalData.symptomList);
   const totalNumOfCards = symptomCardData.length;
 
   let averageIntensity =

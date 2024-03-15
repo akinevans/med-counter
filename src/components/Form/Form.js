@@ -7,7 +7,7 @@ import AccentColorPicker from "../AccentColorPicker/AccentColorPicker";
 
 // Redux imports
 import { useDispatch } from "react-redux";
-import { addSymptomCard } from "../../redux/countReducer";
+import { addSymptomCard } from "../../redux/medicalDataReducer";
 
 //utility imports
 import {

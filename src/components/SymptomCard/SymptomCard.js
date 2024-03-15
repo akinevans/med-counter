@@ -17,7 +17,7 @@ import {
   editSymptom,
   deleteDuplicateSymptom,
   deleteSymptomCard,
-} from "../../redux/countReducer";
+} from "../../redux/medicalDataReducer";
 
 // utility imports
 import {
@@ -36,7 +36,7 @@ export default function SymptomCard(props) {
   const [selectedColor, setSelectedColor] = useState();
 
   // Redux state arrays
-  const symptomCardData = useSelector((state) => state.count.symptomList);
+  const symptomCardData = useSelector((state) => state.medicalData.symptomList);
   console.log("symptomCardData", symptomCardData);
 
   const dispatch = useDispatch();
