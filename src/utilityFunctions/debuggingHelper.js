@@ -85,3 +85,34 @@ export const generateRandomDateTime = () => {
 
   return [formattedDate, formattedTime];
 };
+
+//
+//
+//
+//
+
+// Function for deleting all entries - FOR TESTING ONLY
+export const handleDeletion = () => {
+  const reply = prompt(
+    "Delete all entries? Press Enter / OK for Yes or Cancel / ESC for No"
+  );
+
+  // if cancel or esc is pressed
+  if (reply === null || reply === undefined) {
+    return false;
+  }
+
+  // if enter is pressed
+  if (!reply) {
+    return true;
+  }
+
+  const response = reply.toLowerCase();
+
+  // incase user enters text
+  if (response === "yes" || response === "y") {
+    return true;
+  } else {
+    return false;
+  }
+};

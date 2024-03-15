@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AppHeader from "./components/AppHeader/AppHeader";
 import Form from "./components/Form/Form";
 import SymptomCard from "./components/SymptomCard/SymptomCard";
@@ -10,8 +10,9 @@ import { deleteAll, addSymptomCard } from "./redux/medicalDataReducer";
 
 //utility imports
 import {
-  generateRandomCardValues,
+  handleDeletion,
   generateRandomDateTime,
+  generateRandomCardValues,
 } from "./utilityFunctions/debuggingHelper";
 
 //TODO get header icons for edit and delete symptomCord
@@ -19,32 +20,13 @@ import {
 function App() {
   //state variables
   const [formVisible, setFormVisible] = useState(false);
-  const [sortByDate, setSortByDate] = useState("descending");
+  const [sortPreference, setSortPreference] = useState(
+    localStorage.getItem("userSortPreference") || "descending"
+  );
 
   // get data from Redux
   const symptomCardData = useSelector((state) => state.medicalData.symptomList);
   const dispatch = useDispatch();
-
-  const handleDeletion = () => {
-    const reply = prompt(
-      "Delete all entries? Enter for Yes or Cancel / ESC for No"
-    );
-    if (reply === null || reply === undefined) {
-      return;
-    }
-
-    if (!reply) {
-      dispatch(deleteAll());
-    }
-
-    const response = reply.toLowerCase();
-
-    if (response === "yes" || response === "y") {
-      dispatch(deleteAll());
-    } else {
-      return false;
-    }
-  };
 
   // function to generate X number of symptom cards with some prefilled data
   const generateRandomCards = () => {
@@ -62,6 +44,20 @@ function App() {
       );
     }
   };
+
+  // Function to handle sortPreference change
+  const handleSortPreferenceChange = (newSortPreference) => {
+    setSortPreference(newSortPreference);
+    localStorage.setItem("userSortPreference", newSortPreference);
+  };
+
+  useEffect(() => {
+    // Check if user sortPreference exists in local storage
+    const storedSortPreference = localStorage.getItem("userSortPreference");
+    if (storedSortPreference) {
+      setSortPreference(storedSortPreference);
+    }
+  }, []);
   return (
     <div className='App'>
       <AppHeader
@@ -73,14 +69,21 @@ function App() {
 
       {/* // Delete all entries btn is for testing purposes only */}
       <div className='helper-buttons-wrapper'>
+        {/* //& DELETE ALL BUTTON */}
+
         <button
           className='delete-all-btn'
           onClick={() => {
-            handleDeletion();
+            if (handleDeletion()) {
+              dispatch(deleteAll());
+            }
           }}
         >
           Delete All Entries
         </button>
+
+        {/* //& GENERATE DATA BUTTON */}
+
         <button
           className='generate-cards-helper-btn'
           onClick={() => {
@@ -90,17 +93,19 @@ function App() {
           Generate Some Data
         </button>
 
+        {/* //& SORT BUTTON */}
         <button
           className='sort-by-date-btn'
           onClick={() => {
-            if (sortByDate === "descending") {
-              setSortByDate("ascending");
-            } else {
-              setSortByDate("descending");
-            }
+            // toggle sortPreference
+            // console.log(sortPreference);
+            handleSortPreferenceChange(
+              sortPreference === "descending" ? "ascending" : "descending"
+            );
+            // console.log("localStorage", localStorage.userSortPreference);
           }}
         >
-          {sortByDate === "descending"
+          {sortPreference === "descending"
             ? "Sort by date ascending"
             : "Sort by date descending"}
         </button>
@@ -116,11 +121,11 @@ function App() {
           symptomCardData.length !== 0 ? "" : "hidden"
         }`}
       >
-        Sorted by {sortByDate === "ascending" ? "ascending" : "descending"}
+        Sorted by {sortPreference === "ascending" ? "ascending" : "descending"}
       </h1>
       <div
         className={`symptom-card-component-list-wrapper ${
-          sortByDate === "descending" ? "descending-date" : "ascending-date"
+          sortPreference === "descending" ? "descending-date" : "ascending-date"
         }`}
       >
         <h1
