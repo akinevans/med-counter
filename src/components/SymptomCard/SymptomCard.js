@@ -4,8 +4,8 @@
 
 //TODO Implement ability to check off and delete multiple cards at once
 
-//TODO* add inputs for symptom frequency, duration, mood, and list of medication taken
-//TODO* add inputs for symptom frequency, duration, mood, and list of medication taken
+//TODO* add inputs for mood, and list of medication taken
+//TODO* add inputs for mood, and list of medication taken
 //TODO& edit symptomCard so it folds in on itself until clicked. Then reveals more data
 //TODO& edit symptomCard so it folds in on itself until clicked. Then reveals more data
 

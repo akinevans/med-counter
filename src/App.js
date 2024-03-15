@@ -32,14 +32,17 @@ function App() {
   const generateRandomCards = () => {
     const numOfCards = prompt("How many cards do you want to generate?");
     for (let i = 1; i <= numOfCards; i++) {
+      // generate random card data object
+      const randomCardData = generateRandomCardValues();
+
       dispatch(
         addSymptomCard({
           date: generateRandomDateTime()[0],
           time: generateRandomDateTime()[1],
-          title: generateRandomCardValues("title"),
+          title: randomCardData.title,
           intensity: Math.floor(Math.random() * 10) + 1,
-          note: generateRandomCardValues("note"),
-          accentColor: generateRandomCardValues("color"),
+          note: randomCardData.note,
+          accentColor: randomCardData.color,
         })
       );
     }
@@ -105,6 +108,7 @@ function App() {
             // console.log("localStorage", localStorage.userSortPreference);
           }}
         >
+          {/* Toggle sort message in button*/}
           {sortPreference === "descending"
             ? "Sort by date ascending"
             : "Sort by date descending"}
@@ -116,6 +120,8 @@ function App() {
           setFormVisible(false);
         }}
       />
+
+      {/* Toggle sort message title*/}
       <h1
         className={`sort-order-message ${
           symptomCardData.length !== 0 ? "" : "hidden"

@@ -1,56 +1,104 @@
 // function for generating X number of symptomCards with random data for testing / data generation purposes
 export const generateRandomCardValues = (key) => {
-  const dataOptions = {
-    title: [
-      "headache",
-      "cold",
-      "nausea",
-      "back pain",
-      "Dull aches",
-      "cold sweat",
-      "dizzy",
-      "fatigue",
-      "rash",
-      "insomnia",
-      "stomach ache",
-      "tooth pain",
-    ],
-    color: [
-      "blue",
-      "light-blue",
-      "teal",
-      "gold",
-      "orange",
-      "green",
-      "dark-green",
-      "purple",
-      "fuchsia",
-      "crimson",
-    ],
-    note: [
-      "Difficulty breathing or a feeling of breathlessness",
-      "Really bad hot flashes",
-      "Feeling dizzy and sluggish",
-      "Pain when attempting to move",
-      "Tight muscles and some tenderness",
-      "Feeling lightheaded and unsteady",
-      "Change in the color or texture of the skin",
-      "Infrequent bowel movements",
-      "Difficulty falling asleep or staying asleep",
-      "Reduced strength or power in muscles",
-      "Elevated body temperature",
-      "Impaired ability to recall information or events",
-    ],
-  };
+  const colorsList = [
+    "blue",
+    "light-blue",
+    "teal",
+    "gold",
+    "orange",
+    "green",
+    "dark-green",
+    "purple",
+    "fuchsia",
+    "crimson",
+  ];
 
-  const optionsArray = dataOptions[key];
-
-  if (!optionsArray) {
-    throw new Error("akin - Invalid key provided in generateRandomCardValues");
+  function generateRandomColor() {
+    return colorsList[Math.floor(Math.random() * colorsList.length)];
   }
 
-  const randomIndex = Math.floor(Math.random() * optionsArray.length);
-  return optionsArray[randomIndex];
+  const dataOptions = [
+    {
+      title: "Headache",
+      note: "Feeling lightheaded and unsteady",
+      color: generateRandomColor(),
+    },
+    {
+      title: "Tooth Ache",
+      note: "Sever pain when chewing and drinking cold liquids",
+      color: generateRandomColor(),
+    },
+    {
+      title: "Nausea",
+      note: "Feeling dizzy and sluggish",
+      color: generateRandomColor(),
+    },
+    {
+      title: "Cold",
+      note: "Frequent sneezing and a runny nose",
+      color: generateRandomColor(),
+    },
+    {
+      title: "Insomnia",
+      note: "Difficulty falling asleep or staying asleep",
+      color: generateRandomColor(),
+    },
+    {
+      title: "Back pain",
+      note: "Tight muscles and some tenderness. Difficulty standing and walking",
+      color: generateRandomColor(),
+    },
+    {
+      title: "Dizzy",
+      note: "Impaired ability to recall information or events",
+      color: generateRandomColor(),
+    },
+    {
+      title: "Fatigue",
+      note: "Reduced strength or power in muscles",
+      color: generateRandomColor(),
+    },
+    {
+      title: "Skin rash",
+      note: "Change in the color or texture of the skin",
+      color: generateRandomColor(),
+    },
+    {
+      title: "Chest pain",
+      note: "Difficulty breathing and a feeling of breathlessness",
+      color: generateRandomColor(),
+    },
+    {
+      title: "Flu",
+      note: "Elevated body temperature, tiredness, and some vomiting",
+      color: generateRandomColor(),
+    },
+    {
+      title: "Anxiety",
+      note: "Hot flashes, elevated heart beat, nervousness",
+      color: generateRandomColor(),
+    },
+    {
+      title: "Joint pain",
+      note: "Discomfort, inflammation, and stiffness in joints.",
+      color: generateRandomColor(),
+    },
+    {
+      title: "Sore throat",
+      note: "Pain, scratchiness, or irritation of the throat that worsens when swallowing.",
+      color: generateRandomColor(),
+    },
+    {
+      title: "Changes in vision",
+      note: "Alterations in visual acuity, clarity, or perception. Blurriness, double vision, blind spots.",
+      color: generateRandomColor(),
+    },
+  ];
+
+  const generatedData =
+    dataOptions[Math.floor(Math.random() * dataOptions.length)];
+
+  return generatedData;
 };
 
 //
