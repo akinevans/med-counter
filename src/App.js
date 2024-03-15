@@ -60,6 +60,30 @@ function App() {
     if (storedSortPreference) {
       setSortPreference(storedSortPreference);
     }
+
+    //
+    //
+
+    // Scroll to the saved position after the page reloads
+    const savedScrollPosition = localStorage.getItem("scrollPosition");
+    if (savedScrollPosition) {
+      window.scrollTo(0, parseInt(savedScrollPosition, 10));
+      localStorage.removeItem("scrollPosition"); // Remove the saved scroll position after using it
+    }
+
+    // Save the scroll position before the page refreshes
+    const scrollPosition = window.scrollY;
+
+    // Add an event listener to the window object for beforeunload event
+    const handleBeforeUnload = () => {
+      localStorage.setItem("scrollPosition", scrollPosition.toString());
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
   }, []);
   return (
     <div className='App'>
