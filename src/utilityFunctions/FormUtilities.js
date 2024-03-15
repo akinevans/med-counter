@@ -11,15 +11,15 @@ export const toggleColorClassNames = (
 //
 
 export const displayAccentColors = () => [
+  "purple",
+  "fuchsia",
   "blue",
   "light-blue",
   "teal",
-  "gold",
-  "orange",
   "green",
   "dark-green",
-  "purple",
-  "fuchsia",
+  "gold",
+  "orange",
   "crimson",
 ];
 

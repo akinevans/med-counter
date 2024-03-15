@@ -1,5 +1,11 @@
 // function for updating the data on an input field when it is changed
-export const handleInputUpdate = (event, inputField, newData, setNewData) => {
+export const handleInputUpdate = (
+  event,
+  inputField,
+  newData,
+  setNewData,
+  passedColor
+) => {
   // edge case - If the user goes into edit mode but doesn't change data
   if (!inputField) {
     throw new Error("akin - No input field provided");
@@ -43,6 +49,14 @@ export const handleInputUpdate = (event, inputField, newData, setNewData) => {
         ...prevState,
         note: event.target.value,
       }));
+      break;
+
+    case "accent-color":
+      setNewData((prevState) => ({
+        ...prevState,
+        accentColor: passedColor,
+      }));
+      // console.log("passedColor", passedColor);
       break;
 
     default:

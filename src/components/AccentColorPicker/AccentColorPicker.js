@@ -14,9 +14,12 @@ export default function AccentColorPicker(props) {
     useState("blue");
 
   const listOfAccentColors = displayAccentColors();
+
   return (
-    <div className='color-picker-wrapper'>
-      <div className={`selected-color-view ${userSelectedAccentColor}`}></div>
+    <div className={`color-picker-wrapper ${props.utilityClass1}`}>
+      <div
+        className={`selected-color-view ${userSelectedAccentColor} ${props.utilityClass2}`}
+      ></div>
       {listOfAccentColors.map((color, index) => (
         <div
           key={index}
@@ -24,10 +27,10 @@ export default function AccentColorPicker(props) {
             isColorSelected,
             userSelectedAccentColor,
             color
-          )}`}
+          )} ${props.utilityClass3}`}
           onClick={() => {
             //on click outside of color box turn it to false ?
-            console.log(color);
+            // console.log(color);
             setIsColorSelected(true);
             setUserSelectedAccentColor(color);
             props.colorOnClick(color);

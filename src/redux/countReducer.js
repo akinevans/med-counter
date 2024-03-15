@@ -63,7 +63,7 @@ export const countSlice = createSlice({
       // console.log("from edit reducer: title:", title);
       // console.log("from edit reducer: intensity:", intensity);
       // console.log("from edit reducer: note:", note);
-      // console.log("from edit reducer: accent color:", accentColor);
+      console.log("from edit reducer: accent color:", accentColor);
 
       // Create a new object with the updated values
       const updatedSymptom = {
@@ -78,7 +78,6 @@ export const countSlice = createSlice({
       };
 
       console.log(updatedSymptom);
-      alert("pause from reducer");
 
       // Update the copied array with the new object
       list[index] = updatedSymptom;

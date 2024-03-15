@@ -9,6 +9,7 @@
 import React from "react";
 import { useState } from "react";
 import "./SymptomCard.css";
+import AccentColorPicker from "../AccentColorPicker/AccentColorPicker";
 
 // redux imports
 import { useDispatch, useSelector } from "react-redux";
@@ -32,6 +33,7 @@ export default function SymptomCard(props) {
 
   // state variables
   const [editEnabled, setEditEnabled] = useState(false);
+  const [selectedColor, setSelectedColor] = useState();
 
   // Redux state arrays
   const symptomCardData = useSelector((state) => state.count.symptomList);
@@ -87,8 +89,11 @@ export default function SymptomCard(props) {
         ),
 
         note: populateNewDataValues("note", newData, props.note),
-        //! change accentColor to newData.accentColor once ability to change from edit mode is color in implemented
-        accentColor: currentData.accentColor,
+        accentColor: populateNewDataValues(
+          "accentColor",
+          newData,
+          props.accentColor
+        ),
       })
     );
 
@@ -103,7 +108,11 @@ export default function SymptomCard(props) {
   return (
     <div className={`symptom-card-wrapper ${editEnabled ? "edit-mode" : ""}`}>
       <div className='symptom-card-inner-wrapper'>
-        <div className={`card-accent-color ${props.accentColor} red`}></div>
+        <div
+          className={`card-accent-color ${
+            selectedColor ? selectedColor : props.accentColor
+          }`}
+        ></div>
         <div className='symptom-card-data-wrapper'>
           {/* //TODO change edit button to an edit icon */}
           <div className='delete-edit-btn-wrapper'>
@@ -139,6 +148,7 @@ export default function SymptomCard(props) {
               {editEnabled ? "Save" : "Edit"}
             </button>
           </div>
+
           <div className='date-time-wrapper'>
             {/* //& DATE  */}
             <input
@@ -236,6 +246,29 @@ export default function SymptomCard(props) {
             </div>
           </div>
         </div>
+      </div>
+      {/* Accent Color Picker */}
+      <div
+        className={`color-picker-component-wrapper ${
+          editEnabled ? "" : "hidden"
+        }`}
+      >
+        <AccentColorPicker
+          utilityClass1='wrapper-vertical-layout'
+          utilityClass2='hide-selected-color'
+          utilityClass3='color-block-alt-size'
+          colorOnClick={(passedColor) => {
+            setSelectedColor(passedColor);
+
+            handleInputUpdate(
+              null,
+              "accent-color",
+              newData,
+              setNewData,
+              passedColor
+            );
+          }}
+        />
       </div>
     </div>
   );

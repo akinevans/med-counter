@@ -20,4 +20,42 @@
   width: 40px;
   height: 40px;
   cursor: pointer;
+  transition: transform 0.1s ease-in-out;
+}
+
+.color-block:hover {
+  transform: scale(1.2);
+  transition: transform 0.1s ease-in-out;
+}
+
+/* Utility classes */
+
+.wrapper-vertical-layout {
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: fit-content;
+  height: 300px;
+  margin: 15px 0;
+  outline: none;
+  /* outline: 2px solid red; */
+}
+
+.hide-selected-color {
+  display: none;
+}
+
+.color-block-alt-size {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.1s ease-in-out;
+  border-radius: 50%;
+}
+
+.color-block-alt-size:hover {
+  transform: scale(1.2);
+  transition: transform 0.1s ease-in-out;
 }
