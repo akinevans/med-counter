@@ -1,13 +1,29 @@
+/* CSS Variables */
+:root {
+  /* Colors */
+  --primary: #3367ed;
+  --secondary: #f9f9f9;
+  --text-black: #0d0e14;
+  --text-grey: #5f6062;
+  --white: #fff;
+  --shadow: #e9e9e9cc;
+
+  /* Font */
+
+  /* misc */
+  --border-radius: 16px;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }

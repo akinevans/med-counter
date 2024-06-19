@@ -1,3 +1,10 @@
+//! This component is no longer in use
+//! This component is no longer in use
+//! This component is no longer in use
+//! This component is no longer in use
+//! This component is no longer in use
+//! This component is no longer in use
+
 import React from "react";
 import { useState } from "react";
 import "../SymptomTracker/SymptomTracker.css";

@@ -1,3 +1,7 @@
+//! component no longer in use
+//! component no longer in use
+//! component no longer in use
+
 import React from "react";
 import "./CountDisplay.css";
 

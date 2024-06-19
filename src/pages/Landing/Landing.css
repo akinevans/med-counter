@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+}
+
+/* Utility classes for react-calendar */
+
+.date-contains-data {
+  color: rgb(12, 207, 158);
+  font-weight: bold;
+}
+
+.reverse {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  margin: 15px;
+  padding: 15px 0;
+  background-color: rgb(165, 165, 165);
+}
+
+.list-item {
+  margin-bottom: 10px;
+}
