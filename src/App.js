@@ -11,7 +11,8 @@ function App() {
   return (
     <Routes>
       {/* <Route path='/' element={<Landing />} /> */}
-      <Route path='/symptom-manager' element={<SymptomManager />} />
+      {/* <Route path='/symptom-manager' element={<SymptomManager />} /> */}
+      <Route path='/' element={<SymptomManager />} />
     </Routes>
   );
 }
